@@ -1,0 +1,4846 @@
+{
+  "OSPF / ECMP (Baseline)": {
+    "mean_power_w": 3760.0,
+    "mean_savings_percent": 0.0,
+    "mean_delay_ms": 0.87,
+    "max_delay_ms": 11.42,
+    "mean_packet_loss_percent": 0.0,
+    "total_congested_events": 67,
+    "cumulative_reward": -1218.54,
+    "timeseries": [
+      {
+        "step": 0,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742170897026416
+      },
+      {
+        "step": 1,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742227688215134
+      },
+      {
+        "step": 2,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.741901123230072
+      },
+      {
+        "step": 3,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742052215741241
+      },
+      {
+        "step": 4,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742265226452858
+      },
+      {
+        "step": 5,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742578852703572
+      },
+      {
+        "step": 6,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742290047475699
+      },
+      {
+        "step": 7,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742166346226277
+      },
+      {
+        "step": 8,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742541822269523
+      },
+      {
+        "step": 9,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742045072673013
+      },
+      {
+        "step": 10,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742369037322002
+      },
+      {
+        "step": 11,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742233097415328
+      },
+      {
+        "step": 12,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743652076075449
+      },
+      {
+        "step": 13,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743373477022425
+      },
+      {
+        "step": 14,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.744342724879303
+      },
+      {
+        "step": 15,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74356211238957
+      },
+      {
+        "step": 16,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743605924368264
+      },
+      {
+        "step": 17,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.744134892348375
+      },
+      {
+        "step": 18,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.744430503990795
+      },
+      {
+        "step": 19,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742749281784652
+      },
+      {
+        "step": 20,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743799293422654
+      },
+      {
+        "step": 21,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 2.94,
+        "packet_loss_percent": 0.0,
+        "congested_links": 7,
+        "active_cores_count": 4,
+        "reward": -11.675862624947584
+      },
+      {
+        "step": 22,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.744443697401099
+      },
+      {
+        "step": 23,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.7451327471916
+      },
+      {
+        "step": 24,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.245167970778665
+      },
+      {
+        "step": 25,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.245984483778898
+      },
+      {
+        "step": 26,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.746075790053586
+      },
+      {
+        "step": 27,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.745076240916687
+      },
+      {
+        "step": 28,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.745152636292291
+      },
+      {
+        "step": 29,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.745147883964698
+      },
+      {
+        "step": 30,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.745270272659914
+      },
+      {
+        "step": 31,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247223132614693
+      },
+      {
+        "step": 32,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.745368391004252
+      },
+      {
+        "step": 33,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 6.75,
+        "packet_loss_percent": 0.0,
+        "congested_links": 14,
+        "active_cores_count": 4,
+        "reward": -43.205830274883766
+      },
+      {
+        "step": 34,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.248959010541659
+      },
+      {
+        "step": 35,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.248527710699573
+      },
+      {
+        "step": 36,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249437164362116
+      },
+      {
+        "step": 37,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 11.42,
+        "packet_loss_percent": 0.0,
+        "congested_links": 16,
+        "active_cores_count": 4,
+        "reward": -76.09924424042441
+      },
+      {
+        "step": 38,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.246767371214513
+      },
+      {
+        "step": 39,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.251115669618581
+      },
+      {
+        "step": 40,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.246545651313622
+      },
+      {
+        "step": 41,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 8.09,
+        "packet_loss_percent": 0.0,
+        "congested_links": 19,
+        "active_cores_count": 4,
+        "reward": -59.29624873576893
+      },
+      {
+        "step": 42,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247695548461211
+      },
+      {
+        "step": 43,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.66,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 4,
+        "reward": -1.7637643420647289
+      },
+      {
+        "step": 44,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250313075321249
+      },
+      {
+        "step": 45,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.246163035659265
+      },
+      {
+        "step": 46,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249937761059923
+      },
+      {
+        "step": 47,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2512404916023945
+      },
+      {
+        "step": 48,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250083828289314
+      },
+      {
+        "step": 49,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.255406553112271
+      },
+      {
+        "step": 50,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252739215995493
+      },
+      {
+        "step": 51,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252002613590748
+      },
+      {
+        "step": 52,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.251535541077759
+      },
+      {
+        "step": 53,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252646988750305
+      },
+      {
+        "step": 54,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247049079173199
+      },
+      {
+        "step": 55,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249268990860527
+      },
+      {
+        "step": 56,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2478314662137295
+      },
+      {
+        "step": 57,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252823729895002
+      },
+      {
+        "step": 58,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252316256460573
+      },
+      {
+        "step": 59,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2512924477337215
+      },
+      {
+        "step": 60,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250079822193045
+      },
+      {
+        "step": 61,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252843578052251
+      },
+      {
+        "step": 62,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.66,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 4,
+        "reward": -1.765527129824192
+      },
+      {
+        "step": 63,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.256902956575818
+      },
+      {
+        "step": 64,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -0.2564645361134089
+      },
+      {
+        "step": 65,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247697597767168
+      },
+      {
+        "step": 66,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250315063355666
+      },
+      {
+        "step": 67,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.248893121042181
+      },
+      {
+        "step": 68,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249797467917767
+      },
+      {
+        "step": 69,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247553852113592
+      },
+      {
+        "step": 70,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -0.2549721866923699
+      },
+      {
+        "step": 71,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.24867279780786
+      },
+      {
+        "step": 72,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.24825154738118
+      },
+      {
+        "step": 73,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249426789462407
+      },
+      {
+        "step": 74,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2492822103036305
+      },
+      {
+        "step": 75,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.256059170247299
+      },
+      {
+        "step": 76,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247225818509792
+      },
+      {
+        "step": 77,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247960385935895
+      },
+      {
+        "step": 78,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249145423930902
+      },
+      {
+        "step": 79,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249478978065134
+      },
+      {
+        "step": 80,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247799873014895
+      },
+      {
+        "step": 81,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252633960486068
+      },
+      {
+        "step": 82,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2480771835053
+      },
+      {
+        "step": 83,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.248189970156767
+      },
+      {
+        "step": 84,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2490963423036
+      },
+      {
+        "step": 85,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.745762595339766
+      },
+      {
+        "step": 86,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.745545248342578
+      },
+      {
+        "step": 87,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.245090153085849
+      },
+      {
+        "step": 88,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2467320208437025
+      },
+      {
+        "step": 89,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74677825698203
+      },
+      {
+        "step": 90,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.24656713292595
+      },
+      {
+        "step": 91,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74484586705515
+      },
+      {
+        "step": 92,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 3.81,
+        "packet_loss_percent": 0.0,
+        "congested_links": 9,
+        "active_cores_count": 4,
+        "reward": -16.869962937188962
+      },
+      {
+        "step": 93,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.744898577762866
+      },
+      {
+        "step": 94,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743861040924267
+      },
+      {
+        "step": 95,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74439704492845
+      },
+      {
+        "step": 96,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743977508605365
+      },
+      {
+        "step": 97,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742941038296392
+      },
+      {
+        "step": 98,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.744734503820222
+      },
+      {
+        "step": 99,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743657402615753
+      },
+      {
+        "step": 100,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743347616586895
+      },
+      {
+        "step": 101,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74373283905602
+      },
+      {
+        "step": 102,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.743988005840656
+      },
+      {
+        "step": 103,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.744601464932277
+      },
+      {
+        "step": 104,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742800882564822
+      },
+      {
+        "step": 105,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74422058136812
+      },
+      {
+        "step": 106,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742599285254071
+      },
+      {
+        "step": 107,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742702978204415
+      },
+      {
+        "step": 108,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742306496828116
+      },
+      {
+        "step": 109,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -3.760456193859212
+      },
+      {
+        "step": 110,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742622488281139
+      },
+      {
+        "step": 111,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742060602304292
+      },
+      {
+        "step": 112,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742133848215026
+      },
+      {
+        "step": 113,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742070514582952
+      },
+      {
+        "step": 114,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742363321925614
+      },
+      {
+        "step": 115,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.741823445541314
+      },
+      {
+        "step": 116,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.741894699584803
+      },
+      {
+        "step": 117,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74264100211971
+      },
+      {
+        "step": 118,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.741891306157195
+      },
+      {
+        "step": 119,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.74209593837969
+      }
+    ]
+  },
+  "Static Heuristic": {
+    "mean_power_w": 3435.2,
+    "mean_savings_percent": 8.64,
+    "mean_delay_ms": 0.94,
+    "max_delay_ms": 12.13,
+    "mean_packet_loss_percent": 0.0,
+    "total_congested_events": 83,
+    "cumulative_reward": -8.69,
+    "timeseries": [
+      {
+        "step": 0,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.742170897026416
+      },
+      {
+        "step": 1,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.55765466375464
+      },
+      {
+        "step": 2,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758011659382293
+      },
+      {
+        "step": 3,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757884815946877
+      },
+      {
+        "step": 4,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757666554089278
+      },
+      {
+        "step": 5,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757247741276487
+      },
+      {
+        "step": 6,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757601157971783
+      },
+      {
+        "step": 7,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757734532891352
+      },
+      {
+        "step": 8,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757320021518227
+      },
+      {
+        "step": 9,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757841573496096
+      },
+      {
+        "step": 10,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757486926415881
+      },
+      {
+        "step": 11,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757663538036507
+      },
+      {
+        "step": 12,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755970136232303
+      },
+      {
+        "step": 13,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756353498640694
+      },
+      {
+        "step": 14,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755425812761484
+      },
+      {
+        "step": 15,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756293968221284
+      },
+      {
+        "step": 16,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756010439887175
+      },
+      {
+        "step": 17,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755324470287357
+      },
+      {
+        "step": 18,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755149556772919
+      },
+      {
+        "step": 19,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757106013090988
+      },
+      {
+        "step": 20,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755866997297533
+      },
+      {
+        "step": 21,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 6.73,
+        "packet_loss_percent": 0.0,
+        "congested_links": 12,
+        "active_cores_count": 1,
+        "reward": -28.069628856144078
+      },
+      {
+        "step": 22,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754875322613572
+      },
+      {
+        "step": 23,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.753911978138632
+      },
+      {
+        "step": 24,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.054750135652216037
+      },
+      {
+        "step": 25,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2539674084420843
+      },
+      {
+        "step": 26,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.2462831325600625
+      },
+      {
+        "step": 27,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.245059420260335
+      },
+      {
+        "step": 28,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.2451370472572374
+      },
+      {
+        "step": 29,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.245062378449089
+      },
+      {
+        "step": 30,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.2452594832936033
+      },
+      {
+        "step": 31,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2526236845344885
+      },
+      {
+        "step": 32,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.245518168447087
+      },
+      {
+        "step": 33,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 6.79,
+        "packet_loss_percent": 0.0,
+        "congested_links": 15,
+        "active_cores_count": 3,
+        "reward": -40.94583149620114
+      },
+      {
+        "step": 34,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25151335245760514
+      },
+      {
+        "step": 35,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2512906413052668
+      },
+      {
+        "step": 36,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25013494875966746
+      },
+      {
+        "step": 37,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 12.13,
+        "packet_loss_percent": 0.0,
+        "congested_links": 22,
+        "active_cores_count": 3,
+        "reward": -85.6548150795667
+      },
+      {
+        "step": 38,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25318105034667987
+      },
+      {
+        "step": 39,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2480433185951012
+      },
+      {
+        "step": 40,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2529397917687105
+      },
+      {
+        "step": 41,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 9.86,
+        "packet_loss_percent": 0.0,
+        "congested_links": 20,
+        "active_cores_count": 3,
+        "reward": -68.08322927206498
+      },
+      {
+        "step": 42,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.447695548461211
+      },
+      {
+        "step": 43,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.66,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 4,
+        "reward": -1.7637643420647289
+      },
+      {
+        "step": 44,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250313075321249
+      },
+      {
+        "step": 45,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.246163035659265
+      },
+      {
+        "step": 46,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249937761059923
+      },
+      {
+        "step": 47,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2512404916023945
+      },
+      {
+        "step": 48,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250083828289314
+      },
+      {
+        "step": 49,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.255406553112271
+      },
+      {
+        "step": 50,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252739215995493
+      },
+      {
+        "step": 51,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252002613590748
+      },
+      {
+        "step": 52,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.251535541077759
+      },
+      {
+        "step": 53,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252646988750305
+      },
+      {
+        "step": 54,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247049079173199
+      },
+      {
+        "step": 55,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249268990860527
+      },
+      {
+        "step": 56,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2478314662137295
+      },
+      {
+        "step": 57,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252823729895002
+      },
+      {
+        "step": 58,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252316256460573
+      },
+      {
+        "step": 59,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2512924477337215
+      },
+      {
+        "step": 60,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250079822193045
+      },
+      {
+        "step": 61,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.252843578052251
+      },
+      {
+        "step": 62,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.66,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 4,
+        "reward": -1.765527129824192
+      },
+      {
+        "step": 63,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.256902956575818
+      },
+      {
+        "step": 64,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -0.2564645361134089
+      },
+      {
+        "step": 65,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247697597767168
+      },
+      {
+        "step": 66,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.250315063355666
+      },
+      {
+        "step": 67,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.248893121042181
+      },
+      {
+        "step": 68,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249797467917767
+      },
+      {
+        "step": 69,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247553852113592
+      },
+      {
+        "step": 70,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -0.2549721866923699
+      },
+      {
+        "step": 71,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.24867279780786
+      },
+      {
+        "step": 72,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.24825154738118
+      },
+      {
+        "step": 73,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249426789462407
+      },
+      {
+        "step": 74,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.2492822103036305
+      },
+      {
+        "step": 75,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.256059170247299
+      },
+      {
+        "step": 76,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247225818509792
+      },
+      {
+        "step": 77,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.247960385935895
+      },
+      {
+        "step": 78,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.249145423930902
+      },
+      {
+        "step": 79,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.050503132937955775
+      },
+      {
+        "step": 80,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25215438387940703
+      },
+      {
+        "step": 81,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 3.747826333290529
+      },
+      {
+        "step": 82,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25165252852964204
+      },
+      {
+        "step": 83,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25181099651215727
+      },
+      {
+        "step": 84,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25057980100628946
+      },
+      {
+        "step": 85,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.245866595204594
+      },
+      {
+        "step": 86,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.245495221593044
+      },
+      {
+        "step": 87,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2548510006254826
+      },
+      {
+        "step": 88,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2529074895322887
+      },
+      {
+        "step": 89,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.2466122613778823
+      },
+      {
+        "step": 90,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2531440827480814
+      },
+      {
+        "step": 91,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.244824911143503
+      },
+      {
+        "step": 92,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 4.54,
+        "packet_loss_percent": 0.0,
+        "congested_links": 9,
+        "active_cores_count": 3,
+        "reward": -17.536773736485475
+      },
+      {
+        "step": 93,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.2449596312754063
+      },
+      {
+        "step": 94,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.243875148673922
+      },
+      {
+        "step": 95,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.2444918536074203
+      },
+      {
+        "step": 96,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.2441754584123985
+      },
+      {
+        "step": 97,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.556979630473881
+      },
+      {
+        "step": 98,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754573493095847
+      },
+      {
+        "step": 99,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756067958108334
+      },
+      {
+        "step": 100,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756287225842305
+      },
+      {
+        "step": 101,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755794527561568
+      },
+      {
+        "step": 102,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75562079254398
+      },
+      {
+        "step": 103,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75450911603245
+      },
+      {
+        "step": 104,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756976479070676
+      },
+      {
+        "step": 105,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755084840468324
+      },
+      {
+        "step": 106,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757248465325016
+      },
+      {
+        "step": 107,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757149157520185
+      },
+      {
+        "step": 108,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757563397216247
+      },
+      {
+        "step": 109,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.89,
+        "packet_loss_percent": 0.0,
+        "congested_links": 3,
+        "active_cores_count": 1,
+        "reward": 6.745808661355014
+      },
+      {
+        "step": 110,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757260565867917
+      },
+      {
+        "step": 111,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757840056116539
+      },
+      {
+        "step": 112,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757765140675042
+      },
+      {
+        "step": 113,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757845064420028
+      },
+      {
+        "step": 114,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757521699414424
+      },
+      {
+        "step": 115,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75809589355179
+      },
+      {
+        "step": 116,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758005514584998
+      },
+      {
+        "step": 117,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757203581691213
+      },
+      {
+        "step": 118,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758005211859325
+      },
+      {
+        "step": 119,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757840368215122
+      }
+    ]
+  },
+  "Load-Threshold Reactive": {
+    "mean_power_w": 3242.93,
+    "mean_savings_percent": 13.75,
+    "mean_delay_ms": 1.07,
+    "max_delay_ms": 16.44,
+    "mean_packet_loss_percent": 0.0,
+    "total_congested_events": 94,
+    "cumulative_reward": 534.03,
+    "timeseries": [
+      {
+        "step": 0,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75773077903435
+      },
+      {
+        "step": 1,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75765466375464
+      },
+      {
+        "step": 2,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758011659382293
+      },
+      {
+        "step": 3,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757884815946877
+      },
+      {
+        "step": 4,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757666554089278
+      },
+      {
+        "step": 5,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757247741276487
+      },
+      {
+        "step": 6,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757601157971783
+      },
+      {
+        "step": 7,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757734532891352
+      },
+      {
+        "step": 8,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757320021518227
+      },
+      {
+        "step": 9,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757841573496096
+      },
+      {
+        "step": 10,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757486926415881
+      },
+      {
+        "step": 11,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757663538036507
+      },
+      {
+        "step": 12,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755970136232303
+      },
+      {
+        "step": 13,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756353498640694
+      },
+      {
+        "step": 14,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755425812761484
+      },
+      {
+        "step": 15,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756293968221284
+      },
+      {
+        "step": 16,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756010439887175
+      },
+      {
+        "step": 17,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755324470287357
+      },
+      {
+        "step": 18,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755149556772919
+      },
+      {
+        "step": 19,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757106013090988
+      },
+      {
+        "step": 20,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755866997297533
+      },
+      {
+        "step": 21,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 6.73,
+        "packet_loss_percent": 0.0,
+        "congested_links": 12,
+        "active_cores_count": 1,
+        "reward": -28.069628856144078
+      },
+      {
+        "step": 22,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.944443697401098
+      },
+      {
+        "step": 23,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.553911978138633
+      },
+      {
+        "step": 24,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754479388361563
+      },
+      {
+        "step": 25,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75332078758153
+      },
+      {
+        "step": 26,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.752795484258852
+      },
+      {
+        "step": 27,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754252555952347
+      },
+      {
+        "step": 28,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.753851961358627
+      },
+      {
+        "step": 29,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754285424752274
+      },
+      {
+        "step": 30,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754123064434156
+      },
+      {
+        "step": 31,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.749626156235168
+      },
+      {
+        "step": 32,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.753562052003662
+      },
+      {
+        "step": 33,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 10.68,
+        "packet_loss_percent": 0.0,
+        "congested_links": 18,
+        "active_cores_count": 1,
+        "reward": -62.33658286551193
+      },
+      {
+        "step": 34,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.448959010541659
+      },
+      {
+        "step": 35,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.550361058630118
+      },
+      {
+        "step": 36,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.240671077171474
+      },
+      {
+        "step": 37,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 12.13,
+        "packet_loss_percent": 0.0,
+        "congested_links": 22,
+        "active_cores_count": 3,
+        "reward": -85.8548150795667
+      },
+      {
+        "step": 38,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.446767371214513
+      },
+      {
+        "step": 39,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.92,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 9.933212382689216
+      },
+      {
+        "step": 40,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.0529397917687105
+      },
+      {
+        "step": 41,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 16.44,
+        "packet_loss_percent": 0.0,
+        "congested_links": 19,
+        "active_cores_count": 1,
+        "reward": -100.94315834820178
+      },
+      {
+        "step": 42,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -7.447695548461211
+      },
+      {
+        "step": 43,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.16,
+        "packet_loss_percent": 0.0,
+        "congested_links": 2,
+        "active_cores_count": 1,
+        "reward": 8.334257879186616
+      },
+      {
+        "step": 44,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.04911146103176062
+      },
+      {
+        "step": 45,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2537359125213484
+      },
+      {
+        "step": 46,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.040930020442968
+      },
+      {
+        "step": 47,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 3.548493844404019
+      },
+      {
+        "step": 48,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2504733158615097
+      },
+      {
+        "step": 49,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 3.7425089329681414
+      },
+      {
+        "step": 50,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.245770662818868
+      },
+      {
+        "step": 51,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.24763978149621413
+      },
+      {
+        "step": 52,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.24970425769269144
+      },
+      {
+        "step": 53,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.24687140678944647
+      },
+      {
+        "step": 54,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25300515854933764
+      },
+      {
+        "step": 55,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.549565345300651
+      },
+      {
+        "step": 56,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.052016147488642694
+      },
+      {
+        "step": 57,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.539150818766403
+      },
+      {
+        "step": 58,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.047254448386410575
+      },
+      {
+        "step": 59,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.24916787402774054
+      },
+      {
+        "step": 60,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25028482022828313
+      },
+      {
+        "step": 61,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.24673239577526956
+      },
+      {
+        "step": 62,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.68,
+        "packet_loss_percent": 0.0,
+        "congested_links": 2,
+        "active_cores_count": 3,
+        "reward": 0.7288019844737055
+      },
+      {
+        "step": 63,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.24247553867151395
+      },
+      {
+        "step": 64,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2462832528522929
+      },
+      {
+        "step": 65,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25193694665634425
+      },
+      {
+        "step": 66,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.548180012203652
+      },
+      {
+        "step": 67,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.05181098278071056
+      },
+      {
+        "step": 68,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.24972138210615497
+      },
+      {
+        "step": 69,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.2518944418734582
+      },
+      {
+        "step": 70,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.02,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 9.892818768928164
+      },
+      {
+        "step": 71,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.05100532247491546
+      },
+      {
+        "step": 72,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.251881335494653
+      },
+      {
+        "step": 73,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25007731521871956
+      },
+      {
+        "step": 74,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.548371244370802
+      },
+      {
+        "step": 75,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.0423132481333412
+      },
+      {
+        "step": 76,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.25289814403666616
+      },
+      {
+        "step": 77,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.548586403358968
+      },
+      {
+        "step": 78,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.24359769901033
+      },
+      {
+        "step": 79,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.745708738041653
+      },
+      {
+        "step": 80,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.05215438387940702
+      },
+      {
+        "step": 81,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.542787153148467
+      },
+      {
+        "step": 82,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.05165252852964203
+      },
+      {
+        "step": 83,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.550810861995611
+      },
+      {
+        "step": 84,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": 0.05057980100628945
+      },
+      {
+        "step": 85,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.245866595204594
+      },
+      {
+        "step": 86,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.55407341042494
+      },
+      {
+        "step": 87,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754558944843088
+      },
+      {
+        "step": 88,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.752050981449402
+      },
+      {
+        "step": 89,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.751899944214658
+      },
+      {
+        "step": 90,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.752121533222557
+      },
+      {
+        "step": 91,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75466584730041
+      },
+      {
+        "step": 92,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 8.32,
+        "packet_loss_percent": 0.0,
+        "congested_links": 11,
+        "active_cores_count": 1,
+        "reward": -36.71645317879823
+      },
+      {
+        "step": 93,
+        "power_w": 3760.0,
+        "savings_percent": 0.0,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 4,
+        "reward": -10.944898577762865
+      },
+      {
+        "step": 94,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.556069012351715
+      },
+      {
+        "step": 95,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755066428057585
+      },
+      {
+        "step": 96,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75566918952093
+      },
+      {
+        "step": 97,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75697963047388
+      },
+      {
+        "step": 98,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754573493095847
+      },
+      {
+        "step": 99,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756067958108334
+      },
+      {
+        "step": 100,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756287225842305
+      },
+      {
+        "step": 101,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755794527561568
+      },
+      {
+        "step": 102,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75562079254398
+      },
+      {
+        "step": 103,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75450911603245
+      },
+      {
+        "step": 104,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756976479070676
+      },
+      {
+        "step": 105,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755084840468324
+      },
+      {
+        "step": 106,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757248465325016
+      },
+      {
+        "step": 107,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757149157520185
+      },
+      {
+        "step": 108,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757563397216247
+      },
+      {
+        "step": 109,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.89,
+        "packet_loss_percent": 0.0,
+        "congested_links": 3,
+        "active_cores_count": 1,
+        "reward": 6.745808661355014
+      },
+      {
+        "step": 110,
+        "power_w": 3536.0,
+        "savings_percent": 5.96,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 3,
+        "reward": -3.4426400491902025
+      },
+      {
+        "step": 111,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.55784005611654
+      },
+      {
+        "step": 112,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757765140675042
+      },
+      {
+        "step": 113,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757845064420028
+      },
+      {
+        "step": 114,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757521699414424
+      },
+      {
+        "step": 115,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75809589355179
+      },
+      {
+        "step": 116,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758005514584998
+      },
+      {
+        "step": 117,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757203581691213
+      },
+      {
+        "step": 118,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758005211859325
+      },
+      {
+        "step": 119,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757840368215122
+      }
+    ]
+  },
+  "Green RL Agent (Ours)": {
+    "mean_power_w": 3114.13,
+    "mean_savings_percent": 17.17,
+    "mean_delay_ms": 1.14,
+    "max_delay_ms": 18.96,
+    "mean_packet_loss_percent": 0.0,
+    "total_congested_events": 103,
+    "cumulative_reward": 897.09,
+    "timeseries": [
+      {
+        "step": 0,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75773077903435
+      },
+      {
+        "step": 1,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75765466375464
+      },
+      {
+        "step": 2,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758011659382293
+      },
+      {
+        "step": 3,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757884815946877
+      },
+      {
+        "step": 4,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757666554089278
+      },
+      {
+        "step": 5,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757247741276487
+      },
+      {
+        "step": 6,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757601157971783
+      },
+      {
+        "step": 7,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757734532891352
+      },
+      {
+        "step": 8,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757320021518227
+      },
+      {
+        "step": 9,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757841573496096
+      },
+      {
+        "step": 10,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757486926415881
+      },
+      {
+        "step": 11,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757663538036507
+      },
+      {
+        "step": 12,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755970136232303
+      },
+      {
+        "step": 13,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756353498640694
+      },
+      {
+        "step": 14,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755425812761484
+      },
+      {
+        "step": 15,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756293968221284
+      },
+      {
+        "step": 16,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756010439887175
+      },
+      {
+        "step": 17,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755324470287357
+      },
+      {
+        "step": 18,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755149556772919
+      },
+      {
+        "step": 19,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757106013090988
+      },
+      {
+        "step": 20,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755866997297533
+      },
+      {
+        "step": 21,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 6.73,
+        "packet_loss_percent": 0.0,
+        "congested_links": 12,
+        "active_cores_count": 1,
+        "reward": -28.069628856144078
+      },
+      {
+        "step": 22,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 4.055358637936031
+      },
+      {
+        "step": 23,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.553911978138633
+      },
+      {
+        "step": 24,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754479388361563
+      },
+      {
+        "step": 25,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75332078758153
+      },
+      {
+        "step": 26,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.752795484258852
+      },
+      {
+        "step": 27,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754252555952347
+      },
+      {
+        "step": 28,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.753851961358627
+      },
+      {
+        "step": 29,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754285424752274
+      },
+      {
+        "step": 30,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754123064434156
+      },
+      {
+        "step": 31,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.749626156235168
+      },
+      {
+        "step": 32,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.753562052003662
+      },
+      {
+        "step": 33,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 10.68,
+        "packet_loss_percent": 0.0,
+        "congested_links": 18,
+        "active_cores_count": 1,
+        "reward": -62.33658286551193
+      },
+      {
+        "step": 34,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.549779990499096
+      },
+      {
+        "step": 35,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.550361058630118
+      },
+      {
+        "step": 36,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.240671077171474
+      },
+      {
+        "step": 37,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 18.96,
+        "packet_loss_percent": 0.0,
+        "congested_links": 19,
+        "active_cores_count": 1,
+        "reward": -116.835807336155
+      },
+      {
+        "step": 38,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.553019850670213
+      },
+      {
+        "step": 39,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.92,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 9.933212382689216
+      },
+      {
+        "step": 40,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.553133528167014
+      },
+      {
+        "step": 41,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 16.44,
+        "packet_loss_percent": 0.0,
+        "congested_links": 19,
+        "active_cores_count": 1,
+        "reward": -100.94315834820178
+      },
+      {
+        "step": 42,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.552323302970809
+      },
+      {
+        "step": 43,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.16,
+        "packet_loss_percent": 0.0,
+        "congested_links": 2,
+        "active_cores_count": 1,
+        "reward": 8.334257879186616
+      },
+      {
+        "step": 44,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.548056745176746
+      },
+      {
+        "step": 45,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.553641219226707
+      },
+      {
+        "step": 46,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.240930020442967
+      },
+      {
+        "step": 47,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.744877264164618
+      },
+      {
+        "step": 48,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.74737304121905
+      },
+      {
+        "step": 49,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.25,
+        "packet_loss_percent": 0.0,
+        "congested_links": 2,
+        "active_cores_count": 1,
+        "reward": 8.498365495068771
+      },
+      {
+        "step": 50,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.546081983325767
+      },
+      {
+        "step": 51,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.542798794486844
+      },
+      {
+        "step": 52,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.06,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.074438553764862
+      },
+      {
+        "step": 53,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.547195411788177
+      },
+      {
+        "step": 54,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.552020911235996
+      },
+      {
+        "step": 55,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.74956534530065
+      },
+      {
+        "step": 56,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.750514449798256
+      },
+      {
+        "step": 57,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.739150818766403
+      },
+      {
+        "step": 58,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.741753845954072
+      },
+      {
+        "step": 59,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.746894854598635
+      },
+      {
+        "step": 60,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.241943270724011
+      },
+      {
+        "step": 61,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.66,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.237328277884957
+      },
+      {
+        "step": 62,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.28,
+        "packet_loss_percent": 0.0,
+        "congested_links": 6,
+        "active_cores_count": 1,
+        "reward": 2.4870831459663076
+      },
+      {
+        "step": 63,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.65,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.539184003521123
+      },
+      {
+        "step": 64,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.544917852849034
+      },
+      {
+        "step": 65,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.547834803280237
+      },
+      {
+        "step": 66,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.748180012203651
+      },
+      {
+        "step": 67,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.748428570848468
+      },
+      {
+        "step": 68,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.242348466110032
+      },
+      {
+        "step": 69,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.749457077875181
+      },
+      {
+        "step": 70,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.02,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.092818768928163
+      },
+      {
+        "step": 71,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.551143719747396
+      },
+      {
+        "step": 72,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.551100021028196
+      },
+      {
+        "step": 73,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.743834758545052
+      },
+      {
+        "step": 74,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.748371244370801
+      },
+      {
+        "step": 75,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.96,
+        "packet_loss_percent": 0.0,
+        "congested_links": 2,
+        "active_cores_count": 1,
+        "reward": 8.617601495878109
+      },
+      {
+        "step": 76,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 7.552537304479738
+      },
+      {
+        "step": 77,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.548586403358968
+      },
+      {
+        "step": 78,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 1,
+        "active_cores_count": 1,
+        "reward": 10.24359769901033
+      },
+      {
+        "step": 79,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.745708738041653
+      },
+      {
+        "step": 80,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.749473393106275
+      },
+      {
+        "step": 81,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.64,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.742787153148466
+      },
+      {
+        "step": 82,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.749022294933354
+      },
+      {
+        "step": 83,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75081086199561
+      },
+      {
+        "step": 84,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.63,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.749263130624799
+      },
+      {
+        "step": 85,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.753555583706724
+      },
+      {
+        "step": 86,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754073410424938
+      },
+      {
+        "step": 87,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754558944843088
+      },
+      {
+        "step": 88,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.752050981449402
+      },
+      {
+        "step": 89,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.751899944214658
+      },
+      {
+        "step": 90,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.62,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.752121533222557
+      },
+      {
+        "step": 91,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75466584730041
+      },
+      {
+        "step": 92,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 8.32,
+        "packet_loss_percent": 0.0,
+        "congested_links": 11,
+        "active_cores_count": 1,
+        "reward": -36.71645317879823
+      },
+      {
+        "step": 93,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 4.055100518871839
+      },
+      {
+        "step": 94,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.556069012351715
+      },
+      {
+        "step": 95,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755066428057585
+      },
+      {
+        "step": 96,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75566918952093
+      },
+      {
+        "step": 97,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75697963047388
+      },
+      {
+        "step": 98,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.754573493095847
+      },
+      {
+        "step": 99,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756067958108334
+      },
+      {
+        "step": 100,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756287225842305
+      },
+      {
+        "step": 101,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755794527561568
+      },
+      {
+        "step": 102,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75562079254398
+      },
+      {
+        "step": 103,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75450911603245
+      },
+      {
+        "step": 104,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.756976479070676
+      },
+      {
+        "step": 105,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.755084840468324
+      },
+      {
+        "step": 106,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757248465325016
+      },
+      {
+        "step": 107,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757149157520185
+      },
+      {
+        "step": 108,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757563397216247
+      },
+      {
+        "step": 109,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 1.89,
+        "packet_loss_percent": 0.0,
+        "congested_links": 3,
+        "active_cores_count": 1,
+        "reward": 6.745808661355014
+      },
+      {
+        "step": 110,
+        "power_w": 3312.0,
+        "savings_percent": 11.91,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 2,
+        "reward": 4.057351498004135
+      },
+      {
+        "step": 111,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.55784005611654
+      },
+      {
+        "step": 112,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757765140675042
+      },
+      {
+        "step": 113,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757845064420028
+      },
+      {
+        "step": 114,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757521699414424
+      },
+      {
+        "step": 115,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.75809589355179
+      },
+      {
+        "step": 116,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758005514584998
+      },
+      {
+        "step": 117,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757203581691213
+      },
+      {
+        "step": 118,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.6,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.758005211859325
+      },
+      {
+        "step": 119,
+        "power_w": 3088.0,
+        "savings_percent": 17.87,
+        "avg_delay_ms": 0.61,
+        "packet_loss_percent": 0.0,
+        "congested_links": 0,
+        "active_cores_count": 1,
+        "reward": 11.757840368215122
+      }
+    ]
+  }
+}
