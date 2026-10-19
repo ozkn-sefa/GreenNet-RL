@@ -263,6 +263,114 @@ class NSFNETTopology:
         return list(self.graph.edges())
 
 
+class AbileneTopology:
+    """
+    Standard Internet2 Abilene 12-Node WAN Backbone Topology from SNDlib.
+    Contains 12 backbone router switches, 15 inter-city backbone links,
+    and 12 attached edge hosts for traffic injection and validation.
+    """
+
+    # 12 SNDlib Abilene nodes with real geographic coordinates (lon, lat) mapped to 2D layout
+    ABILENE_NODES = [
+        ("ATLAM5", "Atlanta-M5", -84.3833, 33.75, 780, 270),
+        ("ATLAng", "Atlanta-ng", -85.50, 34.50, 750, 250),
+        ("CHINng", "Chicago-ng", -87.6167, 41.8333, 620, 130),
+        ("DNVRng", "Denver-ng", -105.00, 40.75, 340, 160),
+        ("HSTNng", "Houston-ng", -95.517364, 29.770031, 520, 310),
+        ("IPLSng", "Indianapolis-ng", -86.159535, 39.780622, 650, 180),
+        ("KSCYng", "Kansas City-ng", -96.596704, 38.961694, 480, 180),
+        ("LOSAng", "Los Angeles-ng", -118.25, 34.05, 120, 260),
+        ("NYCMng", "New York-ng", -73.9667, 40.7833, 860, 120),
+        ("SNVAng", "Sunnyvale-ng", -122.02553, 37.38575, 80, 180),
+        ("STTLng", "Seattle-ng", -122.30, 47.60, 100, 50),
+        ("WASHng", "Washington-ng", -77.026842, 38.897303, 830, 190),
+    ]
+
+    # 15 standard bidirectional backbone links in SNDlib
+    ABILENE_EDGES = [
+        ("ATLAM5", "ATLAng"),
+        ("ATLAng", "CHINng"),
+        ("ATLAng", "HSTNng"),
+        ("ATLAng", "WASHng"),
+        ("CHINng", "IPLSng"),
+        ("CHINng", "NYCMng"),
+        ("DNVRng", "KSCYng"),
+        ("DNVRng", "SNVAng"),
+        ("DNVRng", "STTLng"),
+        ("HSTNng", "KSCYng"),
+        ("HSTNng", "LOSAng"),
+        ("IPLSng", "KSCYng"),
+        ("LOSAng", "SNVAng"),
+        ("NYCMng", "WASHng"),
+        ("SNVAng", "STTLng"),
+    ]
+
+    def __init__(self, link_capacity_mbps: float = 2500.0, default_delay_ms: float = 5.0):
+        self.name = "Abilene-WAN"
+        self.link_capacity_mbps = link_capacity_mbps
+        self.default_delay_ms = default_delay_ms
+
+        self.switches: List[str] = [n[0] for n in self.ABILENE_NODES]
+        # 4 central transit hubs as core switches for 8-action RL policy compatibility
+        self.core_switches: List[str] = ["KSCYng", "IPLSng", "DNVRng", "CHINng"]
+        self.agg_switches: List[str] = ["ATLAng", "HSTNng", "SNVAng", "NYCMng"]
+        self.edge_switches: List[str] = ["ATLAM5", "LOSAng", "STTLng", "WASHng"]
+        self.hosts: List[str] = [f"h_{sw}" for sw in self.switches]
+
+        self.graph = nx.Graph()
+        self._build_topology()
+        self._precompute_k_paths()
+
+    def _build_topology(self):
+        # 1. Add backbone router switches
+        for sw_id, label, lon, lat, x, y in self.ABILENE_NODES:
+            sw_type = "core" if sw_id in self.core_switches else ("aggregation" if sw_id in self.agg_switches else "edge")
+            self.graph.add_node(sw_id, type=sw_type, label=label, lon=lon, lat=lat, x=x, y=y)
+
+        # 2. Add backbone links
+        for u, v in self.ABILENE_EDGES:
+            self.graph.add_edge(
+                u, v,
+                capacity=self.link_capacity_mbps,
+                delay=self.default_delay_ms,
+                active=True,
+                type="wan-backbone"
+            )
+
+        # 3. Add hosts connected to each switch
+        for sw_id, label, lon, lat, x, y in self.ABILENE_NODES:
+            h_id = f"h_{sw_id}"
+            self.graph.add_node(h_id, type="host", label=f"Host-{label}", x=x, y=y + 35)
+            self.graph.add_edge(
+                sw_id, h_id,
+                capacity=self.link_capacity_mbps,
+                delay=0.5,
+                active=True,
+                type="host-edge"
+            )
+
+    def _precompute_k_paths(self, k_paths: int = 4):
+        self.k_shortest_paths: Dict[Tuple[str, str], List[List[str]]] = {}
+        for src in self.hosts:
+            for dst in self.hosts:
+                if src == dst:
+                    continue
+                try:
+                    paths = list(itertools.islice(nx.shortest_simple_paths(self.graph, src, dst), k_paths))
+                    self.k_shortest_paths[(src, dst)] = paths
+                except (nx.NetworkXNoPath, nx.NodeNotFound):
+                    self.k_shortest_paths[(src, dst)] = []
+
+    def get_candidate_paths(self, src: str, dst: str) -> List[List[str]]:
+        return self.k_shortest_paths.get((src, dst), [])
+
+    def get_switch_port_counts(self) -> Dict[str, int]:
+        return {sw: self.graph.degree[sw] for sw in self.switches}
+
+    def get_links(self) -> List[Tuple[str, str]]:
+        return list(self.graph.edges())
+
+
 class TopologyFactory:
     """Factory to instantiate parameterized Fat-Tree and WAN topologies."""
 
@@ -275,6 +383,9 @@ class TopologyFactory:
             return FatTreeTopology(k=6, link_capacity_mbps=link_capacity_mbps)
         elif topo in ["nsfnet", "wan", "nsfnet_wan"]:
             return NSFNETTopology(link_capacity_mbps=link_capacity_mbps)
+        elif topo in ["abilene", "abilenetopology", "abilene_wan"]:
+            return AbileneTopology(link_capacity_mbps=link_capacity_mbps)
         else:
             return FatTreeTopology(k=4, link_capacity_mbps=link_capacity_mbps)
+
 

@@ -31,3 +31,30 @@
   - `test_threshold_core_counts_k4[0.35-3]` testi başarıyla doğrulandı.
 - **Benchmark Doğrulaması (`python scripts/benchmark.py`)**:
   - Benchmark çalıştırıldı ve `results/benchmark_summary.json` dosyasında herhangi bir sapma/değişiklik olmadığı (sonuçların korunduğu) teyit edildi.
+
+---
+
+## 4. SNDlib Abilene Gerçek Dünya Trafik Verisi Entegrasyonu (2026-10-19)
+
+### Değişen ve Eklenen Dosyalar
+- `src/data/__init__.py`: Veri modülü dışa aktarımları (`AbileneDataLoader`, `RealTrafficSource`, özel istisnalar).
+- `src/data/abilene_loader.py`: SNDlib Native 1.0 güvenli ayrıştırıcı, kronolojik bölme (%70/%15/%15), lazy loading & LRU önbellek, veri bütünlüğü ve kesinti doğrulayıcıları.
+- `src/network/topology.py`: 12 düğümlü, 15 omurga bağlantılı `AbileneTopology` sınıfı ve `TopologyFactory` kaydı.
+- `src/env/green_network_env.py`: İsteğe bağlı `traffic_source="real"` desteği, telemetri etiketleme, güvenli pod ayrıştırma, sentetik uyumluluk koruması.
+- `tests/test_abilene_loader.py`: 15 yeni kapsamlı birim ve entegrasyon testi.
+- `README.md`: Veri işleme, kronolojik bölme ve kullanım talimatları eklendi.
+- `.gitignore`: `data/raw/` ve `data/processed/` dizinlerinin Git tarafından izlenmemesi sağlandı.
+
+### Değişiklik Gerekçesi
+- **Gerçekçi Doğrulama:** Sentetik simülasyona ek olarak operatör seviyesinde gerçek WAN trafiği (Yin Zhang Abilene 6 aylık veri seti) üzerinde enerji ve QoS davranışının değerlendirilebilmesi.
+- **Güvenli Ayrıştırma ve Doğrulama:** META (`unit=MBITPERSEC`), NODES ve DEMANDS bölümlerinin doğrulanması; bozuk dosyalar, geçersiz düğümler, negatif trafik ve ölçüm kesintilerinin (`>5min`) tespit edilmesi.
+- **Veri Sızıntısını Önleme:** 48.096 matrisin rastgele değil, katı kronolojik sırayla %70 Train (33.667), %15 Val (7.214) ve %15 Test (7.215) olarak ayrılması.
+- **Hafıza ve Performans Optimizasyonu:** 48.096 dosyanın RAM'i tüketmesini önlemek için `abilene_manifest.json` dizinlemesi ve 1024 boyutlu LRU bellek önbelleği ile lazy loading uygulanması.
+- **Sessiz Düşüşün (Silent Fallback) Engellenmesi:** Gerçek veri talep edildiğinde veri biterse veya eksikse sentetik veriye sessizce geçilmemesi (`AbileneMissingDataError` fırlatılması).
+
+### Test ve Doğrulama Sonuçları
+- **Test Süiti (`pytest -v`)**:
+  - Mevcut 73 testin tamamı eksiksiz korundu.
+  - 15 yeni test eklendi ve tamamı geçti (`88 passed in 21.37s`).
+  - Model ağırlıkları veya PPO hiperparametreleri değiştirilmedi.
+

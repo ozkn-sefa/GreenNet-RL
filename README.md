@@ -141,14 +141,54 @@ sudo python3 mininet_scripts/test_mininet_experiments.py
 ### 5. Testler ve Bilimsel Doğrulama
 
 ```powershell
-# 1. Tüm birim ve entegrasyon testlerini çalıştırma (73 test)
+# 1. Tüm birim ve entegrasyon testlerini çalıştırma (88 test)
 pytest tests -v
 
-# 2. Çoklu seed ve arıza senaryoları kıyaslaması (mean±std, %95 CI)
+# 2. Yalnızca Abilene veri yükleyici ve entegrasyon testlerini çalıştırma
+pytest tests/test_abilene_loader.py -v
+
+# 3. Çoklu seed ve arıza senaryoları kıyaslaması (mean±std, %95 CI)
 python scripts/run_experiments.py --seeds 5 --steps 120
 
-# 3. Ödül fonksiyonu ablation çalışması
+# 4. Ödül fonksiyonu ablation çalışması
 python scripts/run_ablation.py --timesteps 15000 --seeds 3
 ```
 
-çalıştırabilir ve doğrudan OpenFlow anahtarları üzerinde test edebilirsiniz.
+---
+
+### 6. SNDlib Abilene Gerçek Dünya Trafik Verisi Entegrasyonu
+
+GreenNet-RL, sentetik trafik üretiminin yanı sıra **SNDlib Abilene** (Yin Zhang 6 aylık, 5 dakikalık çözünürlüklü) gerçek ağ trafik verilerini destekler.
+
+* **Veri Konumu:** `data/raw/abilene/directed-abilene-zhang-5min-over-6months-ALL-native/`
+* **Toplam Matris:** 48.096 adet Native SNDlib 1.0 matrisi (`2004-03-01` -> `2004-09-10`).
+* **Birim & Doğrulama:** Kaynaktaki orijinal `MBITPERSEC` (Mbps) birimi yapay çarpanlara uğratılmadan korunur. Bozuk dosyalar, geçersiz düğümler, negatif trafik değerleri ve ölçüm kesintileri katı doğrulama kurallarıyla kontrol edilir.
+* **Kronolojik Veri Ayrımı (Data Leakage Önleme):**
+  * **Eğitim (%70):** 33.667 matris (`20040301-0000` -> `20040721-2130`)
+  * **Doğrulama (%15):** 7.214 matris (`20040721-2135` -> `20040815-2240`)
+  * **Test (%15):** 7.215 matris (`20040815-2245` -> `20040910-2355`)
+* **Hafıza Optimizasyonu (Lazy Loading):** 48.096 dosya tek seferde RAM'e yüklenmez; `data/processed/abilene_manifest.json` üzerinden dizinlenir ve ihtiyaç duyuldukça 1024'lük LRU bellek önbelleği ile diskten anlık okunur.
+* **Git Koruması:** `data/raw/` ve `data/processed/` dizinleri `.gitignore` altında izlenmez.
+
+#### Python ile Kullanım Örneği:
+
+```python
+from src.env.green_network_env import GreenNetworkEnv
+from src.data.abilene_loader import AbileneDataLoader
+
+# 1. Abilene Topolojisi ve Gerçek Test Trafiği ile Ortam Oluşturma
+env = GreenNetworkEnv(
+    topology_type="abilene",
+    traffic_source="real",
+    real_traffic_split="test",       # 'train', 'val' veya 'test'
+    link_capacity_mbps=2500.0,
+)
+
+obs, info = env.reset()
+print(f"Trafik Kaynağı: {info['traffic_source']}, Zaman: {info.get('real_timestamp')}")
+
+# 2. Bir adım ilerleme
+obs, reward, terminated, truncated, info = env.step(6)
+print(f"Toplam Talep: {info['total_demand_mbps']} Mbps, Gecikme: {info['avg_delay_ms']} ms")
+```
+

@@ -22,6 +22,7 @@ env.bak/
 venv.bak/
 ENV*/
 env*/
+!src/env/
 
 # ------------------------------------------------------------------------------
 # Distribution / Packaging
@@ -137,3 +138,5 @@ Thumbs.db
 Desktop.ini
 [Dd]esktop.ini
 $RECYCLE.BIN/
+/data/raw/
+/data/processed/
