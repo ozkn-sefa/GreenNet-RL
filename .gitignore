@@ -1,0 +1,139 @@
+# ==============================================================================
+# GreenNet-RL - Professional .gitignore
+# Deep Reinforcement Learning & SDN Energy Optimization Framework
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Byte-compiled / optimized / DLL files
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ------------------------------------------------------------------------------
+# Virtual Environments
+# ------------------------------------------------------------------------------
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+ENV*/
+env*/
+
+# ------------------------------------------------------------------------------
+# Distribution / Packaging
+# ------------------------------------------------------------------------------
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ------------------------------------------------------------------------------
+# Testing, Coverage & Quality Assurance
+# ------------------------------------------------------------------------------
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# ------------------------------------------------------------------------------
+# Jupyter Notebook & Interactive Development
+# ------------------------------------------------------------------------------
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+
+# ------------------------------------------------------------------------------
+# Logs, Temp Files & Intermediate Smoke Runs
+# ------------------------------------------------------------------------------
+*.log
+_train.log
+results/_smoke.*
+scratch/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# ------------------------------------------------------------------------------
+# RL Experiment Checkpoints & Heavy Weights
+# Note: Retain primary pretrained models in models/ (e.g., ppo_green_agent.zip),
+# ignore temporary ablation weights, checkpoints and legacy backups.
+# ------------------------------------------------------------------------------
+runs/
+tensorboard/
+checkpoints/
+models/ablation/
+models/*.legacy*
+models/*.tmp*
+models/*.checkpoint*
+
+# ------------------------------------------------------------------------------
+# SDN, Mininet & Network Simulation Artifacts
+# ------------------------------------------------------------------------------
+*.pcap
+*.pcapng
+*.pid
+mn.log
+ryu.log
+controller.log
+*.sock
+
+# ------------------------------------------------------------------------------
+# Environment Variables & Secrets
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+secrets/
+
+# ------------------------------------------------------------------------------
+# IDEs & Code Editors
+# ------------------------------------------------------------------------------
+.vscode/
+!.vscode/settings.json.example
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# ------------------------------------------------------------------------------
+# Operating System Files
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+[Dd]esktop.ini
+$RECYCLE.BIN/

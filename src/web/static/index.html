@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green SDN - Akıllı Yeşil Ağ Yönetimi & Canlı AI Asistanı</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sade ve Zarif Üst Bar -->
+        <header class="header">
+            <div class="brand">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.2" fill="none">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Green SDN <span class="badge-ai">Akıllı Asistan</span></h1>
+                    <p class="subtitle">Pekiştirmeli Öğrenme Destekli Yeşil Yönlendirme & Canlı Karar Paneli</p>
+                </div>
+            </div>
+
+            <div class="header-controls">
+                <div class="mode-pill-selector">
+                    <button class="mode-btn active" id="btn-mode-rl" onclick="setMode('RL')">
+                        <span class="mode-dot green"></span> 🤖 PPO Yapay Zeka
+                    </button>
+                    <button class="mode-btn" id="btn-mode-ospf" onclick="setMode('OSPF')">
+                        <span class="mode-dot gray"></span> OSPF (Klasik)
+                    </button>
+                </div>
+
+                <div class="topo-picker">
+                    <label for="select-topo">Topoloji:</label>
+                    <select id="select-topo" class="topo-select" onchange="changeTopology(this.value)">
+                        <option value="fattree_k4" selected>Fat-Tree k=4 (4 Omurga, 16 Sunucu)</option>
+                        <option value="fattree_k6">Fat-Tree k=6 (9 Omurga, 54 Sunucu)</option>
+                        <option value="nsfnet">NSFNET WAN (14 Router Omurga)</option>
+                    </select>
+                </div>
+
+                <div class="status-indicator">
+                    <span class="pulse-dot" id="global-pulse"></span>
+                    <span id="ws-status">Canlı Bağlantı</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Odak Kontrol: Trafik ve 4 Sade Sayaç -->
+        <section class="main-control-card">
+            <div class="traffic-section">
+                <div class="traffic-header">
+                    <div class="traffic-label-group">
+                        <span class="traffic-title">📶 Ağ Trafiği Yoğunluğu</span>
+                        <span class="traffic-subtext">Kaydırıcıyı hareket ettirerek ağa yük bindirin:</span>
+                    </div>
+                    <span class="traffic-val-badge" id="traffic-slider-val">100% (Normal Yük)</span>
+                </div>
+                
+                <div class="slider-wrapper">
+                    <input type="range" id="traffic-slider" min="25" max="250" value="100" step="5" oninput="onTrafficSliderInput(this.value)" onchange="onTrafficSliderChange(this.value)">
+                </div>
+
+                <div class="preset-buttons">
+                    <button class="preset-btn" id="preset-1" onclick="setTrafficPreset(0.35, '35%')">
+                        🌙 Düşük (%35)
+                    </button>
+                    <button class="preset-btn active" id="preset-2" onclick="setTrafficPreset(0.85, '85%')">
+                        ⛅ Normal (%85)
+                    </button>
+                    <button class="preset-btn" id="preset-3" onclick="setTrafficPreset(1.45, '145%')">
+                        📈 Yoğun (%145)
+                    </button>
+                    <button class="preset-btn" id="preset-4" onclick="setTrafficPreset(2.30, '230%')">
+                        ⚡ Pik Yük (%230)
+                    </button>
+                    <button class="burst-btn" id="btn-burst" onclick="toggleBurst()">
+                        <span class="burst-icon">⚡</span> <span id="burst-label">Ani Patlama (Burst)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4 Sade ve Net Sayaç -->
+            <div class="kpi-strip">
+                <div class="kpi-mini">
+                    <div class="kpi-mini-title">⚡ Toplam Güç Tüketimi</div>
+                    <div class="kpi-mini-val"><span id="val-power">0</span> <small>Watt</small></div>
+                    <div class="mini-bar-bg"><div class="mini-bar-fill" id="bar-power" style="width: 50%;"></div></div>
+                </div>
+                <div class="kpi-mini">
+                    <div class="kpi-mini-title">🌿 Enerji Tasarrufu</div>
+                    <div class="kpi-mini-val text-green" id="val-savings">0%</div>
+                    <div class="kpi-mini-sub" id="val-carbon-text">Karbon: 0 g CO₂/saat</div>
+                </div>
+                <div class="kpi-mini">
+                    <div class="kpi-mini-title">⏱️ Ortalama Gecikme</div>
+                    <div class="kpi-mini-val text-cyan"><span id="val-delay">0.00</span> <small>ms</small></div>
+                    <div class="qos-mini-badge" id="qos-meter">SLA Uyumlu (&lt;5ms)</div>
+                </div>
+                <div class="kpi-mini">
+                    <div class="kpi-mini-title">🎛️ Aktif Omurga Switch</div>
+                    <div class="kpi-mini-val" id="val-cores">2 / 4</div>
+                    <div class="core-badges-row">
+                        <!-- c00, c01 pill badges buraya dolar -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ana Çalışma Ekranı: Sol (Bağlantılar ve Topoloji) | Sağ (Modelin Karar Asistanı) -->
+        <main class="workbench-layout">
+            <!-- Sol: Ağ Bağlantıları ve Topoloji Tuvali -->
+            <div class="panel canvas-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <span>Ağ Bağlantıları ve Canlı Veri Akışı</span>
+                    </div>
+                    <div class="legend">
+                        <span class="legend-item"><span class="legend-color core-active"></span> Aktif Core</span>
+                        <span class="legend-item"><span class="legend-color core-sleep"></span> Uykuda (Sleep)</span>
+                        <span class="legend-item"><span class="legend-color link-flow"></span> Veri Akışı</span>
+                        <span class="legend-item"><span class="legend-color link-congested"></span> Darboğaz</span>
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <canvas id="topoCanvas" width="940" height="420"></canvas>
+                </div>
+
+                <div class="canvas-footer-simple">
+                    <span>🔝 <strong>Katman 3: Core (Omurga)</strong> — Yapay Zeka Sadece Bunları Uyutur/Uyandırır</span>
+                    <span>↕️ <strong>Katman 2-1: Dağıtım & Kenar</strong> — Sunucuların Bağlantısı İçin Sürekli Aktiftir</span>
+                    <span>💻 <strong>Katman 0: Sunucular (Host)</strong> — Trafik Üreten Cihazlar</span>
+                </div>
+            </div>
+
+            <!-- Sağ: Modelin Karar Asistanı ("Model Sizinle Konuşuyor") -->
+            <div class="panel ai-assistant-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="ai-avatar-icon">🤖</span>
+                        <span>Model Karar Açıklayıcısı (İç Sesi)</span>
+                    </div>
+                    <span class="badge-step" id="badge-step">Adım: 0</span>
+                </div>
+
+                <!-- Son Canlı Karar Konuşma Kartı (Hero) -->
+                <div class="ai-speech-hero" id="ai-hero-card">
+                    <div class="ai-speech-header">
+                        <div class="ai-hero-badge" id="ai-hero-badge">
+                            <span class="ai-hero-dot"></span>
+                            <span id="ai-hero-title">Model Analiz Ediyor...</span>
+                        </div>
+                        <span class="ai-hero-time" id="ai-hero-time">--:--:--</span>
+                    </div>
+                    
+                    <div class="ai-bubble-box">
+                        <div class="ai-avatar-circle">🤖</div>
+                        <p class="ai-speech-bubble" id="ai-hero-message">
+                            Merhaba! Ağ trafiğini ve hat doluluklarını anlık izliyorum. Trafiği yukarıdaki kaydırıcıdan değiştirdiğinizde aldığım kararları ve gerekçelerini burada açıklayacağım.
+                        </p>
+                    </div>
+
+                    <div class="ai-speech-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">📊 Trafik Hacmi:</span>
+                            <span class="meta-val" id="ai-meta-demand">0 Mbps</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">🌿 Tasarruf Oranı:</span>
+                            <span class="meta-val text-green" id="ai-meta-savings">%0</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">🎛️ Aktif Omurga:</span>
+                            <span class="meta-val text-cyan" id="ai-meta-cores">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modelin Karar Geçmişi (Canlı Log Akışı) -->
+                <div class="panel-header sub-header">
+                    <div class="panel-title">
+                        <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>Modelin Son Karar Geçmişi (Neden & Ne Yaptı?)</span>
+                    </div>
+                    <button class="clear-log-btn" onclick="clearAiLog()">Temizle</button>
+                </div>
+
+                <div class="ai-log-stream" id="ai-log-stream">
+                    <!-- Dinamik karar kartları buraya akar -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

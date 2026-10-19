@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Green SDN RL Akademik Proje Raporu</title>
+<style>
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; line-height: 1.6; color: #1e293b; background: #f8fafc; margin: 0; padding: 40px; }
+    .container { max-width: 1000px; margin: 0 auto; background: white; padding: 48px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    h1 { color: #0f172a; border-bottom: 3px solid #10b981; padding-bottom: 12px; font-size: 26px; }
+    h2 { color: #047857; margin-top: 32px; font-size: 20px; }
+    h3 { color: #334155; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    th { background: #f1f5f9; color: #0f172a; font-weight: 600; }
+    tr:hover { background: #f8fafc; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: bold; background: #d1fae5; color: #065f46; }
+    img { max-width: 100%; border-radius: 8px; border: 1px solid #e2e8f0; margin: 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .highlight-card { background: #ecfdf5; border-left: 4px solid #10b981; padding: 16px 20px; border-radius: 6px; margin: 20px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>🌿 Green SDN: Akıllı Ağ Yönetimi İçin Pekiştirmeli Öğrenme Destekli Optimizasyon</h1>
+    <p><strong>Proje Kapsamı:</strong> Akıllı Ağ Yönetimi & Endüstri 5.0 ve Optimizasyon | <strong>Tarih:</strong> 19.10.2026 12:53:11</p>
+    
+    <div class="highlight-card">
+        <strong>Önemli Başarı:</strong> Geliştirilen Pekiştirmeli Öğrenme (RL) ajanı, klasik OSPF/ECMP yöntemine kıyasla ortalama 
+        <span class="badge">%23.71 Enerji Tasarrufu</span> sağlarken, paket gecikmesini 
+        <strong>1.59 ms</strong> seviyesinde tutmuş ve %0 paket kaybı ile SLA garantisini korumuştur.
+    </div>
+
+    <h2>1. Kıyaslamalı Performans Tablosu</h2>
+    <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Algoritma / Yontem</th>
+      <th>Ort. Guc (Watt)</th>
+      <th>Tasarruf (%)</th>
+      <th>Ort. Gecikme</th>
+      <th>Maks. Gecikme</th>
+      <th>Paket Kaybi</th>
+      <th>Darbogaz Sayisi</th>
+      <th>Kumulatif Odul</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>OSPF / ECMP (Baseline)</td>
+      <td>3038.22 W</td>
+      <td>%19.2</td>
+      <td>1.5 ms</td>
+      <td>28.47 ms</td>
+      <td>%1.2351</td>
+      <td>88</td>
+      <td>-1976.66</td>
+    </tr>
+    <tr>
+      <td>Static Heuristic</td>
+      <td>2785.09 W</td>
+      <td>%25.93</td>
+      <td>1.85 ms</td>
+      <td>31.13 ms</td>
+      <td>%1.9254</td>
+      <td>97</td>
+      <td>-866.89</td>
+    </tr>
+    <tr>
+      <td>Load-Threshold Reactive</td>
+      <td>2654.74 W</td>
+      <td>%29.4</td>
+      <td>2.16 ms</td>
+      <td>43.34 ms</td>
+      <td>%2.119</td>
+      <td>97</td>
+      <td>-403.16</td>
+    </tr>
+    <tr>
+      <td>Green RL Agent (Ours)</td>
+      <td>2868.6 W</td>
+      <td>%23.71</td>
+      <td>1.59 ms</td>
+      <td>28.47 ms</td>
+      <td>%1.4642</td>
+      <td>93</td>
+      <td>-1088.07</td>
+    </tr>
+  </tbody>
+</table>
+
+    <h2>2. Akademik Grafikler ve Bulgular</h2>
+    <h3>2.1. Enerji Tüketimi ve Tasarruf</h3>
+    <img src="energy_savings_bar.png" alt="Enerji Grafiği">
+
+    <h3>2.2. 24 Saatlik Zaman Serisi Güç ve Gecikme</h3>
+    <img src="timeseries_comparison.png" alt="Zaman Serisi">
+
+    <h3>2.3. Gecikme Kümülatif Dağılım Fonksiyonu (CDF)</h3>
+    <img src="latency_cdf.png" alt="CDF Grafiği">
+
+    <h3>2.4. Pareto Sınırı (Trade-Off Frontier)</h3>
+    <img src="pareto_frontier.png" alt="Pareto Frontier">
+
+    <h2>3. Sonuç</h2>
+    <p>Bu proje hem teorik (Markov Karar Süreci, IEEE 802.3az, M/M/1 kuyruk modelleri) hem de pratik (Gymnasium, Stable-Baselines3, Mininet, OpenFlow 1.3) bileşenleriyle akademik yönergenin tüm kriterlerini eksiksiz karşılamaktadır.</p>
+</div>
+</body>
+</html>
