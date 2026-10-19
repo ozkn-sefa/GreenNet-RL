@@ -61,7 +61,7 @@ class StaticHeuristicAgent:
 
     def predict(self, observation: np.ndarray, deterministic: bool = True) -> int:
         # Feature index: diurnal factor is at [-3]
-        diurnal_factor = observation[-3]
+        diurnal_factor = round(float(observation[-3]), 5)
 
         if diurnal_factor < 0.6:
             return self.a_low
@@ -84,7 +84,7 @@ class ThresholdLoadAgent:
 
     def predict(self, observation: np.ndarray, deterministic: bool = True) -> int:
         # observation[-2] is normalized total demand (demand / 10000.0)
-        norm_demand = observation[-2]
+        norm_demand = round(float(observation[-2]), 5)
 
         if norm_demand < 0.15:
             return self.actions[0]  # 1 Core
