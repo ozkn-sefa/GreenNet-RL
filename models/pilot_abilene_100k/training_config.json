@@ -1,0 +1,24 @@
+{
+  "algo": "PPO",
+  "device": "cpu",
+  "policy": "MlpPolicy",
+  "net_arch": [
+    128,
+    128
+  ],
+  "learning_rate": 0.0003,
+  "n_steps": 1024,
+  "batch_size": 256,
+  "n_epochs": 10,
+  "gamma": 0.99,
+  "gae_lambda": 0.95,
+  "clip_range": 0.2,
+  "ent_coef": 0.01,
+  "total_timesteps": 100000,
+  "eval_freq": 10000,
+  "seed": 42,
+  "train_split_count": 33667,
+  "val_split_count": 7214,
+  "test_split_count": 7215,
+  "train_gaps_count": 3
+}

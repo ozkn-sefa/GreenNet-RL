@@ -108,6 +108,129 @@
 3. **Öneri**: Abilene topolojisi üzerindeki PPO eğitimleri için **CPU seçeneği** hem %42.39 daha yüksek FPS sunmakta hem de sistem bellek ayak izini yarıdan fazla düşürmektedir.
 
 ### Test Doğrulaması
+- **Test Süiti (`python -m pytest tests -q`)**:
+  - `88 passed in 11.29s` (Tüm testler eksiksiz ve yeşil).
+
+---
+
+## 6. Gerçek Abilene Trafiğinde 100.000 Adımlık Kontrollü PPO Pilot Eğitimi ve Baseline Karşılaştırması (2026-10-23)
+
+### Yapılan Değişiklikler ve Eklemeler
+- **`scripts/train_pilot_abilene.py`**:
+  - Gerçek SNDlib Abilene veri seti üzerinde 100.000 adımlık kontrollü PPO pilot eğitim betiği geliştirildi.
+  - **Kesintiden Sonra Devam Edebilme (Resumability)**: Her 10.000 adımda model checkpoint'leri (`models/pilot_abilene_100k/checkpoint_step_<N>.zip`) ve eğitim konfigürasyonu (`training_config.json`) kaydedildi.
+  - **Sabit Validation Sekansı**: Her 10.000 adımda model ve 3 baseline (OSPF, StaticHeuristic, ThresholdLoad) aynı 300 adımlık doğrulama trafiği üzerinde izole şekilde test edildi.
+  - **QoS/SLA Öncelikli Checkpoint Seçimi**: Yalnızca güvenlik koşullarını sağlayan modeller arasından enerji tasarrufunu seçen seçim mantığı işletildi.
+  - Çıktılar ve geçmiş metrikleri `results/pilot_abilene_100k_results.json` dosyasına yazıldı.
+
+### Eğitim Konfigürasyonu
+- **Cihaz**: CPU (16 Mantıksal Çekirdek)
+- **Ağ Mimarisi**: `MlpPolicy` [128, 128]
+- **Hiperparametreler**:
+  - `learning_rate`: 3e-4
+  - `n_steps`: 1024
+  - `batch_size`: 256
+  - `n_epochs`: 10
+  - `gamma`: 0.99
+  - `gae_lambda`: 0.95
+  - `clip_range`: 0.2
+  - `ent_coef`: 0.01
+  - `seed`: 42
+- **Eğitim Performansı**: Toplam süre **204.27 saniye (~3.4 dakika)**, ortalama **489.54 FPS**.
+
+### Veri İzolasyonu ve Kesinti Yönetimi
+- **Train Split**: 33.667 matris (%70, indeks 0 .. 33.666). 100.000 adım süresince kronolojik sırayla işlendi (yaklaşık 2.97 train döngüsü belgelendi).
+- **Validation Split**: 7.214 matris (%15, indeks 33.667 .. 40.880). Kesinlikle yalnızca periyodik model değerlendirmesinde kullanıldı; eğitim gradyanına karıştırılmadı.
+- **Test Split**: 7.215 matris (%15, indeks 40.881 .. 48.095). Kesinlikle **dokunulmadı ve korundu**.
+- **Ölçüm Kesintileri**: Train split içinde 3 adet ölçüm aralığı (>5 dk) tespit edildi ve bölüm (episode) sınırlarında süreklilik bozulmadan yönetildi.
+
+### Eğitim Dinamikleri ve Metrik Gelişimi
+- **Bölüm Ödülü (`rollout/ep_rew_mean`)**: Başlangıçtaki **-524.0** seviyesinden **-56.7** seviyesine yükselerek istikrar kazandı.
+- **Açıklanan Varyans (`train/explained_variance`)**: Başlangıçta **-0.001** iken adım 80.000 sonrasında **0.890 – 0.910** seviyesine ulaşarak değer ağının WAN trafik durumunu %90 doğrulukla öngördüğünü kanıtladı.
+- **Kayıp Değerleri**:
+  - `train/loss`: 1258.1 -> 0.218
+  - `train/value_loss`: 2707.5 -> 0.449
+  - `train/policy_gradient_loss`: -0.0183 -> 0.000198
+  - `train/entropy_loss`: -2.07 -> -0.207 (Ajan kararlı çalışma moduna yakınsadı)
+  - `train/approx_kl`: ~0.00002 – 0.0015 (Politika güncelleme stabilitesi korundu)
+
+### Validation Karşılaştırması (300 Adım Gerçek Abilene Validation Trafiği)
+
+| Ajan / Checkpoint | SLA İhlali (%) | Ort. Paket Kaybı (%) | Ort. Gecikme (ms) | p95 Gecikme (ms) | Switch Toggles | Enerji Tasarrufu vs OSPF (%) | Güvenlik Durumu |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **PPO (Checkpoint 10k - 100k)** | **28.00%** | **1.06%** | **14.24 ms** | **15.32 ms** | **0** | **0.00%** | Güvenlik Adayı (OSPF Seviyesi) |
+| **OSPF Baseline (Tüm Omurgalar Aktif)** | **28.00%** | **1.06%** | **14.24 ms** | **15.32 ms** | **0** | 0.00% (Referans) | Güvenlik Adayı (Referans) |
+| **Static Diurnal Heuristic** | 55.67% | 12.11% | 14.36 ms | 15.34 ms | 28 | 0.00% | **GÜVENSİZ (Yüksek Kayıp)** |
+| **Threshold Load Reactive** | 100.00% | 39.00% | 14.51 ms | 15.56 ms | 4 | 0.00% | **GÜVENSİZ (Kritik Darboğaz)** |
+
+### Başarısız Deneyler ve Model Seçimi Değerlendirmesi
+1. **PPO'nun Öğrendiği Karar**: Abilene bir WAN ağıdır (15 bağlantı, 2500 Mbps kapasite, propagation delay ~10–15 ms). Model erken aşamada omurgaları kapatmanın ağır gecikme ve paket kaybı cezalarına yol açtığını keşfetmiş; bu nedenle cezalardan kaçınmak adına OSPF benzeri "tam kapasite" modunu (Action 7) tercih etmiştir.
+2. **Kural Tabanlı Sezgisellerin Çöküşü**: Ağ durumunu gerçek zamanlı izlemeyen `StaticHeuristic` ve `ThresholdLoad` ajanları omurgaları uyutmaya kalkıştığında, WAN trafiği dar boğaza girmiş ve paket kayıpları sırasıyla **%12.11** ve **%39.00** gibi felaket seviyelere ulaşmıştır. PPO bu tuzağa düşmemiş, kaybı **%1.06** seviyesinde tutmuştur.
+3. **Güvenlik Koşulu Karşılanma Durumu**: Katı SLA koşulu (SLA ihlali <= %5 ve paket kaybı <= %1.5) unshielded/ham politika için **hiçbir checkpoint tarafından karşılanamamıştır**. Bunun temel nedeni, Abilene ağında fiziksel yayılım gecikmesinin zaten ~13-14 ms olması ve varsayılan ortam SLA gecikme eşiğinin (~14.5 ms) çok dar kalmasıdır; nitekim tüm omurgaları sürekli açık tutan OSPF dahi %28 SLA ihlali vermektedir.
+4. **En Dengeli Model**: `checkpoint_step_10000.zip` modeli en dengeli ağırlık olarak `best_model.zip` ve `final_model.zip` olarak kaydedilmiştir.
+
+### Kalan Sorunlar ve Çözüm Önerileri
+- **Abilene WAN SLA Kalibrasyonu**: Mevcut SLA gecikme eşiği formülasyonu LAN/Fat-Tree varsayımlarına yakındır. WAN için RTT toleransının (propagation delay + dinamik buffer kuyruk gecikmesi) ortam seviyesinde kalibre edilmesi önerilir.
+- **SLA Shield (Güvenlik Kalkanı) Entegrasyonu**: Ham RL politikasının omurgaları yalnızca güvenli pencerelerde (gece düşük trafik) kapatmasını sağlamak için `use_shield=True` koruması altında enerji tasarrufu kilidi açılabilir.
+
+### Test Doğrulaması
 - `python -m pytest tests -q` çalıştırıldı:
-  - **88 passed in 11.29s** (Tüm testler eksiksiz ve yeşil).
+  - **88 passed in 11.33s** (Tüm testler eksiksiz ve yeşil).
+
+---
+
+## 7. Abilene 100K PPO Pilot Sonuçları Kök Neden Analizi, Düzeltmeler ve Regresyon Doğrulaması (2026-10-23)
+
+### 1. Kök Nedenler ve Mimari Tespitler
+1. **PPO'nun Action 7 Seçmesi ve Enerji Tasarrufunun %0 Kalması**:
+   - Abilene bir WAN ağıdır (12 PoP router, 15 omurga bağlantısı). Ortalama düğüm derecesi 2.5'tir.
+   - Her router'a (`c_id`) doğrudan yerel bir host (`h_c_id`) bağlıdır.
+   - Yapılan topolojik yol analizi kanıtlamıştır ki:
+     - **Action 0 (1 Core)**: 132 host çiftinin 60'ında hiç yol yoktur (**%45.5 bağlantısız / unroutable**). Ortalama paket kaybı: **%51.74**.
+     - **Action 1 (1 Core)**: 132 host çiftinin 76'sında hiç yol yoktur (**%57.6 bağlantısız**). Ortalama paket kaybı: **%55.33**.
+     - **Action 2 & 3 (2 Core)**: 42 host çifti bağlantısız (**%31.8**). Ortalama paket kaybı: **%25.5 – %37.9**.
+     - **Action 4 & 5 (3 Core)**: 22 host çifti bağlantısız (**%16.7**). Ortalama paket kaybı: **%16.9 – %25.1**.
+     - **Action 6 & 7 (4 Core - Tüm Omurgalar Aktif)**: **0 bağlantısız host çifti (%100 ulaşılaiblir)**. Ortalama paket kaybı: **%0.00**.
+   - Sonuç: Abilene'de router deep-sleep (şasi kapatma) eylemleri **ağ grafını fiziksel olarak parçalamakta** ve hostları koparmaktadır. PPO ağır cezalardan (-130 vs -8) kaçınarak mantıksal olarak Action 7'ye oturmuştur.
+2. **Static/Threshold'un Enerji Tasarrufunun %0 Görünmesi Hatası**:
+   - `scripts/train_pilot_abilene.py` betiğinde güç metrikleri `step_info.get("power_metrics", {}).get("total_power_w", 0.0)` olarak okunmaya çalışılmış; oysa `step_info` doğrudan `"total_power_w"` anahtarını içermektedir.
+   - Bu anahtar uyuşmazlığı nedeniyle `total_energy_kwh` ve `ref_energy` daima `0.0` hesaplanmış ve yüzde tasarruf hatalı olarak `%0.0` görünmüştür.
+3. **OSPF'in %28 SLA İhlali Vermesi**:
+   - `GreenNetworkEnv.__init__` içinde varsayılan `link_capacity_mbps: float = 1000.0` parametresi, `AbileneTopology`'nin gerçek 2500.0 Mbps (OC-48) kapasitesini ezmekteydi.
+   - 1000 Mbps kapasitede gerçek Abilene pik trafiği tekil linkleri aştığı için adımların %28'inde dar boğaz ve kayıp yaşanmaktaydı.
+   - Doğal 2500 Mbps kapasite sağlandığında OSPF ve PPO'nun SLA ihlali **%0.0'a**, paket kaybı ise **%0.0000'a** düşmektedir.
+
+### 2. Düzeltilen Dosyalar ve Değişiklikler
+1. **`src/env/green_network_env.py`**:
+   - `link_capacity_mbps: Optional[float] = None` yapıldı. Belirtilmediğinde `TopologyFactory` üzerinden topolojinin doğal kapasitesi (Abilene için 2500.0 Mbps, FatTree için 1000.0 Mbps) korunacak şekilde dinamik çözümleme eklendi.
+2. **`src/network/topology.py`**:
+   - `TopologyFactory.create` metodunda `link_capacity_mbps=None` durumu güvenle ele alındı; topoloji varsayılanlarına güvenli geri dönüş sağlandı.
+3. **`scripts/train_pilot_abilene.py`**:
+   - `step_info["total_power_w"]` doğrudan okunarak enerji hesaplaması düzeltildi.
+   - Güvenlik kriterlerini karşılamayan hiçbir checkpoint'in yanıltıcı şekilde `best_model.zip` olarak etiketlenmemesi sağlandı (`best_checkpoint = None`).
+   - `models/pilot_abilene_100k/best_model.zip` kaldırıldı.
+4. **`tests/test_abilene_regression.py`**:
+   - Link kapasitesi dinamik çözümlemesi, güç metriklerinin `step_info` içinde doğrulanması ve Abilene aksiyon ulaşılamazlık (reachability) analizini doğrulayan 4 yeni regresyon testi eklendi.
+
+### 3. Çoklu Trafik Rejimi Validation Sonuçları (Genişletilmiş Analiz)
+Validation split'te Düşük (Gece: 0..200), Orta (Gündüz: 2000..2200) ve Pik (Burst: 4500..4700) pencereleri üzerinde ölçülen gerçek değerler:
+
+| Senaryo / Kapasite | Ajan | Güç (W) | Enerji Tasarrufu (%) | SLA İhlali (%) | Paket Kaybı (%) | p95 Gecikme (ms) | Toggles |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Düşük Trafik (2500 Mbps)** | **PPO (100k)** | 1809.7 W | 0.0% | **0.0%** | **0.00%** | 13.65 ms | 0 |
+| | **OSPF (All-Active)** | 1809.7 W | 0.0% | **0.0%** | **0.00%** | 13.65 ms | 0 |
+| | **Static Heuristic** | 1703.5 W | 5.9% | 35.3% | 13.89% | 14.22 ms | 14 |
+| | **Threshold Reactive** | 1505.7 W | 16.8% | 100.0% | 38.42% | 14.43 ms | 4 |
+| **Orta Trafik (2500 Mbps)** | **PPO (100k)** | 1814.2 W | 0.0% | **0.0%** | **0.00%** | 13.29 ms | 0 |
+| | **OSPF (All-Active)** | 1814.2 W | 0.0% | **0.0%** | **0.00%** | 13.29 ms | 0 |
+| | **Static Heuristic** | 1802.3 W | 0.7% | 4.0% | 1.33% | 13.31 ms | 12 |
+| | **Threshold Reactive** | 1512.8 W | 16.6% | 100.0% | 32.40% | 14.11 ms | 4 |
+| **Pik Trafik (2500 Mbps)** | **PPO (100k)** | 1816.8 W | 0.0% | **2.7%** | **0.67%** | 13.79 ms | 0 |
+| | **OSPF (All-Active)** | 1816.8 W | 0.0% | **2.7%** | **0.67%** | 13.79 ms | 0 |
+| | **Static Heuristic** | 1788.6 W | 1.5% | 12.0% | 4.41% | 13.80 ms | 10 |
+| | **Threshold Reactive** | 1513.7 W | 16.7% | 99.3% | 41.11% | 13.26 ms | 12 |
+
+### 4. Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **92 passed in 11.50s** (88 mevcut + 4 yeni regresyon testi, tümü yeşil).
 

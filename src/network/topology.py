@@ -375,17 +375,22 @@ class TopologyFactory:
     """Factory to instantiate parameterized Fat-Tree and WAN topologies."""
 
     @staticmethod
-    def create(topology_type: str = "fattree_k4", link_capacity_mbps: float = 1000.0) -> Any:
+    def create(topology_type: str = "fattree_k4", link_capacity_mbps: Any = None) -> Any:
         topo = topology_type.lower()
         if topo in ["fattree_k4", "k4", "fattree-k4"]:
-            return FatTreeTopology(k=4, link_capacity_mbps=link_capacity_mbps)
+            cap = 1000.0 if link_capacity_mbps is None else float(link_capacity_mbps)
+            return FatTreeTopology(k=4, link_capacity_mbps=cap)
         elif topo in ["fattree_k6", "k6", "fattree-k6"]:
-            return FatTreeTopology(k=6, link_capacity_mbps=link_capacity_mbps)
+            cap = 1000.0 if link_capacity_mbps is None else float(link_capacity_mbps)
+            return FatTreeTopology(k=6, link_capacity_mbps=cap)
         elif topo in ["nsfnet", "wan", "nsfnet_wan"]:
-            return NSFNETTopology(link_capacity_mbps=link_capacity_mbps)
+            cap = 1000.0 if link_capacity_mbps is None else float(link_capacity_mbps)
+            return NSFNETTopology(link_capacity_mbps=cap)
         elif topo in ["abilene", "abilenetopology", "abilene_wan"]:
-            return AbileneTopology(link_capacity_mbps=link_capacity_mbps)
+            cap = 2500.0 if link_capacity_mbps is None else float(link_capacity_mbps)
+            return AbileneTopology(link_capacity_mbps=cap)
         else:
-            return FatTreeTopology(k=4, link_capacity_mbps=link_capacity_mbps)
+            cap = 1000.0 if link_capacity_mbps is None else float(link_capacity_mbps)
+            return FatTreeTopology(k=4, link_capacity_mbps=cap)
 
 

@@ -78,7 +78,7 @@ class GreenNetworkEnv(gym.Env):
         self,
         k: int = 4,
         topology_type: str = "fattree_k4",
-        link_capacity_mbps: float = 1000.0,
+        link_capacity_mbps: Optional[float] = None,
         energy_weight: float = 2.5,
         delay_weight: float = 1.0,
         loss_weight: float = 5.0,
@@ -103,7 +103,7 @@ class GreenNetworkEnv(gym.Env):
         self.reward_scale = float(reward_scale)  # uniform scaling of the step reward (value-function conditioning)
         self.k = k
         self.topology_type = topology_type
-        self.link_capacity_mbps = link_capacity_mbps
+        self.link_capacity_mbps = float(link_capacity_mbps) if link_capacity_mbps is not None else None
         self.energy_weight = energy_weight
         self.delay_weight = delay_weight
         self.loss_weight = loss_weight
@@ -130,9 +130,13 @@ class GreenNetworkEnv(gym.Env):
 
         # Initialize network components via TopologyFactory
         if topology_type and topology_type != "fattree_k4":
-            self.topology = TopologyFactory.create(topology_type, link_capacity_mbps=link_capacity_mbps)
+            self.topology = TopologyFactory.create(topology_type, link_capacity_mbps=self.link_capacity_mbps)
         else:
-            self.topology = FatTreeTopology(k=k, link_capacity_mbps=link_capacity_mbps)
+            cap = self.link_capacity_mbps if self.link_capacity_mbps is not None else 1000.0
+            self.topology = FatTreeTopology(k=k, link_capacity_mbps=cap)
+
+        if self.link_capacity_mbps is None:
+            self.link_capacity_mbps = float(getattr(self.topology, "link_capacity_mbps", 1000.0))
 
         self.power_model = NetworkPowerModel()
         self.traffic_gen = TrafficGenerator(hosts=self.topology.hosts)
