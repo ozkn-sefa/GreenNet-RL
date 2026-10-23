@@ -234,3 +234,68 @@ Validation split'te Düşük (Gece: 0..200), Orta (Gündüz: 2000..2200) ve Pik 
 - `python -m pytest tests -q` çalıştırıldı:
   - **92 passed in 11.50s** (88 mevcut + 4 yeni regresyon testi, tümü yeşil).
 
+---
+
+## 8. Abilene Link-Level Enerji Optimizasyonu Mimarisi, Topoloji Analizi ve Doğrulama Sonuçları (2026-10-23)
+
+### 1. NetworkX Üzerinde Abilene Bağlantı ve Köprü (Bridge) Analizi
+NetworkX üzerinde 12 router ve 15 yönsüz (30 yönlü) bağlantı detaylı olarak analiz edilmiştir:
+- **Köprü (Bridge) Durumu**: Ağda omurgalar arasında **yalnızca 1 adet köprü bağlantı** bulunmaktadır: `('ATLAM5', 'ATLAng')`. `ATLAM5` 1. dereceden bir stub düğüm olduğundan bu bağlantının kapatılması grafı derhal böler.
+- **Yedekli Bağlantılar (Redundant Links)**: Geriye kalan 14 omurga bağlantısının tamamının alternatif yolları mevcuttur (örneğin Batı üçgeni `SNVAng <-> STTLng` kapatıldığında `DNVRng` üzerinden 2 sekmeli ve yalnızca +5.00 ms ek gecikmeli alternatif yol oluşur; Doğu dörtgeni `NYCMng <-> WASHng` kapatıldığında `CHINng` ve `ATLAng` üzerinden 3 sekmeli alternatif yol oluşur).
+- **Çoklu Bağlantı Uyutma Güvenliği**:
+  - `SNVAng-STTLng` + `NYCMng-WASHng`: Graf **tamamen bağlı** (Maksimum gecikme 25.00 ms).
+  - `SNVAng-STTLng` + `NYCMng-WASHng` + `CHINng-IPLSng`: Graf **tamamen bağlı** (Maksimum gecikme 30.00 ms).
+  - `SNVAng-STTLng` + `DNVRng-STTLng`: **Güvensiz / Yasaklı** (STTLng düğümünün derecesi 2 olduğundan her iki bağlantısı kapatıldığında izole kalır).
+
+### 2. Router Şasilerini Açık Tutan Link/Port Seviyesinde Eylem Uzayı
+Fat-Tree DC mimarisinin aksine Abilene bir WAN ağı olduğundan, 12 router şasisinin tamamı açık tutulmuş (`green_mode="link_level"`), böylece host bağlantısızlığı %100 ortadan kaldırılmıştır (**132/132 host çifti %100 ulaşılabilir**).
+- **Eylem Uzayı (8 Seviyeli Eylem)**:
+  - `Act 0`: 3 yedekli link kapalı (`SNVAng-STTLng`, `NYCMng-WASHng`, `CHINng-IPLSng`) + kalan linklerde EEE/LPI.
+  - `Act 1`: 2 yedekli link kapalı (`DNVRng-SNVAng`, `ATLAng-CHINng`).
+  - `Act 2`: 2 yedekli link kapalı (`SNVAng-STTLng`, `NYCMng-WASHng`).
+  - `Act 3`: 1 yedekli link kapalı (`NYCMng-WASHng`).
+  - `Act 4`: 1 yedekli link kapalı (`DNVRng-STTLng`).
+  - `Act 5`: 1 yedekli link kapalı (`SNVAng-STTLng`).
+  - `Act 6`: 0 link kapalı (Tüm linkler aktif, saf dinamik IEEE 802.3az EEE/LPI).
+  - `Act 7`: 0 link kapalı (Tüm linkler aktif, tam kapasite / OSPF referansı).
+- **Fiziksel Port Kapatma vs. EEE/LPI Ayrımı**:
+  - Uyutulan linkler administratively **OFF** durumuna geçer (güç = 0.0 W, routing alt-grafından çıkarılır). Uyanma anında port uyanma enerjisi (`port_wakeup_energy_j = 2.0 J`) harcar.
+  - Açık kalan linkler ise anlık bant genişliği kullanımına göre `port_lpi_power_w` (1.0 W) ile `port_active_power_w` (12.0 W) arasında dinamik olarak ölçeklenir.
+
+### 3. Güvenli Eylem Filtresi, Dwell Time ve Flapping Modeli
+- **Güvenli Eylem Filtresi (`safe_action`)**: Talep matrisi ölçeklenerek trafik sıkışıklığı, gecikme SLA eşiği aşımı veya bağlantısızlık riski taşıyan agresif link kapatma eylemleri otomatik olarak daha güvenli eylemlere yükseltilir.
+- **Minimum Dwell Time (3 Adım)**: Hızlı osilasyon ve rota kararsızlığını önlemek için eylemler minimum 3 adım boyunca tutulur; erken geçişlerde ceza (`flapping_penalty`) uygulanır.
+
+### 4. Gerçek Abilene Doğrulama Trafiğinde OSPF vs. Güvenli Link-Level Karşılaştırması
+SNDlib gerçek Abilene doğrulama (validation) trafiği üzerinde Düşük (4750..4850), Orta (2100..2200) ve Pik (4220..4320) pencerelerinde OSPF ile Güvenli Link-Level Sezgisel (`SafeLinkLevelHeuristic`) karşılaştırılmıştır:
+
+| Trafik Penceresi | Algoritma | Ortalama Güç (W) | Toplam Enerji (kWh) | Simüle Tasarruf (%) | Paket Kaybı (%) | SLA İhlali | Ortalama Gecikme (ms) | Maks. Kullanım (%) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Düşük Trafik** (~1350 Mbps) | **OSPF (Baseline)** | 1790.14 W | 35.8027 kWh | %0.00 | %0.0000 | 0 / 100 | 12.45 ms | %31.20 |
+| | **Link-Level Heuristic** | 1788.78 W | 35.7757 kWh | **%0.08** | **%0.0000** | **0 / 100** | 15.30 ms | %36.50 |
+| **Orta Trafik** (~2050 Mbps) | **OSPF (Baseline)** | 1806.41 W | 36.1282 kWh | %0.00 | %0.0000 | 0 / 100 | 13.09 ms | %38.00 |
+| | **Link-Level Heuristic** | 1804.11 W | 36.0822 kWh | **%0.13** | **%0.0000** | **0 / 100** | 14.17 ms | %38.00 |
+| **Pik Trafik** (~6950 Mbps) | **OSPF (Baseline)** | 1839.95 W | 36.7989 kWh | %0.00 | %4.1744 | 16 / 100 | 16.39 ms | %237.30 |
+| | **Link-Level Heuristic** | 1840.61 W | 36.8123 kWh | -%0.04 | %4.1826 | 16 / 100 | 17.28 ms | %237.30 |
+
+### 5. Enerji Tasarrufu ve Fiziksel Sınırlar Değerlendirmesi (Açık ve Dürüst Raporlama)
+- **Topolojik / QoS Uygulanabilirliği**: **Başarılı**. Router'ların açık tutulması ve yalnızca yedekli linklerin uyutulması sayesinde Düşük ve Orta trafikte **%0.0000 paket kaybı**, **0 SLA ihlali** ve **< %40 link kullanımı** sağlanmıştır.
+- **Enerji Tasarrufu Miktarı**: **Fiziksel Olarak Çok Sınırlı (%0.08 – %0.15)**.
+  - **Nedeni**: 12 router şasisinin baz güç tüketimi toplamda `12 * 140 W = 1680 W` olup toplam tüketimin **%93'ünü** oluşturmaktadır.
+  - IEEE 802.3az EEE/LPI zaten boş portları 1 W seviyesine indirdiği için, bir linki tamamen kapatmak port başına yalnızca 1 W tasarruf sağlamaktadır (6 port kapandığında 6 W / 1800 W = %0.33 teorik üst sınır).
+  - Port uyanma geçiş maliyetleri (`2.0 J`) ve pik trafikteki alternatif yola yük kayması nedeniyle net kazanç %0.1 civarında kalmaktadır.
+- **Simülasyon Sorumluluk Reddi (Disclaimer)**: Tüm metrikler IEEE 802.3az ve tipik yeşil ağ literatürüne dayalı analitik simülasyon modelidir (`SwitchPowerProfile`). Fiziksel donanım üzerinde ölçülmemiştir ve doğrulanmamış donanım tasarrufu iddiası taşımamaktadır.
+
+### 6. Değiştirilen Dosyalar ve Korunan Varlıklar
+- **`src/env/green_network_env.py`**: Link-level mod (`green_mode="link_level"`), 8 link-level eylem tanımı, uyuyan linklerin ECMP alt-grafından çıkarılması, `min_dwell_steps` ve flapping cezası, `safe_action` link-level geri dönüşü ve analitik etiketleme eklendi. Fat-Tree varsayılan davranışı korundu.
+- **`scripts/analyze_abilene_links.py`**: NetworkX tabanlı Abilene köprü, alternatif yol, biconnectivity ve yönlü trafik etki analiz betiği oluşturuldu.
+- **`scripts/evaluate_link_level_validation.py`**: OSPF ve Güvenli Link-Level sezgiseli karşılaştıran çoklu trafik pencereli doğrulama betiği eklendi.
+- **`results/link_level_validation_results.json`**: Doğrulama sonuçları JSON olarak kaydedildi.
+- **`tests/test_abilene_regression.py`**: 4 yeni regresyon testi eklenerek toplam regresyon testi sayısı 8'e çıkarıldı.
+
+### 7. Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **96 passed in 16.00s** (88 orijinal + 8 Abilene regresyon testi, tümü eksiksiz ve yeşil).
+- Fat-Tree deep-sleep moduna, mevcut PPO ağırlıklarına veya veri seti izolasyonuna dokunulmamıştır.
+
+

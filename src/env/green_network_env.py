@@ -97,12 +97,17 @@ class GreenNetworkEnv(gym.Env):
         real_traffic_loader: Optional[Any] = None,
         real_traffic_split: str = "train",
         real_traffic_loop: bool = False,
+        green_mode: str = "switch_sleep",
+        min_dwell_steps: int = 3,
     ):
         super().__init__()
 
         self.reward_scale = float(reward_scale)  # uniform scaling of the step reward (value-function conditioning)
         self.k = k
         self.topology_type = topology_type
+        self.green_mode = str(green_mode).lower()
+        self.min_dwell_steps = int(min_dwell_steps)
+        self.steps_in_action = 0
         self.link_capacity_mbps = float(link_capacity_mbps) if link_capacity_mbps is not None else None
         self.energy_weight = energy_weight
         self.delay_weight = delay_weight
@@ -170,9 +175,27 @@ class GreenNetworkEnv(gym.Env):
                 sla_delay_ms = 1.5 * float(np.mean(lens)) + 2.0
         self.sla_delay_ms = float(sla_delay_ms)
 
-        # Build topology-aware graduated core action sets (from 1 core up to ALL cores)
+        # Build topology-aware graduated core action sets (or link-level sleep sets for WAN)
         num_cores = len(self.core_switches)
-        if num_cores == 4:
+        self.is_link_level = (self.green_mode == "link_level")
+        self.sleeping_links: List[List[Tuple[str, str]]] = [[] for _ in range(8)]
+
+        if self.is_link_level and "abilene" in self.topology_type.lower():
+            # Dedicated Abilene Link/Port Energy Optimization
+            # All 12 router chassis stay ON for 100% host reachability.
+            # Actions 0..7 select strategic redundant link sleep combinations & EEE/LPI.
+            self.sleeping_links = [
+                [self._canon(('SNVAng', 'STTLng')), self._canon(('NYCMng', 'WASHng')), self._canon(('CHINng', 'IPLSng'))], # Act 0: 3 links sleep + EEE
+                [self._canon(('DNVRng', 'SNVAng')), self._canon(('ATLAng', 'CHINng'))],                                     # Act 1: 2 links sleep
+                [self._canon(('SNVAng', 'STTLng')), self._canon(('NYCMng', 'WASHng'))],                                     # Act 2: 2 links sleep
+                [self._canon(('NYCMng', 'WASHng'))],                                                                         # Act 3: 1 link sleep
+                [self._canon(('DNVRng', 'STTLng'))],                                                                         # Act 4: 1 link sleep
+                [self._canon(('SNVAng', 'STTLng'))],                                                                         # Act 5: 1 link sleep
+                [],                                                                                                           # Act 6: 0 links sleep (pure adaptive EEE/LPI)
+                [],                                                                                                           # Act 7: 0 links sleep (All active / OSPF)
+            ]
+            self.core_actions = [list(self.core_switches) for _ in range(8)]
+        elif num_cores == 4:
             self.core_actions = [
                 [self.core_switches[0]],                         # Act 0: 1 Core (75% saving)
                 [self.core_switches[1]],                         # Act 1: 1 Core
@@ -247,9 +270,10 @@ class GreenNetworkEnv(gym.Env):
     def _compute_paths(self, act_idx: int, failed: FrozenSet[Tuple[str, str]]) -> Dict[Tuple[str, str], List[List[str]]]:
         hosts = self.topology.hosts
         active_cores = set(self.core_actions[act_idx])
+        sleep_links = set(self.sleeping_links[act_idx]) if getattr(self, "is_link_level", False) else set()
         subgraph = nx.Graph()
         for (u, v) in self.links:
-            if (u, v) in failed:
+            if (u, v) in failed or (u, v) in sleep_links:
                 continue
             u_active = (u not in self.core_switches) or (u in active_cores)
             v_active = (v not in self.core_switches) or (v in active_cores)
@@ -421,19 +445,33 @@ class GreenNetworkEnv(gym.Env):
                     and o["avg_delay_ms"] <= self.sla_delay_ms):
                 mask[a] = True
         if not mask.any():
-            full_n = len(self.core_actions[self.full_action])
-            for a in range(n):
-                if len(self.core_actions[a]) == full_n:
-                    mask[a] = True
+            if getattr(self, "is_link_level", False):
+                min_sleep = min(len(self.sleeping_links[a]) for a in range(n))
+                for a in range(n):
+                    if len(self.sleeping_links[a]) == min_sleep:
+                        mask[a] = True
+            else:
+                full_n = len(self.core_actions[self.full_action])
+                for a in range(n):
+                    if len(self.core_actions[a]) == full_n:
+                        mask[a] = True
         return mask
 
     def safe_action(self, action: int) -> Tuple[int, bool]:
         """Returns (safe_action, overridden). Unsafe requests become the lowest-power allowed action
-        with at least as many active cores as requested (else the lowest-power allowed action)."""
+        with at least as many active cores/links as requested (else the lowest-power allowed action)."""
         action = int(action)
         mask = self.action_mask()
         if mask[action]:
             return action, False
+
+        if getattr(self, "is_link_level", False):
+            allowed = [a for a in range(len(mask)) if mask[a]]
+            higher = [a for a in allowed if a >= action]
+            pool = higher if higher else allowed
+            best = min(pool) if pool else self.full_action
+            return int(best), True
+
         requested_cores = len(self.core_actions[action])
         allowed = [a for a in range(len(mask)) if mask[a]]
         bigger = [a for a in allowed if len(self.core_actions[a]) >= requested_cores]
@@ -468,6 +506,7 @@ class GreenNetworkEnv(gym.Env):
         self.current_step = 0
         self.current_action = 7  # full capacity
         self.prev_action = None
+        self.steps_in_action = 0
 
         if "traffic_source" in options:
             self.traffic_source = str(options["traffic_source"]).lower()
@@ -534,23 +573,27 @@ class GreenNetworkEnv(gym.Env):
             action, overridden = self.safe_action(requested_action)
         self.current_action = int(action)
 
-        # 1. Apply Action: Configure Core Switch States
-        active_cores = set(self.core_actions[self.current_action])
-        for c in self.core_switches:
-            self.switch_states[c] = (c in active_cores)
+        # 1. Apply Action: Configure Switch and Link States
+        if getattr(self, "is_link_level", False):
+            for s in self.all_switches:
+                self.switch_states[s] = True
+            sleep_now = set(self.sleeping_links[self.current_action])
+        else:
+            active_cores = set(self.core_actions[self.current_action])
+            for c in self.core_switches:
+                self.switch_states[c] = (c in active_cores)
+            for s in self.topology.agg_switches + self.topology.edge_switches:
+                self.switch_states[s] = True
+            sleep_now = set()
 
-        # Aggregation and Edge switches remain active for host connectivity
-        for s in self.topology.agg_switches + self.topology.edge_switches:
-            self.switch_states[s] = True
-
-        # 2. Determine Link States based on Switch States and failures
+        # 2. Determine Link States based on Switch States, sleep links, and failures
         failed = self._failed_links_at(self.current_step)
         self._failed_now = failed
         link_states: Dict[Tuple[str, str], bool] = {}
         for (u, v) in self.links:
             u_active = self.switch_states.get(u, True)
             v_active = self.switch_states.get(v, True)
-            link_states[(u, v)] = bool(u_active and v_active and (u, v) not in failed)
+            link_states[(u, v)] = bool(u_active and v_active and (u, v) not in failed and (u, v) not in sleep_now)
 
         # 3. Generate Step Traffic
         if self.traffic_source == "real":
@@ -597,23 +640,30 @@ class GreenNetworkEnv(gym.Env):
             power_info["total_power_w"], self.step_duration_s, trans["transition_energy_j"]
         )
         self.episode_energy_j += step_energy_j
-        toggles = trans["switch_wakeups"] + trans["switch_sleeps"]
+        toggles = trans["switch_wakeups"] + trans["switch_sleeps"] + trans.get("port_wakeups", 0) + trans.get("port_sleeps", 0)
         self.episode_switch_toggles += toggles
         self._prev_switch_states = dict(self.switch_states)
         self._prev_link_states = dict(link_states)
 
         # 6. Multi-Objective Reward
         cfg = self.reward_cfg
-        active_core_count = len(self.core_actions[self.current_action])
-        total_core_count = float(len(self.core_switches))
-        core_saving_ratio = (total_core_count - active_core_count) / max(1.0, total_core_count)
-        energy_reward = core_saving_ratio * 16.0 * (self.energy_weight / 2.5) * cfg["energy"]
+        if getattr(self, "is_link_level", False):
+            # Link-level energy reward: saving proportional to sleeping ports
+            total_backbone_links = max(1.0, float(len(self.sleeping_links[0]) if self.sleeping_links[0] else len(self.links)))
+            link_saving_ratio = len(sleep_now) / total_backbone_links
+            energy_reward = link_saving_ratio * 16.0 * (self.energy_weight / 2.5) * cfg["energy"]
+            waste_penalty = 0.0
+        else:
+            active_core_count = len(self.core_actions[self.current_action])
+            total_core_count = float(len(self.core_switches))
+            core_saving_ratio = (total_core_count - active_core_count) / max(1.0, total_core_count)
+            energy_reward = core_saving_ratio * 16.0 * (self.energy_weight / 2.5) * cfg["energy"]
 
-        # Over-provisioning / Waste Penalty (Prevents the lazy 'turn on everything' shortcut)
-        estimated_safe_cores = max(1, int(np.ceil(total_demand_mbps / 1100.0)))
-        waste_penalty = 0.0
-        if active_core_count > estimated_safe_cores and max_utilization < 0.70:
-            waste_penalty = (active_core_count - estimated_safe_cores) * 3.5 * cfg["waste"]
+            # Over-provisioning / Waste Penalty (Prevents the lazy 'turn on everything' shortcut)
+            estimated_safe_cores = max(1, int(np.ceil(total_demand_mbps / 1100.0)))
+            waste_penalty = 0.0
+            if active_core_count > estimated_safe_cores and max_utilization < 0.70:
+                waste_penalty = (active_core_count - estimated_safe_cores) * 3.5 * cfg["waste"]
 
         # Delay Penalty with SLA threshold (end-to-end, traffic-weighted)
         delay_penalty = (avg_delay_ms / 2.5) * self.delay_weight * cfg["delay"]
@@ -623,16 +673,26 @@ class GreenNetworkEnv(gym.Env):
         loss_penalty = (packet_loss_rate * 50.0) * self.loss_weight * cfg["loss"]
         congestion_penalty = (congested_links_count * 1.5 * cfg["congestion"]) if congested_links_count > 0 else 0.0
 
-        # Route Flapping / Switching Penalty (Hysteresis) + switch wake-up cost
+        # Route Flapping / Switching Penalty (Hysteresis) + dwell time enforcement + wake-up cost
         action_changed = self.prev_action is not None and self.current_action != self.prev_action
         switching_penalty = 0.2 * cfg["switching"] if action_changed else 0.0
-        wakeup_penalty = 0.5 * trans["switch_wakeups"] * cfg["wakeup"]
+
+        flapping_penalty = 0.0
         if action_changed:
+            if self.steps_in_action < self.min_dwell_steps and not overridden:
+                flapping_penalty = float(self.min_dwell_steps - self.steps_in_action) * 1.5 * cfg.get("switching", 1.0)
+            self.steps_in_action = 0
             self.episode_action_changes += 1
+        else:
+            self.steps_in_action += 1
+
+        wakeup_penalty = 0.5 * trans["switch_wakeups"] * cfg["wakeup"]
+        port_wakeup_penalty = 0.05 * trans.get("port_wakeups", 0) * cfg["wakeup"]
         self.prev_action = self.current_action
 
         reward = float(energy_reward - waste_penalty - delay_penalty - loss_penalty
-                       - congestion_penalty - switching_penalty - wakeup_penalty) * self.reward_scale
+                       - congestion_penalty - switching_penalty - flapping_penalty
+                       - wakeup_penalty - port_wakeup_penalty) * self.reward_scale
 
         # 7. Check Episode Termination
         terminated = False
@@ -674,6 +734,14 @@ class GreenNetworkEnv(gym.Env):
             "action_changed": bool(action_changed),
             "episode_switch_toggles": int(self.episode_switch_toggles),
             "episode_action_changes": int(self.episode_action_changes),
+            "green_mode": self.green_mode,
+            "is_link_level": getattr(self, "is_link_level", False),
+            "steps_in_action": self.steps_in_action,
+            "sleeping_links": [f"{u}->{v}" for (u, v) in (self.sleeping_links[self.current_action] if getattr(self, "is_link_level", False) else [])],
+            "energy_model_assumptions": (
+                "Analytical simulation model based on IEEE 802.3az EEE/LPI and port admin-down "
+                "(12W active, 1W LPI, 0W off). Not measured or verified on physical hardware."
+            ),
             "ports_active": power_info.get("ports_active", 0),
             "ports_lpi": power_info.get("ports_lpi", 0),
             "ports_off": power_info.get("ports_off", 0),

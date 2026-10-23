@@ -52,3 +52,51 @@ def test_abilene_action_reachability():
     for act in range(6):
         unroutable = sum(1 for (s, d), paths in env._action_paths[act].items() if len(paths) == 0)
         assert unroutable > 0, f"Action {act} was expected to partition Abilene graph, got {unroutable} unroutable pairs"
+
+
+def test_abilene_link_level_all_actions_100_percent_reachability():
+    """Verify that in link_level mode, all 8 actions provide 100% host reachability (0 unroutable pairs)."""
+    env = GreenNetworkEnv(topology_type="abilene", green_mode="link_level")
+    assert env.is_link_level is True
+    total_pairs = len(env.topology.hosts) * (len(env.topology.hosts) - 1)
+    assert total_pairs == 132
+
+    for act in range(8):
+        unroutable = sum(1 for (s, d), paths in env._action_paths[act].items() if len(paths) == 0)
+        assert unroutable == 0, f"Link action {act} caused {unroutable} unroutable host pairs!"
+
+
+def test_abilene_link_level_port_states_and_power():
+    """Verify that sleeping links turn ports OFF and power reflects analytical EEE/LPI model."""
+    env = GreenNetworkEnv(topology_type="abilene", green_mode="link_level")
+    env.reset()
+    obs, r, term, trunc, info = env.step(0)
+    assert "energy_model_assumptions" in info
+    assert "IEEE 802.3az" in info["energy_model_assumptions"]
+    assert info["ports_off"] >= 6, f"Expected at least 6 ports OFF in Act 0, got {info['ports_off']}"
+    assert info["total_power_w"] > 0
+
+
+def test_min_dwell_time_flapping_penalty():
+    """Verify that switching action before min_dwell_steps tracks dwell steps and action changes."""
+    env = GreenNetworkEnv(topology_type="abilene", green_mode="link_level", min_dwell_steps=3, use_safety_filter=False)
+    env.reset()
+    obs, r1, term, trunc, info1 = env.step(7)
+    assert info1["steps_in_action"] == 1  # First step in action 7
+    obs, r2, term, trunc, info2 = env.step(0)
+    assert info2["steps_in_action"] == 0  # Switched to action 0
+    assert info2["action_changed"] is True
+    # Step again with same action -> steps_in_action increments to 1
+    obs, r3, term, trunc, info3 = env.step(0)
+    assert info3["steps_in_action"] == 1
+    assert info3["action_changed"] is False
+
+
+def test_energy_model_assumptions_label():
+    """Verify analytical simulation disclaimer is present in step_info."""
+    env = GreenNetworkEnv(topology_type="abilene", green_mode="link_level")
+    env.reset()
+    obs, r, term, trunc, info = env.step(7)
+    assert "energy_model_assumptions" in info
+    assert "Not measured or verified on physical hardware" in info["energy_model_assumptions"]
+

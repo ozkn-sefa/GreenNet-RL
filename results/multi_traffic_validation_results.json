@@ -1,0 +1,282 @@
+{
+  "1000Mbps": {
+    "Low Traffic (Off-Peak/Night)": {
+      "PPO (100k)": {
+        "steps": 150,
+        "mean_power_w": 1906.4,
+        "total_energy_kwh": 57.1924,
+        "sla_violation_percent": 8.67,
+        "avg_delay_ms": 14.03,
+        "p95_delay_ms": 15.27,
+        "mean_packet_loss_rate": 0.00343,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "OSPF (All-Active)": {
+        "steps": 150,
+        "mean_power_w": 1906.4,
+        "total_energy_kwh": 57.1924,
+        "sla_violation_percent": 8.67,
+        "avg_delay_ms": 14.03,
+        "p95_delay_ms": 15.27,
+        "mean_packet_loss_rate": 0.00343,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "Static Heuristic": {
+        "steps": 150,
+        "mean_power_w": 1789.0,
+        "total_energy_kwh": 53.6715,
+        "sla_violation_percent": 44.0,
+        "avg_delay_ms": 14.22,
+        "p95_delay_ms": 15.36,
+        "mean_packet_loss_rate": 0.14237,
+        "switch_toggles": 14,
+        "energy_savings_percent": 6.16
+      },
+      "Threshold Reactive": {
+        "steps": 150,
+        "mean_power_w": 1567.4,
+        "total_energy_kwh": 47.0213,
+        "sla_violation_percent": 100.0,
+        "avg_delay_ms": 14.42,
+        "p95_delay_ms": 15.42,
+        "mean_packet_loss_rate": 0.38422,
+        "switch_toggles": 4,
+        "energy_savings_percent": 17.78
+      }
+    },
+    "Medium Traffic (Normal Day)": {
+      "PPO (100k)": {
+        "steps": 150,
+        "mean_power_w": 1917.3,
+        "total_energy_kwh": 57.5198,
+        "sla_violation_percent": 15.33,
+        "avg_delay_ms": 14.69,
+        "p95_delay_ms": 16.69,
+        "mean_packet_loss_rate": 0.00879,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "OSPF (All-Active)": {
+        "steps": 150,
+        "mean_power_w": 1917.3,
+        "total_energy_kwh": 57.5198,
+        "sla_violation_percent": 15.33,
+        "avg_delay_ms": 14.69,
+        "p95_delay_ms": 16.69,
+        "mean_packet_loss_rate": 0.00879,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "Static Heuristic": {
+        "steps": 150,
+        "mean_power_w": 1904.3,
+        "total_energy_kwh": 57.1292,
+        "sla_violation_percent": 19.33,
+        "avg_delay_ms": 14.71,
+        "p95_delay_ms": 16.69,
+        "mean_packet_loss_rate": 0.02212,
+        "switch_toggles": 12,
+        "energy_savings_percent": 0.68
+      },
+      "Threshold Reactive": {
+        "steps": 150,
+        "mean_power_w": 1584.9,
+        "total_energy_kwh": 47.5458,
+        "sla_violation_percent": 100.0,
+        "avg_delay_ms": 15.34,
+        "p95_delay_ms": 17.23,
+        "mean_packet_loss_rate": 0.32552,
+        "switch_toggles": 4,
+        "energy_savings_percent": 17.34
+      }
+    },
+    "Peak Traffic (Burst/High Load)": {
+      "PPO (100k)": {
+        "steps": 150,
+        "mean_power_w": 1918.5,
+        "total_energy_kwh": 57.5559,
+        "sla_violation_percent": 37.33,
+        "avg_delay_ms": 15.5,
+        "p95_delay_ms": 22.56,
+        "mean_packet_loss_rate": 0.03339,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "OSPF (All-Active)": {
+        "steps": 150,
+        "mean_power_w": 1918.5,
+        "total_energy_kwh": 57.5559,
+        "sla_violation_percent": 37.33,
+        "avg_delay_ms": 15.5,
+        "p95_delay_ms": 22.56,
+        "mean_packet_loss_rate": 0.03339,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "Static Heuristic": {
+        "steps": 150,
+        "mean_power_w": 1887.3,
+        "total_energy_kwh": 56.62,
+        "sla_violation_percent": 46.67,
+        "avg_delay_ms": 15.48,
+        "p95_delay_ms": 22.56,
+        "mean_packet_loss_rate": 0.07077,
+        "switch_toggles": 10,
+        "energy_savings_percent": 1.63
+      },
+      "Threshold Reactive": {
+        "steps": 150,
+        "mean_power_w": 1577.2,
+        "total_energy_kwh": 47.3166,
+        "sla_violation_percent": 100.0,
+        "avg_delay_ms": 13.85,
+        "p95_delay_ms": 14.98,
+        "mean_packet_loss_rate": 0.41322,
+        "switch_toggles": 12,
+        "energy_savings_percent": 17.79
+      }
+    }
+  },
+  "2500Mbps": {
+    "Low Traffic (Off-Peak/Night)": {
+      "PPO (100k)": {
+        "steps": 150,
+        "mean_power_w": 1809.7,
+        "total_energy_kwh": 54.2909,
+        "sla_violation_percent": 0.0,
+        "avg_delay_ms": 12.98,
+        "p95_delay_ms": 13.65,
+        "mean_packet_loss_rate": 0.0,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "OSPF (All-Active)": {
+        "steps": 150,
+        "mean_power_w": 1809.7,
+        "total_energy_kwh": 54.2909,
+        "sla_violation_percent": 0.0,
+        "avg_delay_ms": 12.98,
+        "p95_delay_ms": 13.65,
+        "mean_packet_loss_rate": 0.0,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "Static Heuristic": {
+        "steps": 150,
+        "mean_power_w": 1703.5,
+        "total_energy_kwh": 51.1049,
+        "sla_violation_percent": 35.33,
+        "avg_delay_ms": 13.2,
+        "p95_delay_ms": 14.22,
+        "mean_packet_loss_rate": 0.13895,
+        "switch_toggles": 14,
+        "energy_savings_percent": 5.87
+      },
+      "Threshold Reactive": {
+        "steps": 150,
+        "mean_power_w": 1505.7,
+        "total_energy_kwh": 45.1722,
+        "sla_violation_percent": 100.0,
+        "avg_delay_ms": 13.53,
+        "p95_delay_ms": 14.43,
+        "mean_packet_loss_rate": 0.38422,
+        "switch_toggles": 4,
+        "energy_savings_percent": 16.8
+      }
+    },
+    "Medium Traffic (Normal Day)": {
+      "PPO (100k)": {
+        "steps": 150,
+        "mean_power_w": 1814.2,
+        "total_energy_kwh": 54.4273,
+        "sla_violation_percent": 0.0,
+        "avg_delay_ms": 12.87,
+        "p95_delay_ms": 13.29,
+        "mean_packet_loss_rate": 0.0,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "OSPF (All-Active)": {
+        "steps": 150,
+        "mean_power_w": 1814.2,
+        "total_energy_kwh": 54.4273,
+        "sla_violation_percent": 0.0,
+        "avg_delay_ms": 12.87,
+        "p95_delay_ms": 13.29,
+        "mean_packet_loss_rate": 0.0,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "Static Heuristic": {
+        "steps": 150,
+        "mean_power_w": 1802.3,
+        "total_energy_kwh": 54.0699,
+        "sla_violation_percent": 4.0,
+        "avg_delay_ms": 12.89,
+        "p95_delay_ms": 13.31,
+        "mean_packet_loss_rate": 0.01333,
+        "switch_toggles": 12,
+        "energy_savings_percent": 0.66
+      },
+      "Threshold Reactive": {
+        "steps": 150,
+        "mean_power_w": 1512.8,
+        "total_energy_kwh": 45.3854,
+        "sla_violation_percent": 100.0,
+        "avg_delay_ms": 13.45,
+        "p95_delay_ms": 14.11,
+        "mean_packet_loss_rate": 0.32403,
+        "switch_toggles": 4,
+        "energy_savings_percent": 16.61
+      }
+    },
+    "Peak Traffic (Burst/High Load)": {
+      "PPO (100k)": {
+        "steps": 150,
+        "mean_power_w": 1816.8,
+        "total_energy_kwh": 54.5032,
+        "sla_violation_percent": 2.67,
+        "avg_delay_ms": 13.04,
+        "p95_delay_ms": 13.79,
+        "mean_packet_loss_rate": 0.00666,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "OSPF (All-Active)": {
+        "steps": 150,
+        "mean_power_w": 1816.8,
+        "total_energy_kwh": 54.5032,
+        "sla_violation_percent": 2.67,
+        "avg_delay_ms": 13.04,
+        "p95_delay_ms": 13.79,
+        "mean_packet_loss_rate": 0.00666,
+        "switch_toggles": 0,
+        "energy_savings_percent": 0.0
+      },
+      "Static Heuristic": {
+        "steps": 150,
+        "mean_power_w": 1788.6,
+        "total_energy_kwh": 53.6592,
+        "sla_violation_percent": 12.0,
+        "avg_delay_ms": 13.06,
+        "p95_delay_ms": 13.8,
+        "mean_packet_loss_rate": 0.04407,
+        "switch_toggles": 10,
+        "energy_savings_percent": 1.55
+      },
+      "Threshold Reactive": {
+        "steps": 150,
+        "mean_power_w": 1513.7,
+        "total_energy_kwh": 45.4103,
+        "sla_violation_percent": 99.33,
+        "avg_delay_ms": 12.7,
+        "p95_delay_ms": 13.26,
+        "mean_packet_loss_rate": 0.41113,
+        "switch_toggles": 12,
+        "energy_savings_percent": 16.68
+      }
+    }
+  }
+}
