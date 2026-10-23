@@ -59,3 +59,11 @@ def test_baselines_valid_on_other_topologies(request, fixture):
     th = ThresholdLoadAgent(env=env)
     counts = [cores(env, th.predict(obs_with(demand=d))) for d in (0.0, 0.2, 0.4, 0.9)]
     assert counts == sorted(counts)
+
+
+def test_safe_action_never_downgrades_full_capacity(env_k4):
+    """Full-capacity request (OSPF / Action 7) must never be downgraded to fewer cores by safe_action."""
+    action, overridden = env_k4.safe_action(7)
+    assert len(env_k4.core_actions[action]) == 4
+    assert overridden is False
+

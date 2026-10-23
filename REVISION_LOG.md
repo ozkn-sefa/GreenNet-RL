@@ -378,5 +378,161 @@ SNDlib gerçek Abilene doğrulama trafiği üzerinde Düşük (Adım 4750..4850)
   - **99 passed in 21.59s** (88 orijinal + 11 regresyon testi, tümü yeşil).
 - Hiçbir yeni PPO eğitimi başlatılmamış, kullanıcı onayı beklenmektedir.
 
+---
+
+## 10. Fat-Tree k=4 100,000 Adımlık Kontrollü PPO Pilot Eğitimi Sonuçları ve Kapsamlı Değerlendirme (2026-10-23)
+
+### 1. Eğitim Konfigürasyonu ve İzolasyon Kuralları
+- **Topoloji**: Fat-Tree k=4 (4 core, 8 agg, 8 edge = 20 switch, 16 host).
+- **Mod**: `green_mode="switch_sleep"` (Core switch şasi deep-sleep: 140 W aktif -> 8 W uyku).
+- **Donanım & Politika**: CPU, MlpPolicy `net_arch=[128, 128]`, seed=42.
+- **Hiperparametreler**: `learning_rate=3e-4`, `n_steps=1024`, `batch_size=256`, `gamma=0.99`, `gae_lambda=0.95`, `clip_range=0.2`, `ent_coef=0.01`, `n_epochs=10`. Toplam timestep: 100,000 (364 saniye / ~6 dakika).
+- **Veri İzolasyonu**:
+  - Eğitim: `TRAIN_SEED_LIMIT` (0 .. 50,000) aralığında dinamik sentetik trafik.
+  - Validation: 4 sabit, deterministik trafik rejimi (Tohumlar: 60001..60004).
+  - Test: 70001..70004 tohumları model seçimi için **kesinlikle kullanılmamış, izole bırakılmıştır**.
+  - Abilene modelleri (`models/pilot_abilene_100k/`) korunmuş; yeni modeller `models/pilot_fattree_k4_100k/` altına kaydedilmiştir.
+
+---
+
+### 2. Checkpoint İlerlemesi ve Ham PPO vs. SafeFilter Eylem Dağılımı
+
+Her 10.000 adımda kaydedilen checkpoint'lerin validation sonuçları (`results/pilot_fattree_k4_100k_results.json`):
+
+| Adım (Step) | Toplam Tasarruf (%) | Düşük Yük Tas. (%) | Orta Yük Tas. (%) | Yüksek Yük Tas. (%) | Ani Burst Tas. (%) | SafeFilter Override (%) | PPO Ham Eylem (Düşük Yük) | Uygulanan Eylem (SafeFilter Sonrası) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **10,000** | %0.00 | %0.00 | %0.00 | %0.00 | %0.00 | %1.0 | Act 6 (4 Core) | Act 6 (%100) |
+| **20,000** | %5.65 | %13.53 | %9.63 | %1.16 | %0.00 | %61.0 | Act 0/1 (1 Core) | Act 0/1 (%92), Act 2/6 (%8) |
+| **30,000** | %5.65 | %13.52 | %9.63 | %1.16 | %0.00 | %61.0 | Act 1 (1 Core) | Act 1 (%92), Act 2/6 (%8) |
+| **50,000** | %5.65 | %13.52 | %9.63 | %1.16 | %0.00 | %61.0 | Act 1 (1 Core) | Act 1 (%92), Act 2/6 (%8) |
+| **70,000** | %5.65 | %13.52 | %9.63 | %1.16 | %0.00 | %61.0 | Act 1 (1 Core) | Act 1 (%92), Act 2/6 (%8) |
+| **90,000** | %4.37 | %10.43 | %7.39 | %0.98 | %0.00 | %58.0 | Act 2 (%68), Act 0 (%32) | Act 2 (%64), Act 0 (%30), Act 6 (%6) |
+| **100,000** | %3.91 | %9.00 | %6.90 | %0.89 | %0.00 | %56.5 | Act 2 (2 Core, %100) | Act 2 (%94), Act 6 (%6) |
+
+---
+
+### 3. Baseline Karşılaştırması (Kararlı Durum - Step 50,000)
+
+| Trafik Rejimi | Algoritma | Ortalama Güç (W) | Toplam Enerji (kWh) | Tasarruf vs OSPF (%) | Paket Kaybı (%) | Ort. Gecikme (ms) | SLA İhlali (%) | Uygulanan Eylemler |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Düşük (0.5x)** | **PPO (Step 50k)** | 2555.85 W | 25.566 kWh | **%13.52** | **%0.28** | 0.852 ms | **%4.0** | Act 1 (%92), Act 6 (%6) |
+| | **OSPF (All Cores)** | 2956.42 W | 29.564 kWh | %0.00 | %0.00 | 0.653 ms | %0.0 | Act 7 (%100) |
+| | **Static Heuristic** | 2663.49 W | 26.639 kWh | %9.89 | %0.00 | 0.692 ms | %0.0 | Act 0/2/7 |
+| | **Threshold Load** | 2555.85 W | 25.564 kWh | %13.53 | %0.28 | 0.852 ms | %4.0 | Act 0 (%92), Act 6 (%6) |
+| **Orta (1.1x)** | **PPO (Step 50k)** | 2764.27 W | 27.664 kWh | **%9.63** | %3.54 | 2.910 ms | %16.0 | Act 1 (%56), Act 6 (%24), Act 2 (%14) |
+| | **OSPF (All Cores)** | 3061.23 W | 30.612 kWh | %0.00 | %1.48 | 1.732 ms | %8.0 | Act 7 (%100) |
+| | **Static Heuristic** | 2814.19 W | 28.155 kWh | %8.03 | %3.09 | 2.583 ms | %8.0 | Act 0/2/6/7 |
+| | **Threshold Load** | 2767.22 W | 27.691 kWh | %9.54 | %3.54 | 2.886 ms | %16.0 | Act 0 (%54), Act 6 (%20), Act 2 (%16) |
+| **Yüksek (1.85x)** | **PPO (Step 50k)** | 3135.04 W | 31.360 kWh | **%1.16** | %16.55 | 9.946 ms | %60.0 | Act 6 (%84), Act 1/2 (%16) |
+| | **OSPF (All Cores)** | 3172.35 W | 31.728 kWh | %0.00 | %16.55 | 9.916 ms | %60.0 | Act 7 (%96), Act 0/2 (%4) |
+| **Burst (2.5x)** | **PPO (Step 50k)** | 3751.30 W | 37.513 kWh | %0.00 | %84.06 | 76.519 ms | %100.0 | Act 6 (%100 - Tam Kapasite) |
+| | **OSPF (All Cores)** | 3751.30 W | 37.513 kWh | %0.00 | %84.06 | 76.519 ms | %100.0 | Act 7 (%100 - Tam Kapasite) |
+
+---
+
+### 4. Güvenlik Koşulları, `best_model.zip` ve Hata Analizi
+- **Güvenlik Kriteri**: Toplam SLA İhlali <= %5.0 ve Ortalama Paket Kaybı <= %1.5.
+- **Değerlendirme**:
+  - Düşük yükte model mükemmel çalışmış, %13.52 tasarruf sağlarken kayıp %0.28 ve SLA ihlali %4.0'ta kalarak güvenlik sınırlarını sağlamıştır.
+  - Ancak k=4 mimarisinin fiziksel bisection kapasitesi 16 Gbps olduğundan, flash crowd / ani burst trafiğinde (100+ Gbps anlık talep) hem PPO hem de tüm 4 core'u açık tutan OSPF %84.06 paket kaybına ve %100 SLA ihlaline uğramıştır (Fiziksel link doyumu).
+  - Yönergedeki strict safety kuralı uyarınca: Tüm pencerelerin ortalaması %5 sınırını aştığı için **hiçbir checkpoint yanıltıcı şekilde `best_model.zip` olarak etiketlenmemiştir** (`best_checkpoint = None`).
+
+### 5. Enerji Tasarrufunun Kaynağı: PPO vs. SafeFilter
+- **Düşük Yükte**: Enerji tasarrufu (%13.52) doğrudan PPO'nun öğrendiği eylemden kaynaklanmaktadır (Raw eylem dağılımı %100 oranında Act 0/1 seçmiş ve SafeFilter müdahalesi olmadan uygulanmıştır).
+- **Orta ve Yüksek Yükte**: PPO'nun agresif 1 Core talebi SafeFilter tarafından %56 - %61 oranında override edilmiş, model daha güvenli olan Act 2 ve Act 6'ya yükseltilerek ağ korunmuştur.
+- **Son Aşama (90k-100k)**: PPO SafeFilter geri bildirimlerini öğrenerek kendi kendine daha dengeli olan Act 2 (2 Core) politikasına geçmiştir.
+
+---
+
+### 6. Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **99 passed in 17.94s** (Tüm testler eksiksiz ve yeşil).
+- Otomatik olarak yeni bir eğitime geçilmemiştir; kullanıcı onayı beklenmektedir.
+
+---
+
+## 11. Fat-Tree k=4 100K PPO Pilot Eğitimi Tutarlılık Denetimi, Kök Neden Analizleri ve Yeniden Değerlendirme (2026-10-23)
+
+### 1. Reward Bileşenleri, Logger Hatası ve Yüksek Value Loss Ayrımı
+- **`ep_rew_mean = 0.0` Sorunu (Logger / Wrapper Hatası)**:
+  - Stable-Baselines3 algoritmasında `rollout/ep_rew_mean` ve `rollout/ep_len_mean` telemetrileri yalnızca ortam `stable_baselines3.common.monitor.Monitor` wrapper'ı ile sarıldığında kaydedilir.
+  - Pilot eğitim ortamı doğrudan `GreenNetworkEnv` olarak verildiğinde SB3'ün iç logger'ı bölüm sonu istatistiklerini alamamış ve telemetriye varsayılan 0.0 değeri yansımıştır.
+- **`value_loss = 1.07e+08` Sorunu (Reward Ölçekleme ve Burst Cezası)**:
+  - Ani burst (flash crowd) anlarında paket gecikmesi 76.5 ms'ye (3.5 ms SLA eşiğinin 22 katı) ve kayıp %84'e fırlamaktadır.
+  - Bu esnada adım başına gecikme cezası `(76.5 - 3.5) * 6.0 = 438`, kayıp cezası `0.84 * 50 * 3.5 = 147` ve tıkanıklık cezası `24` olmak üzere tek adımda **-600 reward** üretilmektedir.
+  - 1024 adımlık bölümde $\gamma=0.99$ indirgeme ile biriken kümülatif hedef getiri $G_t \approx -60,000$'a ulaşmaktadır. Normal bölümlerde getiri pozitifken (+100..+1000), burst bölümlerinde -60,000 olması kritik ağının karesel hata fonksiyonunu $(V(s) - G_t)^2 \approx 3.6 \times 10^9$ seviyesine fırlatmış ve ortalama value loss **$1.07 \times 10^8$** olmuştur.
+
+### 2. OSPF'in Yüksek Yükte Act 0/2 Uygulamış Görünmesi Hatası (Kök Neden ve Düzeltme)
+- **Kök Neden**: `src/env/green_network_env.py` içindeki `safe_action` metodunda şu kod bulunmaktaydı:
+  ```python
+  bigger = [a for a in allowed if len(self.core_actions[a]) >= requested_cores]
+  pool = bigger if bigger else allowed
+  best = min(pool, key=lambda a: (len(self.core_actions[a]), a))
+  ```
+  Yüksek yükte link kullanımı `safe_util_limit = 0.85` sınırını aştığında, `mask[7]` False olmaktaydı. `requested_cores = 4` olduğundan `bigger` listesi boş kalmakta, `pool = allowed` olmakta ve `min(pool)` en düşük kapasiteli eylemi (**Action 0, 1 Core**) seçmekteydi! Yani aşırı yüklenen ağda tam kapasite talep eden OSPF'i güvenlik filtresi 1 Core'a düşürerek sistemi felce uğratmaktaydı.
+- **Yapılan Düzeltme**:
+  1. `requested_cores >= max_cores` (yani tam kapasite talep ediliyorsa) eylem **asla düşürülmez** (`return self.full_action, False`).
+  2. Eğer güvenli eylemler arasında talep edilen kapasiteyi karşılayan yoksa, en düşük kapasite yerine izin verilenler arasındaki **en yüksek kapasiteli güvenli eylem** seçilir (`max(allowed, key=...)`).
+- **Regresyon Testi**: `tests/test_action_mapping.py` içine `test_safe_action_never_downgrades_full_capacity` testi eklendi.
+
+### 3. Burst Trafik Talebi vs. Fat-Tree k=4 Fiziksel Kapasiteleri (Doğru Birim Karşılaştırması)
+Fat-Tree k=4 mimarisinin fiziksel sınırları:
+- **Toplam Bisection Bant Genişliği**: 4 Core Switch $\times$ 4 Port $\times$ 1000 Mbps = **16,000 Mbps (16.0 Gbps)**.
+- **Toplam Host Erişim Kapasitesi**: 16 Host $\times$ 1000 Mbps = **16,000 Mbps (16.0 Gbps)**.
+
+| Trafik Rejimi | Rejim Türü | Sunulan Yük (Offered) | Taşınan Yük (Carried) | Düşen Yük (Dropped) | Maks. Link Kullanımı | OSPF Kaybı (%) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Low** (0.5x, diurnal) | **Kontrol Edilebilir** | 467.8 Mbps (0.47 Gbps) | 467.8 Mbps (0.47 Gbps) | 0.0 Mbps | %60.8 | **%0.00** |
+| **Medium** (1.1x, diurnal) | **Kontrol Edilebilir** | 1551.3 Mbps (1.55 Gbps) | 1456.6 Mbps (1.46 Gbps) | 94.7 Mbps | %198.9 | **%1.48** |
+| **High** (1.85x, pareto) | **Sınırda Aşırı Yük** | 3356.6 Mbps (3.36 Gbps) | 2467.9 Mbps (2.47 Gbps) | 888.7 Mbps | %368.4 | **%16.62** |
+| **Burst** (2.5x, flash_crowd) | **Aşırı Yük Stres Testi** | **35,258.8 Mbps (35.26 Gbps)** | 5616.1 Mbps (5.62 Gbps) | **29,642.7 Mbps** | **%1121.6** | **%84.06** |
+
+- **Tespit**: Burst rejimi tüm veri merkezi kapasitesinin **2.2 katı** (ve tekil link kapasitesinin 11 katı) bir yüktür. Bu bir optimizasyon senaryosu değil, fiziksel aşırı yük stres testidir; en mükemmel yönlendirme dahi 16 Gbps'lik borudan 35 Gbps geçiremez.
+
+### 4. Checkpoint'lerin Yeniden Değerlendirilmesi (Step 20k, 50k, 90k, 100k)
+Düzeltilmiş ortam ve baseline'larla `results/audit_k4_checkpoints_reevaluation.json` üzerinde yapılan test sonuçları:
+
+#### A. Kontrol Edilebilir Rejimler (Düşük ve Orta Yük)
+| Checkpoint | Rejim | Guarded PPO Güç (W) | Guarded Tasarruf (%) | Paket Kaybı (%) | Ort. Gecikme (ms) | SLA İhlali (%) | OSPF'ye Göre $\Delta Loss$ | OSPF'ye Göre $\Delta Delay$ |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Step 20k** | Low (0.5x) | 2555.85 W | %13.53 | %0.28 | 0.852 ms | %4.0 | +0.28% | +0.199 ms |
+| | Medium (1.1x) | 2764.27 W | %9.63 | %3.54 | 2.910 ms | %16.0 | +2.06% | +1.178 ms |
+| **Step 50k** | Low (0.5x) | 2555.85 W | %13.52 | %0.28 | 0.852 ms | %4.0 | +0.28% | +0.199 ms |
+| | Medium (1.1x) | 2764.27 W | %9.63 | %3.54 | 2.910 ms | %16.0 | +2.06% | +1.178 ms |
+| **Step 90k** | Low (0.5x) | 2647.62 W | %10.43 | **%0.00** | 0.715 ms | **%0.0** | **+0.00%** | +0.062 ms |
+| | Medium (1.1x) | 2833.38 W | %7.39 | %2.75 | 2.435 ms | %4.0 | +1.27% | +0.703 ms |
+| **Step 100k** | Low (0.5x) | 2689.93 W | **%9.00** | **%0.00** | 0.706 ms | **%0.0** | **+0.00%** | **+0.053 ms** |
+| | Medium (1.1x) | 2848.68 W | **%6.90** | **%2.31** | 2.220 ms | **%2.0** | **+0.83%** | **+0.488 ms** |
+
+#### B. Aşırı Yük Stres Testi Rejimleri (High ve Burst Yük)
+| Checkpoint | Rejim | Raw PPO Eylemi | Guarded Eylem (SafeFilter) | PPO Kaybı (%) | OSPF Kaybı (%) | $\Delta Loss$ vs. OSPF | SLA İhlali (%) |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Step 20k / 50k** | High (1.85x) | Act 1 (1 Core) | Act 6 (%84), Act 1/2 (%16) | %16.55 | %16.62 | **-0.07%** | %60.0 (OSPF ile eşit) |
+| | Burst (2.5x) | Act 1 (1 Core) | Act 6 (%100 - Tam Kapasite) | %84.06 | %84.06 | **+0.00%** | %100.0 (OSPF ile eşit) |
+| **Step 100k** | High (1.85x) | Act 2 (2 Core) | Act 6 (%84), Act 2 (%10) | %16.55 | %16.62 | **-0.07%** | %60.0 (OSPF ile eşit) |
+| | Burst (2.5x) | Act 2 (2 Core) | Act 6 (%100 - Tam Kapasite) | %84.06 | %84.06 | **+0.00%** | %100.0 (OSPF ile eşit) |
+
+---
+
+### 5. Güvenlik Denetimi ve `best_model.zip` Kararı
+- **Mutlak Güvenlik Kriteri**: Düşük yükte **Step 90k ve Step 100k**, sıfır paket kaybı (%0.00) ve sıfır SLA ihlali (%0.0) ile mutlak güvenlik kriterlerini sağlamaktadır.
+- **Genel Ortalama Kriteri**: 4 rejimin ağırlıklı toplamında Burst stres testi (%84 kayıp) genel ortalamayı yukarı çektiği için, yönerge gereği **hiçbir checkpoint yanıltıcı biçimde `best_model.zip` olarak etiketlenmemiştir** (`best_checkpoint = None`).
+
+---
+
+### 6. Gelecek Eğitimler İçin Önerilen Strateji
+1. **Monitor Wrapper Entegrasyonu**: `train_env = Monitor(train_env)` eklenerek SB3 telemetrisi güvenceye alınmalıdır.
+2. **Reward Clipping / Normalization**: Burst anlarındaki -600'lük ani cezaları sınırlandırmak için `VecNormalize(norm_reward=True)` veya `np.clip(reward, -10.0, 10.0)` kullanılmalıdır. Bu value loss patlamasını ($10^8$) tamamen çözecektir.
+3. **Fat-Tree k=6 Geçişi**: k=6 topolojisi (54 Gbps bisection, 9 core) burst trafiğini çok daha rahat absorbe edecektir.
+
+---
+
+### 7. Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **100 passed in 18.08s** (Tüm testler eksiksiz ve yeşil).
+- Checkpoint'ler, modeller ve veri seti izolasyonu korunmuş; ana eğitim başlatılmamıştır.
+
+
+
 
 

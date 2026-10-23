@@ -1,0 +1,5348 @@
+{
+  "metadata": {
+    "topology": "fattree_k4",
+    "k": 4,
+    "green_mode": "switch_sleep",
+    "device": "cpu",
+    "seed": 42,
+    "total_timesteps": 100000,
+    "duration_seconds": 364.21,
+    "best_checkpoint_step": null,
+    "safety_criteria": {
+      "max_overall_sla_violation_percent": 5.0,
+      "max_overall_loss_percent": 1.5,
+      "max_burst_loss_percent": 2.5
+    }
+  },
+  "validation_records": [
+    {
+      "step": 10000,
+      "timestamp": "2026-10-23 22:20:13",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_10000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "6": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "6": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "6": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "6": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "6": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 129.417113,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 0.0,
+        "overall_sla_violation_rate_percent": 42.0,
+        "overall_mean_loss_percent": 25.5247,
+        "overall_override_rate_percent": 1.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 20000,
+      "timestamp": "2026-10-23 22:20:49",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_20000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.565215,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 19,
+            "raw_actions_distribution": {
+              "0": 35,
+              "1": 15
+            },
+            "applied_actions_distribution": {
+              "0": 32,
+              "1": 14,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 13.53,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.663503,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 52,
+            "raw_actions_distribution": {
+              "0": 37,
+              "1": 13
+            },
+            "applied_actions_distribution": {
+              "0": 22,
+              "1": 6,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 9.63,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.360438,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 24,
+            "raw_actions_distribution": {
+              "0": 29,
+              "1": 21
+            },
+            "applied_actions_distribution": {
+              "0": 2,
+              "1": 2,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 1.16,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 122.102152,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 5.65,
+        "overall_sla_violation_rate_percent": 45.0,
+        "overall_mean_loss_percent": 26.1097,
+        "overall_override_rate_percent": 61.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 30000,
+      "timestamp": "2026-10-23 22:21:23",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_30000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.566048,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 21,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 13.52,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.664337,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 54,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 28,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 9.63,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 1.16,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 122.102986,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 5.65,
+        "overall_sla_violation_rate_percent": 45.0,
+        "overall_mean_loss_percent": 26.1097,
+        "overall_override_rate_percent": 61.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 40000,
+      "timestamp": "2026-10-23 22:22:00",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_40000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.566048,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 21,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 13.52,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.664337,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 54,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 28,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 9.63,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 1.16,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 122.102986,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 5.65,
+        "overall_sla_violation_rate_percent": 45.0,
+        "overall_mean_loss_percent": 26.1097,
+        "overall_override_rate_percent": 61.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 50000,
+      "timestamp": "2026-10-23 22:22:38",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_50000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.566048,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 21,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 13.52,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.664337,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 54,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 28,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 9.63,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 1.16,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 122.102986,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 5.65,
+        "overall_sla_violation_rate_percent": 45.0,
+        "overall_mean_loss_percent": 26.1097,
+        "overall_override_rate_percent": 61.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 60000,
+      "timestamp": "2026-10-23 22:23:15",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_60000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.566048,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 21,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 13.52,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.664337,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 54,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 28,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 9.63,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 1.16,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 122.102986,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 5.65,
+        "overall_sla_violation_rate_percent": 45.0,
+        "overall_mean_loss_percent": 26.1097,
+        "overall_override_rate_percent": 61.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 70000,
+      "timestamp": "2026-10-23 22:23:52",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_70000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.566048,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 21,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 13.52,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.664337,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 54,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 28,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 9.63,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 1.16,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 122.102986,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 5.65,
+        "overall_sla_violation_rate_percent": 45.0,
+        "overall_mean_loss_percent": 26.1097,
+        "overall_override_rate_percent": 61.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 80000,
+      "timestamp": "2026-10-23 22:24:28",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_80000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.566048,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 21,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 13.52,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.664337,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 54,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 28,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 9.63,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 1.16,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 122.102986,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 5.65,
+        "overall_sla_violation_rate_percent": 45.0,
+        "overall_mean_loss_percent": 26.1097,
+        "overall_override_rate_percent": 61.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 90000,
+      "timestamp": "2026-10-23 22:25:04",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_90000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2647.62,
+            "total_energy_kwh": 26.48123,
+            "mean_delay_ms": 0.715,
+            "p95_delay_ms": 0.899,
+            "p99_delay_ms": 0.9,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 98.1,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 15,
+            "raw_actions_distribution": {
+              "0": 16,
+              "2": 34
+            },
+            "applied_actions_distribution": {
+              "0": 15,
+              "2": 32,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 10.43,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2833.38,
+            "total_energy_kwh": 28.351264,
+            "mean_delay_ms": 2.435,
+            "p95_delay_ms": 4.424,
+            "p99_delay_ms": 4.458,
+            "mean_loss_percent": 2.7542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 6,
+            "sla_violation_rate_percent": 12.0,
+            "switch_toggles": 44,
+            "raw_actions_distribution": {
+              "0": 15,
+              "2": 35
+            },
+            "applied_actions_distribution": {
+              "0": 5,
+              "2": 30,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 7.39,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3140.75,
+            "total_energy_kwh": 31.416705,
+            "mean_delay_ms": 9.945,
+            "p95_delay_ms": 19.03,
+            "p99_delay_ms": 19.03,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 25,
+              "1": 10,
+              "2": 15
+            },
+            "applied_actions_distribution": {
+              "0": 2,
+              "2": 4,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 0.98,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "1": 49
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 123.762195,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 4.37,
+        "overall_sla_violation_rate_percent": 43.0,
+        "overall_mean_loss_percent": 25.8428,
+        "overall_override_rate_percent": 58.0,
+        "meets_safety_criteria": false
+      }
+    },
+    {
+      "step": 100000,
+      "timestamp": "2026-10-23 22:25:40",
+      "checkpoint_file": "models/pilot_fattree_k4_100k\\checkpoint_step_100000.zip",
+      "regimes": {
+        "Low": {
+          "ppo": {
+            "mean_power_w": 2689.93,
+            "total_energy_kwh": 26.902643,
+            "mean_delay_ms": 0.706,
+            "p95_delay_ms": 0.886,
+            "p99_delay_ms": 0.887,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 98.1,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 47,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ospf": {
+            "mean_power_w": 2956.42,
+            "total_energy_kwh": 29.564222,
+            "mean_delay_ms": 0.653,
+            "p95_delay_ms": 0.779,
+            "p99_delay_ms": 0.779,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 60.8,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2663.49,
+            "total_energy_kwh": 26.639071,
+            "mean_delay_ms": 0.692,
+            "p95_delay_ms": 0.851,
+            "p99_delay_ms": 0.852,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 93.9,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 23,
+              "2": 17,
+              "6": 1,
+              "7": 9
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "threshold": {
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.564381,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "switch_toggles": 17,
+            "raw_actions_distribution": {
+              "0": 47,
+              "2": 3
+            },
+            "applied_actions_distribution": {
+              "0": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "ppo_saving_percent": 9.0,
+          "static_saving_percent": 9.89,
+          "threshold_saving_percent": 13.53
+        },
+        "Medium": {
+          "ppo": {
+            "mean_power_w": 2848.68,
+            "total_energy_kwh": 28.500137,
+            "mean_delay_ms": 2.22,
+            "p95_delay_ms": 4.169,
+            "p99_delay_ms": 4.202,
+            "mean_loss_percent": 2.3114,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 5,
+            "sla_violation_rate_percent": 10.0,
+            "switch_toggles": 34,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 35,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 15,
+            "override_rate_percent": 30.0
+          },
+          "ospf": {
+            "mean_power_w": 3061.23,
+            "total_energy_kwh": 30.61227,
+            "mean_delay_ms": 1.732,
+            "p95_delay_ms": 3.163,
+            "p99_delay_ms": 3.207,
+            "mean_loss_percent": 1.4816,
+            "max_utilization_percent": 198.9,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 2814.19,
+            "total_energy_kwh": 28.155255,
+            "mean_delay_ms": 2.583,
+            "p95_delay_ms": 4.497,
+            "p99_delay_ms": 4.53,
+            "mean_loss_percent": 3.089,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "switch_toggles": 32,
+            "raw_actions_distribution": {
+              "0": 23,
+              "2": 18,
+              "7": 9
+            },
+            "applied_actions_distribution": {
+              "0": 20,
+              "2": 11,
+              "4": 2,
+              "6": 8,
+              "7": 9
+            },
+            "override_count": 10,
+            "override_rate_percent": 20.0
+          },
+          "threshold": {
+            "mean_power_w": 2767.22,
+            "total_energy_kwh": 27.690543,
+            "mean_delay_ms": 2.886,
+            "p95_delay_ms": 4.991,
+            "p99_delay_ms": 5.025,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "switch_toggles": 46,
+            "raw_actions_distribution": {
+              "0": 33,
+              "2": 14,
+              "4": 1,
+              "7": 2
+            },
+            "applied_actions_distribution": {
+              "0": 27,
+              "2": 8,
+              "4": 3,
+              "6": 10,
+              "7": 2
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "ppo_saving_percent": 6.9,
+          "static_saving_percent": 8.03,
+          "threshold_saving_percent": 9.54
+        },
+        "High": {
+          "ppo": {
+            "mean_power_w": 3143.64,
+            "total_energy_kwh": 31.444751,
+            "mean_delay_ms": 9.945,
+            "p95_delay_ms": 19.029,
+            "p99_delay_ms": 19.029,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 20,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 5,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 45,
+            "override_rate_percent": 90.0
+          },
+          "ospf": {
+            "mean_power_w": 3172.35,
+            "total_energy_kwh": 31.727625,
+            "mean_delay_ms": 9.916,
+            "p95_delay_ms": 18.985,
+            "p99_delay_ms": 18.985,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 10,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 1,
+              "7": 48
+            },
+            "override_count": 2,
+            "override_rate_percent": 4.0
+          },
+          "static": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 29,
+              "2": 18,
+              "7": 3
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 39,
+              "7": 3
+            },
+            "override_count": 43,
+            "override_rate_percent": 86.0
+          },
+          "threshold": {
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "switch_toggles": 22,
+            "raw_actions_distribution": {
+              "0": 4,
+              "2": 28,
+              "4": 14,
+              "7": 4
+            },
+            "applied_actions_distribution": {
+              "0": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 38,
+              "7": 4
+            },
+            "override_count": 41,
+            "override_rate_percent": 82.0
+          },
+          "ppo_saving_percent": 0.89,
+          "static_saving_percent": 1.16,
+          "threshold_saving_percent": 1.16
+        },
+        "Burst": {
+          "ppo": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "ospf": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "static": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "7": 50
+            },
+            "applied_actions_distribution": {
+              "7": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "threshold": {
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "switch_toggles": 0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "7": 49
+            },
+            "applied_actions_distribution": {
+              "6": 1,
+              "7": 49
+            },
+            "override_count": 1,
+            "override_rate_percent": 2.0
+          },
+          "ppo_saving_percent": 0.0,
+          "static_saving_percent": 0.0,
+          "threshold_saving_percent": 0.0
+        }
+      },
+      "overall": {
+        "ppo_total_energy_kwh": 124.360527,
+        "ospf_total_energy_kwh": 129.417113,
+        "overall_saving_percent": 3.91,
+        "overall_sla_violation_rate_percent": 42.5,
+        "overall_mean_loss_percent": 25.7321,
+        "overall_override_rate_percent": 56.5,
+        "meets_safety_criteria": false
+      }
+    }
+  ],
+  "training_telemetry": [
+    {
+      "num_timesteps": 1024,
+      "fps": 0.0,
+      "loss": 0.0,
+      "policy_loss": 0.0,
+      "value_loss": 0.0,
+      "entropy_loss": 0.0,
+      "approx_kl": 0.0,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 2048,
+      "fps": 0.0,
+      "loss": 769234.75,
+      "policy_loss": -0.0006099495920352637,
+      "value_loss": 1560007.653125,
+      "entropy_loss": -2.079404205083847,
+      "approx_kl": 6.178382318466902e-05,
+      "explained_variance": -6.222724914550781e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 3072,
+      "fps": 0.0,
+      "loss": 12447194.0,
+      "policy_loss": -4.699378332588822e-05,
+      "value_loss": 25057698.85,
+      "entropy_loss": -2.079256182909012,
+      "approx_kl": 4.856439772993326e-06,
+      "explained_variance": 8.14199447631836e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 4096,
+      "fps": 0.0,
+      "loss": 805958.75,
+      "policy_loss": -0.00033614771091379226,
+      "value_loss": 1693823.321875,
+      "entropy_loss": -2.0793203353881835,
+      "approx_kl": 2.8613372705876827e-05,
+      "explained_variance": 0.0014937520027160645,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 5120,
+      "fps": 0.0,
+      "loss": 7017893.0,
+      "policy_loss": -0.00013303225859999656,
+      "value_loss": 13807073.65,
+      "entropy_loss": -2.079284143447876,
+      "approx_kl": 5.7248398661613464e-06,
+      "explained_variance": 0.000319063663482666,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 6144,
+      "fps": 0.0,
+      "loss": 77300.5078125,
+      "policy_loss": -0.0005626543890684843,
+      "value_loss": 166047.8640625,
+      "entropy_loss": -2.079280436038971,
+      "approx_kl": 7.21507822163403e-05,
+      "explained_variance": 0.0019665956497192383,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 7168,
+      "fps": 0.0,
+      "loss": 5314841.5,
+      "policy_loss": -7.906602113507688e-05,
+      "value_loss": 11025933.35,
+      "entropy_loss": -2.078902852535248,
+      "approx_kl": 9.08970832824707e-06,
+      "explained_variance": 0.0001055002212524414,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 8192,
+      "fps": 0.0,
+      "loss": 55927992.0,
+      "policy_loss": -3.311701584607363e-05,
+      "value_loss": 112106049.2,
+      "entropy_loss": -2.0785025119781495,
+      "approx_kl": 1.1952361091971397e-06,
+      "explained_variance": -1.1920928955078125e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 9216,
+      "fps": 0.0,
+      "loss": 4476979.0,
+      "policy_loss": -0.00016507234540767967,
+      "value_loss": 9386601.3,
+      "entropy_loss": -2.0789388954639434,
+      "approx_kl": 3.748806193470955e-06,
+      "explained_variance": 9.840726852416992e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 10240,
+      "fps": 0.0,
+      "loss": 84143.6796875,
+      "policy_loss": -0.000741672539152205,
+      "value_loss": 149449.23203125,
+      "entropy_loss": -2.0791980028152466,
+      "approx_kl": 8.639914449304342e-05,
+      "explained_variance": 0.0035961270332336426,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 11264,
+      "fps": 0.0,
+      "loss": 34976.32421875,
+      "policy_loss": -0.0010466910462127998,
+      "value_loss": 70966.0068359375,
+      "entropy_loss": -2.0791578233242034,
+      "approx_kl": 0.00024135166313499212,
+      "explained_variance": 0.0007705092430114746,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 12288,
+      "fps": 0.0,
+      "loss": 7973.283203125,
+      "policy_loss": -0.004463728872360661,
+      "value_loss": 14846.03779296875,
+      "entropy_loss": -2.078846925497055,
+      "approx_kl": 0.0018934860127046704,
+      "explained_variance": 0.0022194385528564453,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 13312,
+      "fps": 0.0,
+      "loss": 408678.71875,
+      "policy_loss": -0.0005528902809601277,
+      "value_loss": 860304.8078125,
+      "entropy_loss": -2.0743781983852387,
+      "approx_kl": 0.0003100861795246601,
+      "explained_variance": 8.034706115722656e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 14336,
+      "fps": 0.0,
+      "loss": 392752.65625,
+      "policy_loss": -0.00040124037186615167,
+      "value_loss": 776787.45,
+      "entropy_loss": -2.073467844724655,
+      "approx_kl": 3.996351733803749e-05,
+      "explained_variance": 5.882978439331055e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 15360,
+      "fps": 0.0,
+      "loss": 80703.6796875,
+      "policy_loss": -0.0011369869345799089,
+      "value_loss": 134217.9681640625,
+      "entropy_loss": -2.0744987189769746,
+      "approx_kl": 0.00023006473202258348,
+      "explained_variance": 0.0002811551094055176,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 16384,
+      "fps": 0.0,
+      "loss": 365501.03125,
+      "policy_loss": -0.0007147809723392129,
+      "value_loss": 692833.63125,
+      "entropy_loss": -2.0729234874248506,
+      "approx_kl": 0.00011491944314911962,
+      "explained_variance": 4.309415817260742e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 17408,
+      "fps": 0.0,
+      "loss": 3243420.5,
+      "policy_loss": -1.5592382987961172e-05,
+      "value_loss": 7244383.55,
+      "entropy_loss": -2.0732159078121186,
+      "approx_kl": 3.4396653063595295e-06,
+      "explained_variance": 1.043081283569336e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 18432,
+      "fps": 0.0,
+      "loss": 13837760.0,
+      "policy_loss": -0.0001148293842561543,
+      "value_loss": 27622814.4,
+      "entropy_loss": -2.072582113742828,
+      "approx_kl": 2.5336630642414093e-06,
+      "explained_variance": 1.5497207641601562e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 19456,
+      "fps": 0.0,
+      "loss": 3810403.5,
+      "policy_loss": -0.0001355363754555583,
+      "value_loss": 7760221.5,
+      "entropy_loss": -2.0731394708156587,
+      "approx_kl": 3.142864443361759e-06,
+      "explained_variance": 1.0848045349121094e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 20480,
+      "fps": 0.0,
+      "loss": 5301250.0,
+      "policy_loss": -9.183745714835823e-05,
+      "value_loss": 9846898.075,
+      "entropy_loss": -2.072878873348236,
+      "approx_kl": 1.9010622054338455e-06,
+      "explained_variance": 7.748603820800781e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 21504,
+      "fps": 0.0,
+      "loss": 41647.9921875,
+      "policy_loss": -0.0006754696252755821,
+      "value_loss": 87850.1572265625,
+      "entropy_loss": -2.0747372925281526,
+      "approx_kl": 0.00011415861081331968,
+      "explained_variance": 0.0004966259002685547,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 22528,
+      "fps": 0.0,
+      "loss": 18701.66015625,
+      "policy_loss": -0.0008236797584686428,
+      "value_loss": 32446.473583984374,
+      "entropy_loss": -2.07516804933548,
+      "approx_kl": 0.00019218650413677096,
+      "explained_variance": 0.0006315112113952637,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 23552,
+      "fps": 0.0,
+      "loss": 2706.22412109375,
+      "policy_loss": -0.004021597560495138,
+      "value_loss": 5511.941955566406,
+      "entropy_loss": -2.0733900725841523,
+      "approx_kl": 0.002255100291222334,
+      "explained_variance": 0.0032540559768676758,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 24576,
+      "fps": 0.0,
+      "loss": 3284871.25,
+      "policy_loss": -0.0003008935891557485,
+      "value_loss": 7260121.3625,
+      "entropy_loss": -2.061356234550476,
+      "approx_kl": 0.0002466527512297034,
+      "explained_variance": 3.159046173095703e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 25600,
+      "fps": 0.0,
+      "loss": 59843744.0,
+      "policy_loss": -8.494860376231372e-05,
+      "value_loss": 119377772.4,
+      "entropy_loss": -2.061071914434433,
+      "approx_kl": 2.814456820487976e-06,
+      "explained_variance": -1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 26624,
+      "fps": 0.0,
+      "loss": 1246.8914794921875,
+      "policy_loss": -0.020640244823880494,
+      "value_loss": 2359.274530029297,
+      "entropy_loss": -2.050563007593155,
+      "approx_kl": 0.015482578426599503,
+      "explained_variance": -0.0005213022232055664,
+      "clip_fraction": 0.09208984375,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 27648,
+      "fps": 0.0,
+      "loss": 108490.0,
+      "policy_loss": 0.00013906581443734467,
+      "value_loss": 206097.0890625,
+      "entropy_loss": -2.013463532924652,
+      "approx_kl": 0.00035098957596346736,
+      "explained_variance": 0.0001538991928100586,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 28672,
+      "fps": 0.0,
+      "loss": 447324.03125,
+      "policy_loss": -0.0002492768166121095,
+      "value_loss": 927018.2359375,
+      "entropy_loss": -1.9884496450424194,
+      "approx_kl": 2.1425483282655478e-05,
+      "explained_variance": 5.245208740234375e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 29696,
+      "fps": 0.0,
+      "loss": 29382132.0,
+      "policy_loss": -9.100529714487494e-05,
+      "value_loss": 58387094.6,
+      "entropy_loss": -2.0063994348049166,
+      "approx_kl": 6.042129825800657e-06,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 30720,
+      "fps": 0.0,
+      "loss": 18667982.0,
+      "policy_loss": -4.6106718946248294e-05,
+      "value_loss": 37464618.3,
+      "entropy_loss": -1.989080286026001,
+      "approx_kl": 1.3210228644311428e-06,
+      "explained_variance": -1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 31744,
+      "fps": 0.0,
+      "loss": 45317324.0,
+      "policy_loss": -5.831512389704585e-05,
+      "value_loss": 90207572.4,
+      "entropy_loss": -1.9986436277627946,
+      "approx_kl": 1.4409888535737991e-06,
+      "explained_variance": 1.7881393432617188e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 32768,
+      "fps": 0.0,
+      "loss": 617269.25,
+      "policy_loss": -0.0003240874211769551,
+      "value_loss": 1131722.48125,
+      "entropy_loss": -1.988480380177498,
+      "approx_kl": 2.8206035494804382e-05,
+      "explained_variance": 4.112720489501953e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 33792,
+      "fps": 0.0,
+      "loss": 6289085.0,
+      "policy_loss": -0.00010334016405977309,
+      "value_loss": 13101942.85,
+      "entropy_loss": -1.9975788712501525,
+      "approx_kl": 5.111447535455227e-06,
+      "explained_variance": 3.5762786865234375e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 34816,
+      "fps": 0.0,
+      "loss": 652025.0625,
+      "policy_loss": -0.0002531716017983854,
+      "value_loss": 1263511.953125,
+      "entropy_loss": -2.0043545603752135,
+      "approx_kl": 7.443304639309645e-06,
+      "explained_variance": 2.664327621459961e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 35840,
+      "fps": 0.0,
+      "loss": 4979534.5,
+      "policy_loss": -0.00017669281805865467,
+      "value_loss": 9482251.625,
+      "entropy_loss": -1.9988943576812743,
+      "approx_kl": 5.814305040985346e-06,
+      "explained_variance": 7.748603820800781e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 36864,
+      "fps": 0.0,
+      "loss": 3369148.5,
+      "policy_loss": -7.792407413944601e-05,
+      "value_loss": 7051444.1,
+      "entropy_loss": -1.9986787021160126,
+      "approx_kl": 8.963397704064846e-07,
+      "explained_variance": 1.6689300537109375e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 37888,
+      "fps": 0.0,
+      "loss": 41912.5625,
+      "policy_loss": -0.0006369140290189534,
+      "value_loss": 89948.829296875,
+      "entropy_loss": -1.9978657245635987,
+      "approx_kl": 0.00014822377124801278,
+      "explained_variance": 3.600120544433594e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 38912,
+      "fps": 0.0,
+      "loss": 6442526.0,
+      "policy_loss": -2.9333366546779872e-05,
+      "value_loss": 13518028.75,
+      "entropy_loss": -1.9871142566204072,
+      "approx_kl": 2.3281783796846867e-05,
+      "explained_variance": 5.960464477539063e-08,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 39936,
+      "fps": 0.0,
+      "loss": 28318840.0,
+      "policy_loss": -5.007479921914637e-05,
+      "value_loss": 56992159.2,
+      "entropy_loss": -1.986134260892868,
+      "approx_kl": 1.4468678273260593e-06,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 40960,
+      "fps": 0.0,
+      "loss": 9851895.0,
+      "policy_loss": -0.00013388969819061458,
+      "value_loss": 19542136.4,
+      "entropy_loss": -1.9966013997793197,
+      "approx_kl": 2.9472867026925087e-06,
+      "explained_variance": 2.384185791015625e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 41984,
+      "fps": 0.0,
+      "loss": 14769316.0,
+      "policy_loss": -9.174483129754662e-05,
+      "value_loss": 29082784.8,
+      "entropy_loss": -1.999684491753578,
+      "approx_kl": 2.169108483940363e-06,
+      "explained_variance": 1.7881393432617188e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 43008,
+      "fps": 0.0,
+      "loss": 1957057.125,
+      "policy_loss": -0.00016761841252446174,
+      "value_loss": 4185674.83125,
+      "entropy_loss": -1.9941554218530655,
+      "approx_kl": 6.447546184062958e-06,
+      "explained_variance": 5.602836608886719e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 44032,
+      "fps": 0.0,
+      "loss": 61209.5078125,
+      "policy_loss": -0.0010403551976196467,
+      "value_loss": 117250.6455078125,
+      "entropy_loss": -1.988020721077919,
+      "approx_kl": 0.00021677225595340133,
+      "explained_variance": 3.36766242980957e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 45056,
+      "fps": 0.0,
+      "loss": 21538846.0,
+      "policy_loss": -0.000252737442497164,
+      "value_loss": 39577172.3,
+      "entropy_loss": -1.9909199804067612,
+      "approx_kl": 3.43737774528563e-05,
+      "explained_variance": 5.960464477539063e-08,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 46080,
+      "fps": 0.0,
+      "loss": 1628578.625,
+      "policy_loss": -0.0001500968763139099,
+      "value_loss": 3340075.04375,
+      "entropy_loss": -1.9771267771720886,
+      "approx_kl": 6.604357622563839e-06,
+      "explained_variance": 1.0728836059570312e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 47104,
+      "fps": 0.0,
+      "loss": 28200.8984375,
+      "policy_loss": -0.001009508321294561,
+      "value_loss": 57837.684375,
+      "entropy_loss": -2.0132241189479827,
+      "approx_kl": 0.00021782779367640615,
+      "explained_variance": 0.00030553340911865234,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 48128,
+      "fps": 0.0,
+      "loss": 27084734.0,
+      "policy_loss": 0.00011148389312438667,
+      "value_loss": 53416037.3,
+      "entropy_loss": -1.996416410803795,
+      "approx_kl": 3.0986382625997066e-05,
+      "explained_variance": -2.384185791015625e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 49152,
+      "fps": 0.0,
+      "loss": 46771712.0,
+      "policy_loss": -0.00010041489731520415,
+      "value_loss": 94984815.2,
+      "entropy_loss": -1.9968673318624497,
+      "approx_kl": 2.9944931156933308e-06,
+      "explained_variance": 2.980232238769531e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 50176,
+      "fps": 0.0,
+      "loss": 58877960.0,
+      "policy_loss": -4.4890196295455095e-05,
+      "value_loss": 116068138.8,
+      "entropy_loss": -1.9821641355752946,
+      "approx_kl": 1.033127773553133e-06,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 51200,
+      "fps": 0.0,
+      "loss": 53364216.0,
+      "policy_loss": -6.0407212004065514e-05,
+      "value_loss": 107486914.6,
+      "entropy_loss": -1.9813991606235504,
+      "approx_kl": 1.4599645510315895e-06,
+      "explained_variance": -1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 52224,
+      "fps": 0.0,
+      "loss": 44157664.0,
+      "policy_loss": -3.413324011489749e-05,
+      "value_loss": 87681068.6,
+      "entropy_loss": -1.9793208599090577,
+      "approx_kl": 5.986657924950123e-07,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 53248,
+      "fps": 0.0,
+      "loss": 375.7657775878906,
+      "policy_loss": -0.03194229919463396,
+      "value_loss": 695.3395172119141,
+      "entropy_loss": -1.9548330366611482,
+      "approx_kl": 0.022376345470547676,
+      "explained_variance": -0.0006676912307739258,
+      "clip_fraction": 0.27880859375,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 54272,
+      "fps": 0.0,
+      "loss": 73674936.0,
+      "policy_loss": 0.0004704646416939795,
+      "value_loss": 146197797.6,
+      "entropy_loss": -1.9029529452323914,
+      "approx_kl": 0.0007925114477984607,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 55296,
+      "fps": 0.0,
+      "loss": 164076.0625,
+      "policy_loss": -0.0005429518700111657,
+      "value_loss": 326973.05546875,
+      "entropy_loss": -1.8779792487621307,
+      "approx_kl": 8.973287185654044e-05,
+      "explained_variance": 7.748603820800781e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 56320,
+      "fps": 0.0,
+      "loss": 87733.84375,
+      "policy_loss": -0.0005066650453954935,
+      "value_loss": 169872.4708984375,
+      "entropy_loss": -1.8916603565216064,
+      "approx_kl": 5.3899537306278944e-05,
+      "explained_variance": 1.4722347259521484e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 57344,
+      "fps": 0.0,
+      "loss": 44781848.0,
+      "policy_loss": 5.680067115463316e-05,
+      "value_loss": 90165797.0,
+      "entropy_loss": -1.8959592908620835,
+      "approx_kl": 2.146646147593856e-05,
+      "explained_variance": 1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 58368,
+      "fps": 0.0,
+      "loss": 910883.1875,
+      "policy_loss": -0.00020884829573333263,
+      "value_loss": 1684818.065625,
+      "entropy_loss": -1.8682311564683913,
+      "approx_kl": 1.392606645822525e-05,
+      "explained_variance": 6.556510925292969e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 59392,
+      "fps": 0.0,
+      "loss": 70198088.0,
+      "policy_loss": -7.404654752463102e-06,
+      "value_loss": 140525238.0,
+      "entropy_loss": -1.9057903736829758,
+      "approx_kl": 2.202985342592001e-06,
+      "explained_variance": 1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 60416,
+      "fps": 0.0,
+      "loss": 74285120.0,
+      "policy_loss": -4.6636699698865415e-05,
+      "value_loss": 149913218.4,
+      "entropy_loss": -1.9077577859163284,
+      "approx_kl": 8.783536031842232e-07,
+      "explained_variance": 1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 61440,
+      "fps": 0.0,
+      "loss": 5267.625,
+      "policy_loss": -0.0020209250971674917,
+      "value_loss": 12293.26201171875,
+      "entropy_loss": -1.9347659677267075,
+      "approx_kl": 0.0007127278367988765,
+      "explained_variance": 0.00015920400619506836,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 62464,
+      "fps": 0.0,
+      "loss": 438999.34375,
+      "policy_loss": -0.000712973260669969,
+      "value_loss": 768264.0109375,
+      "entropy_loss": -1.8663238435983658,
+      "approx_kl": 0.0001634731306694448,
+      "explained_variance": 2.384185791015625e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 63488,
+      "fps": 0.0,
+      "loss": 3888547.5,
+      "policy_loss": -8.028300944715739e-05,
+      "value_loss": 8020867.075,
+      "entropy_loss": -1.882931125164032,
+      "approx_kl": 3.171211574226618e-06,
+      "explained_variance": 2.980232238769531e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 64512,
+      "fps": 0.0,
+      "loss": 27163630.0,
+      "policy_loss": -3.335227956995368e-05,
+      "value_loss": 54333706.8,
+      "entropy_loss": -1.914630538225174,
+      "approx_kl": 8.383067324757576e-07,
+      "explained_variance": -1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 65536,
+      "fps": 0.0,
+      "loss": 19183720.0,
+      "policy_loss": -5.988831981085241e-05,
+      "value_loss": 38375814.8,
+      "entropy_loss": -1.8687352120876313,
+      "approx_kl": 1.4705001376569271e-06,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 66560,
+      "fps": 0.0,
+      "loss": 2319947.75,
+      "policy_loss": -8.330326527357101e-05,
+      "value_loss": 4594068.1,
+      "entropy_loss": -1.890752449631691,
+      "approx_kl": 1.6166013665497303e-06,
+      "explained_variance": 1.7285346984863281e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 67584,
+      "fps": 0.0,
+      "loss": 46982540.0,
+      "policy_loss": -1.363821793347597e-05,
+      "value_loss": 94290743.0,
+      "entropy_loss": -1.8906179696321488,
+      "approx_kl": 4.1368184611201286e-07,
+      "explained_variance": -1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 68608,
+      "fps": 0.0,
+      "loss": 30008646.0,
+      "policy_loss": -0.00013600729871541262,
+      "value_loss": 58488695.3,
+      "entropy_loss": -1.9094631135463715,
+      "approx_kl": 3.3925753086805344e-06,
+      "explained_variance": 5.960464477539063e-08,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 69632,
+      "fps": 0.0,
+      "loss": 60288396.0,
+      "policy_loss": -1.047049881890416e-05,
+      "value_loss": 120693550.2,
+      "entropy_loss": -1.8984912276268004,
+      "approx_kl": 5.582696758210659e-07,
+      "explained_variance": -1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 70656,
+      "fps": 0.0,
+      "loss": 5570484.0,
+      "policy_loss": -9.478991851210594e-05,
+      "value_loss": 10787953.6,
+      "entropy_loss": -1.8866592943668365,
+      "approx_kl": 1.4739925973117352e-06,
+      "explained_variance": 1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 71680,
+      "fps": 0.0,
+      "loss": 389.51690673828125,
+      "policy_loss": -0.026372347841970623,
+      "value_loss": 740.9103591918945,
+      "entropy_loss": -1.8719515055418015,
+      "approx_kl": 0.021201003342866898,
+      "explained_variance": -0.0009256601333618164,
+      "clip_fraction": 0.21845703125,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 72704,
+      "fps": 0.0,
+      "loss": 194678.546875,
+      "policy_loss": 4.38727845903486e-05,
+      "value_loss": 409094.328125,
+      "entropy_loss": -1.7892191141843796,
+      "approx_kl": 0.00011997093679383397,
+      "explained_variance": 7.611513137817383e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 73728,
+      "fps": 0.0,
+      "loss": 6634233.0,
+      "policy_loss": -4.7559558879584074e-05,
+      "value_loss": 12532947.05,
+      "entropy_loss": -1.7712258219718933,
+      "approx_kl": 2.691289409995079e-06,
+      "explained_variance": 2.384185791015625e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 74752,
+      "fps": 0.0,
+      "loss": 1748725.375,
+      "policy_loss": -0.00017491820617578923,
+      "value_loss": 3113556.0,
+      "entropy_loss": -1.776651892066002,
+      "approx_kl": 6.674265023320913e-06,
+      "explained_variance": 8.046627044677734e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 75776,
+      "fps": 0.0,
+      "loss": 69893.390625,
+      "policy_loss": -0.0005666751007083803,
+      "value_loss": 142167.398828125,
+      "entropy_loss": -1.7541970700025558,
+      "approx_kl": 0.00012542435433715582,
+      "explained_variance": 1.7523765563964844e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 76800,
+      "fps": 0.0,
+      "loss": 43287856.0,
+      "policy_loss": -0.00016945924144238234,
+      "value_loss": 83157216.0,
+      "entropy_loss": -1.8305231183767319,
+      "approx_kl": 2.4193141143769026e-05,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 77824,
+      "fps": 0.0,
+      "loss": 207825.953125,
+      "policy_loss": -0.0004167847946519032,
+      "value_loss": 424788.09375,
+      "entropy_loss": -1.7394543707370758,
+      "approx_kl": 6.610475247725844e-05,
+      "explained_variance": 5.602836608886719e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 78848,
+      "fps": 0.0,
+      "loss": 22527004.0,
+      "policy_loss": -4.224166041240096e-05,
+      "value_loss": 44609582.9,
+      "entropy_loss": -1.7595443814992904,
+      "approx_kl": 1.1606141924858093e-05,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 79872,
+      "fps": 0.0,
+      "loss": 4305236.5,
+      "policy_loss": -0.00017881300009321422,
+      "value_loss": 7924836.2625,
+      "entropy_loss": -1.7528505116701125,
+      "approx_kl": 8.991220965981483e-06,
+      "explained_variance": 1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 80896,
+      "fps": 0.0,
+      "loss": 3084.20654296875,
+      "policy_loss": -0.005048896413063631,
+      "value_loss": 6016.170922851563,
+      "entropy_loss": -1.7319511353969574,
+      "approx_kl": 0.004690628964453936,
+      "explained_variance": 0.0001437067985534668,
+      "clip_fraction": 0.0123046875,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 81920,
+      "fps": 0.0,
+      "loss": 2918372.75,
+      "policy_loss": 0.00012010268401354551,
+      "value_loss": 6054209.5,
+      "entropy_loss": -1.7175385266542436,
+      "approx_kl": 0.00015932985115796328,
+      "explained_variance": 1.9073486328125e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 82944,
+      "fps": 0.0,
+      "loss": 66315672.0,
+      "policy_loss": -5.2669376600533726e-06,
+      "value_loss": 133005262.6,
+      "entropy_loss": -1.7498101741075516,
+      "approx_kl": 5.5716373026371e-07,
+      "explained_variance": 0.0,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 83968,
+      "fps": 0.0,
+      "loss": 1573.693115234375,
+      "policy_loss": -0.0056937408575322476,
+      "value_loss": 3148.7485168457033,
+      "entropy_loss": -1.7853185176849364,
+      "approx_kl": 0.004926502704620361,
+      "explained_variance": 0.0011205077171325684,
+      "clip_fraction": 0.00234375,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 84992,
+      "fps": 0.0,
+      "loss": 22531278.0,
+      "policy_loss": -0.0004464035446289927,
+      "value_loss": 48428014.9,
+      "entropy_loss": -1.6810654193162917,
+      "approx_kl": 0.00043047580402344465,
+      "explained_variance": 7.152557373046875e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 86016,
+      "fps": 0.0,
+      "loss": 11496131.0,
+      "policy_loss": -7.852761773392558e-05,
+      "value_loss": 22420534.85,
+      "entropy_loss": -1.6658219516277313,
+      "approx_kl": 2.3608445189893246e-06,
+      "explained_variance": 1.6987323760986328e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 87040,
+      "fps": 0.0,
+      "loss": 4350252.5,
+      "policy_loss": -6.115272408351302e-05,
+      "value_loss": 8586820.325,
+      "entropy_loss": -1.5542177081108093,
+      "approx_kl": 2.668006345629692e-06,
+      "explained_variance": -4.208087921142578e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 88064,
+      "fps": 0.0,
+      "loss": 75413120.0,
+      "policy_loss": -1.7742341151461004e-05,
+      "value_loss": 150089122.0,
+      "entropy_loss": -1.680774375796318,
+      "approx_kl": 6.569898687303066e-07,
+      "explained_variance": -4.76837158203125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 89088,
+      "fps": 0.0,
+      "loss": 5497056.5,
+      "policy_loss": -0.00022302377037703992,
+      "value_loss": 10369241.675,
+      "entropy_loss": -1.6355587095022202,
+      "approx_kl": 1.047749537974596e-05,
+      "explained_variance": 4.0590763092041016e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 90112,
+      "fps": 0.0,
+      "loss": 61371.46484375,
+      "policy_loss": -0.0006899282860103994,
+      "value_loss": 106321.1310546875,
+      "entropy_loss": -1.7042914003133773,
+      "approx_kl": 0.00018196203745901585,
+      "explained_variance": 0.004976153373718262,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 91136,
+      "fps": 0.0,
+      "loss": 74596.203125,
+      "policy_loss": -0.0006106166867539287,
+      "value_loss": 157949.566015625,
+      "entropy_loss": -1.6278419017791748,
+      "approx_kl": 0.0001300130388699472,
+      "explained_variance": 5.245208740234375e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 92160,
+      "fps": 0.0,
+      "loss": 23097.357421875,
+      "policy_loss": -0.0010599924251437187,
+      "value_loss": 62235.68779296875,
+      "entropy_loss": -1.679108589887619,
+      "approx_kl": 0.0005304754595272243,
+      "explained_variance": 0.00027883052825927734,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 93184,
+      "fps": 0.0,
+      "loss": 13149.9638671875,
+      "policy_loss": -0.0023154562979470937,
+      "value_loss": 30192.80849609375,
+      "entropy_loss": -1.6815647512674332,
+      "approx_kl": 0.0018588679376989603,
+      "explained_variance": 0.0003966689109802246,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 94208,
+      "fps": 0.0,
+      "loss": 30402.1796875,
+      "policy_loss": -0.0007174952886998653,
+      "value_loss": 68337.455078125,
+      "entropy_loss": -1.6314519733190536,
+      "approx_kl": 0.00033925491152331233,
+      "explained_variance": 8.934736251831055e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 95232,
+      "fps": 0.0,
+      "loss": 76562536.0,
+      "policy_loss": -0.000340251304442063,
+      "value_loss": 154000893.2,
+      "entropy_loss": -1.6922579526901245,
+      "approx_kl": 0.00012002745643258095,
+      "explained_variance": -1.1920928955078125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 96256,
+      "fps": 0.0,
+      "loss": 659788.75,
+      "policy_loss": -0.0003012252622283995,
+      "value_loss": 1332984.971875,
+      "entropy_loss": -1.657696709036827,
+      "approx_kl": 1.5116180293262005e-05,
+      "explained_variance": 3.36766242980957e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 97280,
+      "fps": 0.0,
+      "loss": 5010491.0,
+      "policy_loss": -8.580306312069296e-05,
+      "value_loss": 10542658.975,
+      "entropy_loss": -1.6320628374814987,
+      "approx_kl": 4.5006163418293e-06,
+      "explained_variance": 2.980232238769531e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 98304,
+      "fps": 0.0,
+      "loss": 348807.90625,
+      "policy_loss": -0.00023942830157466232,
+      "value_loss": 662141.2484375,
+      "entropy_loss": -1.6568262785673142,
+      "approx_kl": 7.527880370616913e-06,
+      "explained_variance": 5.459785461425781e-05,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 99328,
+      "fps": 0.0,
+      "loss": 1351101.25,
+      "policy_loss": -0.0002713802095968276,
+      "value_loss": 2587302.38125,
+      "entropy_loss": -1.5940174460411072,
+      "approx_kl": 3.0794122721999884e-05,
+      "explained_variance": 4.76837158203125e-07,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    },
+    {
+      "num_timesteps": 100352,
+      "fps": 0.0,
+      "loss": 2588035.5,
+      "policy_loss": -6.895701517350972e-05,
+      "value_loss": 5044173.3,
+      "entropy_loss": -1.6417014718055725,
+      "approx_kl": 1.1594383977353573e-06,
+      "explained_variance": 2.384185791015625e-06,
+      "clip_fraction": 0.0,
+      "mean_reward": 0.0,
+      "mean_ep_length": 0.0
+    }
+  ]
+}

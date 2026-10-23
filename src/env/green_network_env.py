@@ -473,10 +473,21 @@ class GreenNetworkEnv(gym.Env):
             return int(best), True
 
         requested_cores = len(self.core_actions[action])
+        max_cores = len(self.core_actions[self.full_action])
+
+        # If requested action is already at full capacity, never downgrade it
+        if requested_cores >= max_cores:
+            return self.full_action, False
+
         allowed = [a for a in range(len(mask)) if mask[a]]
+        if not allowed:
+            return self.full_action, True
+
         bigger = [a for a in allowed if len(self.core_actions[a]) >= requested_cores]
-        pool = bigger if bigger else allowed
-        best = min(pool, key=lambda a: (len(self.core_actions[a]), a))
+        if bigger:
+            best = min(bigger, key=lambda a: (len(self.core_actions[a]), a))
+        else:
+            best = max(allowed, key=lambda a: (len(self.core_actions[a]), a))
         return int(best), True
 
     def _init_real_traffic_source(self, split: Optional[str] = None, start_step: int = 0):
