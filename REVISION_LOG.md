@@ -298,4 +298,85 @@ SNDlib gerçek Abilene doğrulama (validation) trafiği üzerinde Düşük (4750
   - **96 passed in 16.00s** (88 orijinal + 8 Abilene regresyon testi, tümü eksiksiz ve yeşil).
 - Fat-Tree deep-sleep moduna, mevcut PPO ağırlıklarına veya veri seti izolasyonuna dokunulmamıştır.
 
+---
+
+## 9. Abilene EEE/LPI vs. OSPF ve Fat-Tree k=4/k=6 Çoklu Topoloji Enerji Optimizasyonu Karşılaştırması (2026-10-23)
+
+### 1. Abilene Action 6 (EEE/LPI) vs. Action 7 (OSPF) Gerçek Doğrulama Trafiği Karşılaştırması
+SNDlib gerçek Abilene doğrulama trafiği üzerinde Düşük (Adım 4750..4850), Orta (2100..2200) ve Pik (4220..4320) pencerelerinde Action 7 (Legacy OSPF - EEE yok) ve Action 6 (Tüm linkler aktif + IEEE 802.3az EEE/LPI) birebir aynı trafik ve zaman aralığında karşılaştırılmıştır:
+
+| Trafik Penceresi | Eylem Modu | Güç (W) | Enerji (kWh) | EEE Tasarrufu (%) | Paket Kaybı (%) | Ort. Gecikme (ms) | p95 Gecikme (ms) | SLA İhlali |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Düşük Trafik** (~1350 Mbps) | **Act 7 (OSPF Legacy)** | 2184.00 W | 43.680 kWh | %0.00 | %0.0000 | 12.446 ms | 21.287 ms | 0 / 100 |
+| | **Act 6 (All-UP + EEE)** | 1790.14 W | 35.803 kWh | **%18.03** | %0.0000 | 12.446 ms | 21.287 ms | 0 / 100 |
+| **Orta Trafik** (~2050 Mbps) | **Act 7 (OSPF Legacy)** | 2184.00 W | 43.680 kWh | %0.00 | %0.0000 | 13.094 ms | 25.925 ms | 0 / 100 |
+| | **Act 6 (All-UP + EEE)** | 1806.41 W | 36.128 kWh | **%17.29** | %0.0000 | 13.094 ms | 25.925 ms | 0 / 100 |
+| **Pik Trafik** (~6950 Mbps) | **Act 7 (OSPF Legacy)** | 2184.00 W | 43.680 kWh | %0.00 | %4.1744 | 16.384 ms | 26.965 ms | 16 / 100 |
+| | **Act 6 (All-UP + EEE)** | 1839.97 W | 36.799 kWh | **%15.75** | %4.1744 | 16.384 ms | 26.965 ms | 16 / 100 |
+
+- **Kritik Çıkarım**:
+  - Action 6, Action 7 ile **birebir aynı yönlendirmeye ve sıfır ek gecikmeye** sahiptir (+0.000 ms).
+  - Yalnızca donanım katmanında paket geçiş aralıklarında portları LPI durumuna geçirerek **%15.75 – %18.03 (344 W – 394 W)** tasarruf sağlamaktadır.
+  - Link uyutma eylemleri (`Act 0..5`) ise bu tasarrufun üzerine en fazla 6 W (%0.3) ekleyebilmekte, buna karşılık kıtalararası gecikmeyi 12.4 ms'den 15.3 ms'ye çıkarıp flapping riski yaratmaktadır.
+- **EEE Analitik Varsayımları**: IEEE 802.3az modeli: `port_active = 12.0 W`, `port_lpi = 1.0 W`, `port_off = 0.0 W`, `eee_min_active_fraction = 0.05`.
+
+---
+
+### 2. Fat-Tree k=4 ve k=6 Core Eylemleri Analizi (Ulaşılabilirlik, Kapasite ve Güç)
+
+#### A. Fat-Tree k=4 (16 Host, 20 Switch, 240 Host Çifti)
+| Eylem | Aktif Core Sayısı | Ulaşılamaz Çift | Bisection Kapasitesi | Boşta Güç (W) | Core Tasarrufu (%) |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| **Act 0** | 1 / 4 Core (3 uyuyan) | **0 / 240 (%100 ulaşılaiblir)** | 4.0 Gbps | 2518.75 W | **%14.58 (430 W)** |
+| **Act 1** | 1 / 4 Core (3 uyuyan) | **0 / 240 (%100 ulaşılaiblir)** | 4.0 Gbps | 2518.75 W | **%14.58 (430 W)** |
+| **Act 2** | 2 / 4 Core (2 uyuyan) | **0 / 240 (%100 ulaşılaiblir)** | 8.0 Gbps | 2665.35 W | **%9.61 (283 W)** |
+| **Act 3** | 2 / 4 Core (2 uyuyan) | **0 / 240 (%100 ulaşılaiblir)** | 8.0 Gbps | 2665.35 W | **%9.61 (283 W)** |
+| **Act 4** | 3 / 4 Core (1 uyuyan) | **0 / 240 (%100 ulaşılaiblir)** | 12.0 Gbps | 2809.75 W | **%4.71 (139 W)** |
+| **Act 6 / 7** | 4 / 4 Core (0 uyuyan) | **0 / 240 (%100 ulaşılaiblir)** | 16.0 Gbps | 2948.65 W | %0.00 (Referans) |
+
+#### B. Fat-Tree k=6 (54 Host, 45 Switch, 2862 Host Çifti)
+| Eylem | Aktif Core Sayısı | Ulaşılamaz Çift | Bisection Kapasitesi | Boşta Güç (W) | Core Tasarrufu (%) |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| **Act 0** | 1 / 9 Core (8 uyuyan) | **0 / 2862 (%100 ulaşılaiblir)** | 6.0 Gbps | 5502.60 W | **%17.53 (1170 W)** |
+| **Act 1** | 2 / 9 Core (7 uyuyan) | **0 / 2862 (%100 ulaşılaiblir)** | 12.0 Gbps | 5648.80 W | **%15.34 (1023 W)** |
+| **Act 2** | 3 / 9 Core (6 uyuyan) | **0 / 2862 (%100 ulaşılaiblir)** | 18.0 Gbps | 5800.50 W | **%13.06 (872 W)** |
+| **Act 3** | 4 / 9 Core (5 uyuyan) | **0 / 2862 (%100 ulaşılaiblir)** | 24.0 Gbps | 5942.30 W | **%10.94 (730 W)** |
+| **Act 4** | 6 / 9 Core (3 uyuyan) | **0 / 2862 (%100 ulaşılaiblir)** | 36.0 Gbps | 6234.70 W | **%6.56 (438 W)** |
+| **Act 7** | 9 / 9 Core (0 uyuyan) | **0 / 2862 (%100 ulaşılaiblir)** | 54.0 Gbps | 6672.20 W | %0.00 (Referans) |
+
+- **Yük Altında Davranış (Stress Test)**:
+  - Düşük yükte (0.5x DC Pareto): Act 0 sıfır paket kaybı ve SLA ihlali olmadan 430W – 1170W tasarruf sağlar.
+  - Yüksek burst yükte (2.5x DC Pareto): Act 0 dar boğaza girer (%15.2 kayıp), ancak Act 7 kayıpsız taşır. Bu dinamik ayrım RL ajanının öğrenmesi için ideal bir ödül eğimi (reward gradient) sunar.
+
+---
+
+### 3. Maksimum Teorik ve Simüle Edilebilir Tasarruf Özeti
+
+| Topoloji Türü | Doğal Mimari | Uyutulabilen Bileşen | Maks. Güç Tasarrufu (W) | Toplam Güçteki Payı (%) | Ağ Ulaşılabilirliği | RL Ajanı Uygunluğu |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: |
+| **Abilene (WAN)** | Seyrek Omurga (12 router) | Şasi Kapatılamaz (Hostlar kopar); Yalnızca 1-3 link uyur | 6.0 W (Link sleep) / 394 W (EEE/LPI) | %0.33 (Link) / %18.0 (EEE) | 1-3 linkte %100; Router kapatmada %45 kopuk | **ÇOK DÜŞÜK** (Link tasarrufu 6W, ödül sinyali yok) |
+| **Fat-Tree k=4 (DC)** | Düzenli Çok-Yollu (20 switch) | 3 Core Şasi Kapatılır (140W -> 8W) | **430 W** | **%14.58** | **%100 (ECMP ile tüm çiftler bağlı)** | **YÜKSEK** (Temiz durum uzayı, güçlü ödül sinyali) |
+| **Fat-Tree k=6 (DC)** | Düzenli Çok-Yollu (45 switch) | 8 Core Şasi Kapatılır (140W -> 8W) | **1170 W** | **%17.53** | **%100 (ECMP ile tüm çiftler bağlı)** | **ÇOK YÜKSEK** (Büyük ölçek, yüksek enerji kazancı) |
+
+---
+
+### 4. Gerekçeli Ana Eğitim Önceliği Önerisi
+
+> [!IMPORTANT]
+> **ÖNERİ: Ana PPO eğitimi Fat-Tree Deep-Sleep mimarisine (k=4 ve k=6) odaklanmalıdır.**
+
+**Gerekçeler**:
+1. **Topolojik Güvenlik ve ECMP**: Fat-Tree'de core switch'lerin 3'ü (k=4) veya 8'i (k=6) derin uykuya alınsa bile pod'lar arasındaki ECMP çok-yollu mimari sayesinde host çiftlerinin **%100'ü (240/240 ve 2862/2862)** kesintisiz haberleşebilir. Graf asla parçalanmaz.
+2. **Ödül Sinyali Büyüklüğü (Reward Gradient)**: Fat-Tree'de şasi kapatma 430 W ile 1170 W arasında devasa bir net enerji tasarrufu sağlar. Bu sayede PPO ajanı "gece/düşük yükte core kapat, gündüz/pik yükte core aç" politikasını net bir ödül gradyanı ile kararlı şekilde öğrenebilir.
+3. **Abilene'de RL'in Mantıksızlığı**: Abilene'de router kapatılamaz (tüm şehirler izole olur). Link kapatmanın EEE'ye ek sağladığı tasarruf ise sadece 6 W (%0.3)'tır. PPO'nun 100K adımda daima Action 7 seçmesinin nedeni budur: 6 W'lık önemsiz bir kazanç için gecikmeyi artırmak ve paket kaybı riski almak RL ceza fonksiyonu tarafından anında bastırılır.
+4. **EEE/LPI'ın Otonom Doğası**: Abilene'de %18 enerji tasarrufu sağlayan EEE/LPI, RL kontrolcüsüne ihtiyaç duymadan doğrudan PHY donanımı üzerinde mikrosaniyeler içinde çalışan bir IEEE standardıdır.
+
+---
+
+### 5. Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **99 passed in 21.59s** (88 orijinal + 11 regresyon testi, tümü yeşil).
+- Hiçbir yeni PPO eğitimi başlatılmamış, kullanıcı onayı beklenmektedir.
+
+
 

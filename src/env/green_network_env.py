@@ -627,11 +627,19 @@ class GreenNetworkEnv(gym.Env):
         congested_links_count = res["congested_links"]
 
         # 5. Power & Energy (with EEE/LPI, port-off, deep sleep and transition costs)
+        # In link-level WAN mode: Action 7 is legacy baseline without EEE (constant 12W active ports).
+        # Action 6 is full topology with adaptive IEEE 802.3az EEE/LPI enabled on all links.
+        # Actions 0..5 combine physical link sleep (0W off) with EEE/LPI on remaining links.
+        if getattr(self, "is_link_level", False) and self.current_action == self.full_action:
+            utils_for_power = None
+        else:
+            utils_for_power = {l: min(1.0, u) for l, u in self.link_utilizations.items()}
+
         power_info = self.power_model.calculate_total_power(
             switch_states=self.switch_states,
             link_states=link_states,
             switch_port_counts=self.switch_ports,
-            link_utilizations={l: min(1.0, u) for l, u in self.link_utilizations.items()},
+            link_utilizations=utils_for_power,
         )
         trans = self.power_model.transition_energy_j(
             self._prev_switch_states, self.switch_states, self._prev_link_states, link_states

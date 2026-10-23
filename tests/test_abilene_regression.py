@@ -100,3 +100,36 @@ def test_energy_model_assumptions_label():
     assert "energy_model_assumptions" in info
     assert "Not measured or verified on physical hardware" in info["energy_model_assumptions"]
 
+
+def test_abilene_act6_eee_vs_act7_ospf_power():
+    """Verify that in link_level mode, Action 6 (EEE/LPI) saves power over Action 7 (OSPF legacy) with identical QoS."""
+    env = GreenNetworkEnv(topology_type="abilene", green_mode="link_level", use_safety_filter=False)
+    env.reset()
+    _, _, _, _, info7 = env.step(7)
+    env.reset()
+    _, _, _, _, info6 = env.step(6)
+    assert info7["total_power_w"] > info6["total_power_w"]
+    assert info7["avg_delay_ms"] == pytest.approx(info6["avg_delay_ms"])
+    assert info7["packet_loss_rate"] == pytest.approx(info6["packet_loss_rate"])
+
+
+def test_fattree_k4_all_actions_reachability():
+    """Verify that in FatTree k=4, all 8 core actions have 0 unroutable host pairs (100% reachability)."""
+    env = GreenNetworkEnv(topology_type="fattree_k4", k=4)
+    total_pairs = len(env.topology.hosts) * (len(env.topology.hosts) - 1)
+    assert total_pairs == 240
+    for act in range(8):
+        unroutable = sum(1 for (s, d), paths in env._action_paths[act].items() if len(paths) == 0)
+        assert unroutable == 0, f"FatTree k=4 action {act} has {unroutable} unroutable pairs"
+
+
+def test_fattree_k6_all_actions_reachability():
+    """Verify that in FatTree k=6, all 8 core actions have 0 unroutable host pairs (100% reachability)."""
+    env = GreenNetworkEnv(topology_type="fattree_k6", k=6)
+    total_pairs = len(env.topology.hosts) * (len(env.topology.hosts) - 1)
+    assert total_pairs == 2862
+    for act in range(8):
+        unroutable = sum(1 for (s, d), paths in env._action_paths[act].items() if len(paths) == 0)
+        assert unroutable == 0, f"FatTree k=6 action {act} has {unroutable} unroutable pairs"
+
+

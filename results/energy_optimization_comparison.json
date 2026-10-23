@@ -1,0 +1,502 @@
+{
+  "timestamp": "2026-10-23T22:05:00",
+  "abilene_act6_vs_act7": {
+    "Low Traffic": {
+      "act_7": {
+        "action": 7,
+        "label": "Action 7 (OSPF Legacy - No EEE)",
+        "mean_power_w": 2184.0,
+        "total_energy_kwh": 43.68,
+        "mean_delay_ms": 12.446,
+        "p95_delay_ms": 21.287,
+        "p99_delay_ms": 26.235,
+        "mean_loss_percent": 0.0,
+        "max_utilization_percent": 31.2,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "mean_ports_active": 42.0,
+        "mean_ports_lpi": 0.0,
+        "mean_ports_off": 0.0
+      },
+      "act_6": {
+        "action": 6,
+        "label": "Action 6 (All Active + EEE/LPI)",
+        "mean_power_w": 1790.14,
+        "total_energy_kwh": 35.802722,
+        "mean_delay_ms": 12.446,
+        "p95_delay_ms": 21.287,
+        "p99_delay_ms": 26.235,
+        "mean_loss_percent": 0.0,
+        "max_utilization_percent": 31.2,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "mean_ports_active": 42.0,
+        "mean_ports_lpi": 0.0,
+        "mean_ports_off": 0.0
+      },
+      "saving_percent": 18.03
+    },
+    "Medium Traffic": {
+      "act_7": {
+        "action": 7,
+        "label": "Action 7 (OSPF Legacy - No EEE)",
+        "mean_power_w": 2184.0,
+        "total_energy_kwh": 43.68,
+        "mean_delay_ms": 13.094,
+        "p95_delay_ms": 25.925,
+        "p99_delay_ms": 26.367,
+        "mean_loss_percent": 0.0,
+        "max_utilization_percent": 38.0,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "mean_ports_active": 42.0,
+        "mean_ports_lpi": 0.0,
+        "mean_ports_off": 0.0
+      },
+      "act_6": {
+        "action": 6,
+        "label": "Action 6 (All Active + EEE/LPI)",
+        "mean_power_w": 1806.41,
+        "total_energy_kwh": 36.128238,
+        "mean_delay_ms": 13.094,
+        "p95_delay_ms": 25.925,
+        "p99_delay_ms": 26.367,
+        "mean_loss_percent": 0.0,
+        "max_utilization_percent": 38.0,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "mean_ports_active": 42.0,
+        "mean_ports_lpi": 0.0,
+        "mean_ports_off": 0.0
+      },
+      "saving_percent": 17.29
+    },
+    "Peak Traffic": {
+      "act_7": {
+        "action": 7,
+        "label": "Action 7 (OSPF Legacy - No EEE)",
+        "mean_power_w": 2184.0,
+        "total_energy_kwh": 43.68,
+        "mean_delay_ms": 16.384,
+        "p95_delay_ms": 26.964,
+        "p99_delay_ms": 30.446,
+        "mean_loss_percent": 4.1744,
+        "max_utilization_percent": 237.3,
+        "sla_violations": 16,
+        "sla_violation_rate_percent": 16.0,
+        "mean_ports_active": 42.0,
+        "mean_ports_lpi": 0.0,
+        "mean_ports_off": 0.0
+      },
+      "act_6": {
+        "action": 6,
+        "label": "Action 6 (All Active + EEE/LPI)",
+        "mean_power_w": 1839.97,
+        "total_energy_kwh": 36.799404,
+        "mean_delay_ms": 16.384,
+        "p95_delay_ms": 26.964,
+        "p99_delay_ms": 30.446,
+        "mean_loss_percent": 4.1744,
+        "max_utilization_percent": 237.3,
+        "sla_violations": 16,
+        "sla_violation_rate_percent": 16.0,
+        "mean_ports_active": 42.0,
+        "mean_ports_lpi": 0.0,
+        "mean_ports_off": 0.0
+      },
+      "saving_percent": 15.75
+    }
+  },
+  "fattree_k4": {
+    "k": 4,
+    "actions": [
+      {
+        "action": 0,
+        "active_cores_count": 1,
+        "sleeping_cores_count": 3,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 4.0,
+        "idle_power_w": 2518.75,
+        "saving_vs_full_percent": 14.58
+      },
+      {
+        "action": 1,
+        "active_cores_count": 1,
+        "sleeping_cores_count": 3,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 4.0,
+        "idle_power_w": 2518.75,
+        "saving_vs_full_percent": 14.58
+      },
+      {
+        "action": 2,
+        "active_cores_count": 2,
+        "sleeping_cores_count": 2,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 8.0,
+        "idle_power_w": 2665.35,
+        "saving_vs_full_percent": 9.61
+      },
+      {
+        "action": 3,
+        "active_cores_count": 2,
+        "sleeping_cores_count": 2,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 8.0,
+        "idle_power_w": 2665.35,
+        "saving_vs_full_percent": 9.61
+      },
+      {
+        "action": 4,
+        "active_cores_count": 3,
+        "sleeping_cores_count": 1,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 12.0,
+        "idle_power_w": 2809.75,
+        "saving_vs_full_percent": 4.71
+      },
+      {
+        "action": 5,
+        "active_cores_count": 3,
+        "sleeping_cores_count": 1,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 12.0,
+        "idle_power_w": 2806.45,
+        "saving_vs_full_percent": 4.82
+      },
+      {
+        "action": 6,
+        "active_cores_count": 4,
+        "sleeping_cores_count": 0,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 16.0,
+        "idle_power_w": 2948.65,
+        "saving_vs_full_percent": 0.0
+      },
+      {
+        "action": 7,
+        "active_cores_count": 4,
+        "sleeping_cores_count": 0,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 16.0,
+        "idle_power_w": 2948.65,
+        "saving_vs_full_percent": 0.0
+      }
+    ],
+    "load_tests": {
+      "Light Load (0.5x)": {
+        "act_0": {
+          "active_cores": 1,
+          "mean_delay_ms": 1.273,
+          "mean_loss_percent": 0.781,
+          "max_util_percent": 120.1,
+          "sla_breach_rate": 10.0
+        },
+        "act_2": {
+          "active_cores": 2,
+          "mean_delay_ms": 1.072,
+          "mean_loss_percent": 0.4967,
+          "max_util_percent": 113.5,
+          "sla_breach_rate": 10.0
+        },
+        "act_4": {
+          "active_cores": 3,
+          "mean_delay_ms": 0.989,
+          "mean_loss_percent": 0.2277,
+          "max_util_percent": 112.2,
+          "sla_breach_rate": 6.7
+        },
+        "act_7": {
+          "active_cores": 4,
+          "mean_delay_ms": 0.97,
+          "mean_loss_percent": 0.2287,
+          "max_util_percent": 112.3,
+          "sla_breach_rate": 6.7
+        }
+      },
+      "Medium Load (1.2x)": {
+        "act_0": {
+          "active_cores": 1,
+          "mean_delay_ms": 3.53,
+          "mean_loss_percent": 4.2833,
+          "max_util_percent": 420.2,
+          "sla_breach_rate": 16.7
+        },
+        "act_2": {
+          "active_cores": 2,
+          "mean_delay_ms": 2.896,
+          "mean_loss_percent": 2.697,
+          "max_util_percent": 307.6,
+          "sla_breach_rate": 20.0
+        },
+        "act_4": {
+          "active_cores": 3,
+          "mean_delay_ms": 2.821,
+          "mean_loss_percent": 2.89,
+          "max_util_percent": 307.8,
+          "sla_breach_rate": 16.7
+        },
+        "act_7": {
+          "active_cores": 4,
+          "mean_delay_ms": 2.394,
+          "mean_loss_percent": 1.9723,
+          "max_util_percent": 290.0,
+          "sla_breach_rate": 6.7
+        }
+      },
+      "Heavy Burst (2.5x)": {
+        "act_0": {
+          "active_cores": 1,
+          "mean_delay_ms": 16.049,
+          "mean_loss_percent": 29.2303,
+          "max_util_percent": 379.1,
+          "sla_breach_rate": 90.0
+        },
+        "act_2": {
+          "active_cores": 2,
+          "mean_delay_ms": 10.897,
+          "mean_loss_percent": 19.532,
+          "max_util_percent": 270.6,
+          "sla_breach_rate": 76.7
+        },
+        "act_4": {
+          "active_cores": 3,
+          "mean_delay_ms": 10.638,
+          "mean_loss_percent": 18.8247,
+          "max_util_percent": 276.3,
+          "sla_breach_rate": 83.3
+        },
+        "act_7": {
+          "active_cores": 4,
+          "mean_delay_ms": 8.75,
+          "mean_loss_percent": 15.3747,
+          "max_util_percent": 276.7,
+          "sla_breach_rate": 70.0
+        }
+      }
+    }
+  },
+  "fattree_k6": {
+    "k": 6,
+    "actions": [
+      {
+        "action": 0,
+        "active_cores_count": 1,
+        "sleeping_cores_count": 8,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 6.0,
+        "idle_power_w": 5502.6,
+        "saving_vs_full_percent": 17.53
+      },
+      {
+        "action": 1,
+        "active_cores_count": 2,
+        "sleeping_cores_count": 7,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 12.0,
+        "idle_power_w": 5648.8,
+        "saving_vs_full_percent": 15.34
+      },
+      {
+        "action": 2,
+        "active_cores_count": 3,
+        "sleeping_cores_count": 6,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 18.0,
+        "idle_power_w": 5800.5,
+        "saving_vs_full_percent": 13.06
+      },
+      {
+        "action": 3,
+        "active_cores_count": 4,
+        "sleeping_cores_count": 5,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 24.0,
+        "idle_power_w": 5942.3,
+        "saving_vs_full_percent": 10.94
+      },
+      {
+        "action": 4,
+        "active_cores_count": 6,
+        "sleeping_cores_count": 3,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 36.0,
+        "idle_power_w": 6234.7,
+        "saving_vs_full_percent": 6.56
+      },
+      {
+        "action": 5,
+        "active_cores_count": 7,
+        "sleeping_cores_count": 2,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 42.0,
+        "idle_power_w": 6384.2,
+        "saving_vs_full_percent": 4.32
+      },
+      {
+        "action": 6,
+        "active_cores_count": 8,
+        "sleeping_cores_count": 1,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 48.0,
+        "idle_power_w": 6521.6,
+        "saving_vs_full_percent": 2.26
+      },
+      {
+        "action": 7,
+        "active_cores_count": 9,
+        "sleeping_cores_count": 0,
+        "unroutable_pairs": 0,
+        "reachability_percent": 100.0,
+        "core_capacity_gbps": 54.0,
+        "idle_power_w": 6672.2,
+        "saving_vs_full_percent": 0.0
+      }
+    ],
+    "load_tests": {
+      "Light Load (0.5x)": {
+        "act_0": {
+          "active_cores": 1,
+          "mean_delay_ms": 0.85,
+          "mean_loss_percent": 0.0,
+          "max_util_percent": 97.7,
+          "sla_breach_rate": 3.3
+        },
+        "act_2": {
+          "active_cores": 3,
+          "mean_delay_ms": 0.791,
+          "mean_loss_percent": 0.0,
+          "max_util_percent": 92.4,
+          "sla_breach_rate": 3.3
+        },
+        "act_4": {
+          "active_cores": 6,
+          "mean_delay_ms": 0.683,
+          "mean_loss_percent": 0.0,
+          "max_util_percent": 66.2,
+          "sla_breach_rate": 0.0
+        },
+        "act_7": {
+          "active_cores": 9,
+          "mean_delay_ms": 0.772,
+          "mean_loss_percent": 0.0,
+          "max_util_percent": 92.4,
+          "sla_breach_rate": 3.3
+        }
+      },
+      "Medium Load (1.2x)": {
+        "act_0": {
+          "active_cores": 1,
+          "mean_delay_ms": 3.261,
+          "mean_loss_percent": 5.1307,
+          "max_util_percent": 338.2,
+          "sla_breach_rate": 16.7
+        },
+        "act_2": {
+          "active_cores": 3,
+          "mean_delay_ms": 2.237,
+          "mean_loss_percent": 2.0237,
+          "max_util_percent": 201.0,
+          "sla_breach_rate": 16.7
+        },
+        "act_4": {
+          "active_cores": 6,
+          "mean_delay_ms": 2.011,
+          "mean_loss_percent": 1.5107,
+          "max_util_percent": 210.0,
+          "sla_breach_rate": 13.3
+        },
+        "act_7": {
+          "active_cores": 9,
+          "mean_delay_ms": 1.947,
+          "mean_loss_percent": 1.692,
+          "max_util_percent": 279.6,
+          "sla_breach_rate": 10.0
+        }
+      },
+      "Heavy Burst (2.5x)": {
+        "act_0": {
+          "active_cores": 1,
+          "mean_delay_ms": 10.457,
+          "mean_loss_percent": 23.5657,
+          "max_util_percent": 458.0,
+          "sla_breach_rate": 73.3
+        },
+        "act_2": {
+          "active_cores": 3,
+          "mean_delay_ms": 6.418,
+          "mean_loss_percent": 10.9893,
+          "max_util_percent": 304.8,
+          "sla_breach_rate": 56.7
+        },
+        "act_4": {
+          "active_cores": 6,
+          "mean_delay_ms": 5.484,
+          "mean_loss_percent": 8.5957,
+          "max_util_percent": 304.8,
+          "sla_breach_rate": 50.0
+        },
+        "act_7": {
+          "active_cores": 9,
+          "mean_delay_ms": 5.234,
+          "mean_loss_percent": 7.8223,
+          "max_util_percent": 285.0,
+          "sla_breach_rate": 53.3
+        }
+      }
+    }
+  },
+  "theoretical_analysis": {
+    "abilene_wan": {
+      "chassis_base_power_w": 1680.0,
+      "chassis_fraction_percent": 93.3,
+      "max_safe_sleeping_links": 3,
+      "pure_link_sleep_saving_w": 6.0,
+      "pure_link_sleep_saving_percent": 0.33,
+      "pure_eee_saving_w": 330.0,
+      "pure_eee_saving_percent": 16.18,
+      "combined_max_saving_percent": 16.47,
+      "feasibility_assessment": "Topologically safe with routers ON; energy savings physically dominated by 1680W chassis base power."
+    },
+    "fattree_k4": {
+      "switches_total": 20,
+      "core_switches": 4,
+      "max_sleepable_cores": 3,
+      "chassis_saving_w": 396.0,
+      "max_chassis_saving_percent": 14.14,
+      "feasibility_assessment": "100% reachability preserved across all actions via ECMP multipath. Strong reward gradient."
+    },
+    "fattree_k6": {
+      "switches_total": 45,
+      "core_switches": 9,
+      "max_sleepable_cores": 8,
+      "chassis_saving_w": 1056.0,
+      "max_chassis_saving_percent": 16.76,
+      "feasibility_assessment": "Substantial energy savings (>1056 W). Full ECMP diversity. Highest RL optimization potential."
+    }
+  },
+  "recommendation": {
+    "primary_training_target": "Fat-Tree DC Core Switch Deep-Sleep",
+    "justification": [
+      "1. Fat-Tree provides ECMP multipath where 100% host reachability is preserved even with 1 core active.",
+      "2. Fat-Tree core switch sleep turns off whole chassis (140W -> 8W), yielding 396W (k=4) to 1056W (k=6) savings (~14-16% total DC power), creating a strong, stable reward gradient for PPO.",
+      "3. In contrast, Abilene WAN router chassis cannot sleep without isolating cities (1680W fixed power). Link-level sleep saves only 6W (0.33%), which produces a near-zero RL gradient and is easily suppressed by delay penalties.",
+      "4. Pure EEE/LPI on Abilene (Action 6) achieves ~11-12% power reduction statically without any link shutdown, packet loss, or routing change."
+    ]
+  }
+}
