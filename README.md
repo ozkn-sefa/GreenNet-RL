@@ -1,194 +1,140 @@
-# 🌿 Green SDN: Akıllı Ağ Yönetimi İçin Pekiştirmeli Öğrenme (RL) Destekli Yeşil Yönlendirme ve Enerji Optimizasyonu
+# GreenNet-RL 🌿
 
-[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/)
-[![Gymnasium](https://img.shields.io/badge/Gymnasium-v0.29-brightgreen.svg)](https://gymnasium.farama.org/)
-[![Stable Baselines3](https://img.shields.io/badge/RL-Stable--Baselines3-orange.svg)](https://stable-baselines3.readthedocs.io/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110-009688.svg)](https://fastapi.tiangolo.com/)
-[![Mininet Ready](https://img.shields.io/badge/SDN-Mininet%20%26%20Ryu-blueviolet.svg)](http://mininet.org/)
+**Pekiştirmeli öğrenmeyle ağ enerjisi ve hizmet kalitesi (QoS) optimizasyonu için Python tabanlı araştırma prototipi.**
 
-Bu proje, modern veri merkezi ağlarında (Data Center Networks - DCN) ve Yazılım Tanımlı Ağlar (SDN) ortamında hizmet kalitesinden (QoS) ödün vermeksizin **enerji tüketimini en aza indiren** ileri seviye bir **Pekiştirmeli Öğrenme (Reinforcement Learning - RL)** optimizasyon sistemidir.
+GreenNet-RL; NetworkX topolojileri, Gymnasium ortamı ve Stable-Baselines3 ajanları kullanarak ağdaki enerji–performans ödünleşimini inceler. FastAPI tabanlı bir simülasyon paneli, baseline karşılaştırmaları ve isteğe bağlı SDN/Mininet deney betikleri içerir.
 
-Proje hem **Windows ortamında doğrudan çalıştırılabilen yüksek hızlı bir dijital ikiz simülatörü ve canlı web paneline** hem de gerçek bir testbed ortamında test edilebilmesi için **Mininet & Ryu SDN Denetleyicisi dışa aktarma modülüne** sahiptir.
+> **Araştırma durumu (23 Ekim 2026):** Abilene üzerinde 100.000 adımlık PPO pilotu tamamlanmıştır. Mevcut *router deep-sleep* eylemleriyle PPO, OSPF'ye karşı **%0 enerji tasarrufu** sağlamıştır; çünkü router kapatma bazı kaynak–hedef çiftlerini bağlantısız bırakmaktadır. Link/port seviyesinde enerji kontrolü bir sonraki araştırma aşamasıdır; henüz doğrulanmış sonuç olarak sunulmamaktadır.
 
----
+## Özellikler ve kapsam
 
-## 🎯 Projenin Temel Amaçları ve Özellikleri
+- **Topolojiler:** Fat-Tree, NSFNET ve SNDlib Abilene için NetworkX tabanlı ağ modelleri.
+- **RL:** Gymnasium özel ortamında Stable-Baselines3 PPO; ayrıca DQN ve OSPF/ECMP, Static Heuristic, Threshold baseline altyapısı.
+- **Enerji modeli:** Switch şasisi, port durumu, LPI ve geçiş maliyetlerini ayıran **simüle edilmiş** enerji hesapları; gerçek donanım ölçümü değildir.
+- **QoS:** Yönlendirme, uçtan uca gecikme, paket kaybı, SLA ihlalleri, enerji tüketimi ve switching ölçümleri.
+- **Veri:** Gerçek SNDlib Abilene 5 dakikalık talep matrisleri; sentetik trafik senaryoları ayrıca desteklenir.
+- **Arayüz:** `run.py` üzerinden yerel web paneli.
+- **SDN:** PolicyBridge ve Ryu/Mininet için deneysel entegrasyon; canlı Linux/OVS üzerinde uçtan uca doğrulama henüz tamamlanmamıştır.
 
-1. **Yeşil Bilişim & Endüstri 5.0 Uyumu:**
-   * Düşük ve orta yük dönemlerinde gereksiz açık kalan omurga (Core) anahtarlarını ve bağlantı portlarını **IEEE 802.3az Low Power Idle (LPI) / Sleep** moduna alır.
-   * Geleneksel yöntemlere (OSPF / ECMP) kıyasla **%25 - %45 oranında enerji tasarrufu** sağlar.
+## Hızlı başlangıç — Windows PowerShell
 
-2. **QoS (Hizmet Kalitesi) Güvencesi:**
-   * Çok amaçlı ödül fonksiyonu ($R$), gecikme (latency) ve paket kaybını sıkı şekilde cezalandırır.
-   * Trafik ani artış gösterdiğinde (DDoS, yedekleme patlaması, prime-time) ajan uyuyan omurga anahtarlarını anında uyandırarak darboğazı engeller.
+**Gereksinimler:** Python **3.12** önerilir. Projedeki `numpy<2` bağımlılığı nedeniyle Python 3.13 ortamında kurulum başarısız olabilir.
 
-3. **Mininet & Ryu SDN Tam Uyumluluğu:**
-   * Topoloji ve akış tablosu kuralları OpenFlow 1.3 standardında çalışır.
-   * Tek tıkla veya komutla Mininet topolojisi (`fattree_topo.py`) ve Ryu kontrolcüsü (`ryu_green_controller.py`) üretilebilir.
+```powershell
+# Proje kök dizininde
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install pytest
+python -m pytest tests -q
+python run.py
+```
 
-4. **NOC Seviyesinde İnteraktif Web Simülasyon Paneli:**
-   * WebSocket ile anlık 60 FPS canlı paket akışları, renk kodlu bağlantı dolulukları, anlık güç/karbon tasarruf sayaçları ve OSPF ile canlı kıyaslama grafiği.
+Sunucu açıldıktan sonra `http://127.0.0.1:8000` adresine gidin. Panelin başlaması, tüm model/SDN entegrasyonlarının uçtan uca doğrulandığı anlamına gelmez.
 
----
+## Gerçek Abilene trafik verisi
 
-## 🏗️ Sistem Mimarisi
+Trafik kaynağı: **SNDlib / Yin Zhang Abilene Traffic Matrices**, Native 1.0 biçimi (`MBITPERSEC`), 5 dakikalık ölçümler. Toplam **48.096** zaman damgalı talep matrisi, her matriste 12 düğüm arasında 132 yönlü kaynak–hedef talebi vardır.
+
+- Resmî veri sayfası: https://sndlib.put.poznan.pl/dynamicmatrices.overview.action
+- Ham veriyi arşiv olarak ve/veya çıkarılmış dosyalar halinde `data/raw/abilene/` altında tutun.
+- `data/raw/` ve `data/processed/` Git'e dahil edilmez. Veri seti depoyu klonlamakla otomatik gelmez.
+- Verilerin birimi zaten **Mbps**'tir; tekrar çarpan uygulamayın.
+
+Örnek dizin:
 
 ```text
-profesyonel yazılım uygulamaları/
-├── ARCHITECTURE.md          # Ayrıntılı matematiksel ve akademik mimari dokümantasyonu
-├── requirements.txt         # Gerekli Python kütüphaneleri
-├── run.py                   # Canlı Web Dashboard'u ve simülasyonu başlatan ana script
-├── src/
-│   ├── network/             # Fat-Tree Topolojisi, Güç Tüketim Modeli ve Trafik Üreteci
-│   │   ├── topology.py      # k=4 Fat-Tree (20 switch, 16 host) graf yapısı
-│   │   ├── power_model.py   # IEEE 802.3az tabanlı şasi ve port güç modeli
-│   │   └── traffic.py       # Günlük dalgalanma (diurnal) ve trafik patlaması üreteci
-│   ├── env/
-│   │   └── green_network_env.py # Gymnasium uyumlu Markov Karar Süreci (MDP) ortamı
-│   ├── agents/              # RL Ajanları ve Kıyaslama Algoritmaları
-│   │   ├── rl_agent.py      # Stable-Baselines3 PPO & DQN eğitici ve çıkarım motoru
-│   │   ├── baselines.py     # OSPF (Klasik En Kısa Yol) ve Sezgisel Algoritmalar
-│   │   └── evaluate.py      # Çok metrikli performans değerlendirme motoru
-│   ├── sdn/                 # SDN & Mininet Entegrasyonu
-│   │   ├── controller.py    # OpenFlow Flow-Mod ve Port-Stats kontrol soyutlaması
-│   │   └── mininet_exporter.py # Mininet ve Ryu Python script üreteci
-│   └── web/                 # Canlı Web Dashboard (FastAPI + WebSocket + HTML5 Canvas)
-│       ├── server.py        # Telemetri WebSocket yayıncısı ve REST API
-│       └── static/          # Modern NOC temalı ön yüz (HTML, CSS, JS, Chart.js)
-├── scripts/
-│   ├── train.py             # RL modelini eğiten komut dosyası (--reward-scale destekli)
-│   ├── benchmark.py         # OSPF vs Sezgisel vs RL kıyaslama tablosunu üreten script
-│   ├── run_experiments.py  # Çoklu seed (mean±std, 95% CI) bilimsel deney matrisi
-│   ├── run_ablation.py     # Ödül fonksiyonu ablation çalışması
-│   └── generate_report.py   # Rapor ve grafik üretici
-├── mininet_scripts/         # Mininet topolojisi, Ryu denetleyicisi ve test süiti
-└── tests/                   # Kapsamlı pytest birim ve entegrasyon testleri (73 test)
+data/
+├── raw/abilene/
+│   ├── directed-abilene-zhang-5min-over-6months-ALL-native.tgz
+│   └── directed-abilene-zhang-5min-over-6months-ALL-native/
+│       └── demandMatrix-abilene-zhang-5min-*.txt
+└── processed/                  # Oluşturulan indeks/önbellek
 ```
 
----
+**Kronolojik veri ayrımı (karışık rastgele bölme yok):**
 
-## ⚡ Hızlı Başlangıç
+| Bölüm | Matris sayısı | Zaman aralığı | Kullanım |
+|---|---:|---|---|
+| Train | 33.667 (%70) | 2004-03-01 00:00 – 2004-07-21 21:30 | Ağırlık güncellemeleri |
+| Validation | 7.214 (%15) | 2004-07-21 21:35 – 2004-08-15 22:40 | Checkpoint / hiperparametre seçimi |
+| Test | 7.215 (%15) | 2004-08-15 22:45 – 2004-09-10 23:55 | Nihai bağımsız değerlendirme |
 
-### 1. Canlı Simülasyon Web Panelini Başlatma
+Ölçüm aralıklarında dört tarihsel kesinti bulunmuştur; eğitim ve değerlendirmede süreklilik varsayılmamalıdır. Gerçek veri seçiliyken eksik veri nedeniyle sentetik trafiğe sessiz geçiş yapılmaz.
 
-Simülasyon sunucusunu başlatmak ve web tarayıcısında açmak için:
+## Eğitim ve benchmark
+
+Cihaz karşılaştırmasında gerçek Abilene `train` bölümünde, 10.000 adım ve seed 42 ile **CPU 371,27 adım/sn**, **RTX 4060 Laptop CUDA 260,75 adım/sn** ölçülmüştür. Bu küçük MLP + CPU tabanlı simülasyon için **CPU** tercih edilir; değerler kullanılan makineye özgüdür.
+
+Güncel eğitim seçeneklerini görüntüleyin:
 
 ```powershell
-.\venv\Scripts\python.exe run.py
+python scripts/train.py --help
+python scripts/benchmark_ppo_device.py --help
 ```
 
-Tarayıcınızda otomatik olarak `http://127.0.0.1:8000` açılacaktır.
+100.000 adımlık pilot için `scripts/train_pilot_abilene.py` geliştirilmiştir. Çalıştırmadan önce betiğin CLI seçeneklerini ve çıktı dizinlerini inceleyin. Eski eğitilmiş modelleri koruyun; yeni deneyleri ayrı klasörlerde yürütün.
 
-Panel üzerinden:
-* **Yönlendirme Modu:** PPO Ajanı, OSPF (Klasik) ve Sezgisel modlar arasında tek tıkla geçiş yapabilir, güç tüketiminin anında nasıl değiştiğini izleyebilirsiniz.
-* **Trafik Patlaması (⚡):** Butona basarak ağa ani aşırı yük bindirebilir, RL ajanının uyuyan omurga anahtarlarını nasıl anında uyandırdığını gözlemleyebilirsiniz.
-* **Mininet Dışa Aktar:** Mininet ve Ryu dosyalarını tek tıkla `mininet_scripts/` klasörüne aktarabilirsiniz.
+**Pilot yapılandırması:** PPO, `MlpPolicy [128,128]`, CPU, seed 42, `learning_rate=3e-4`, `n_steps=1024`, `batch_size=256`, `n_epochs=10`, `gamma=0.99`, `gae_lambda=0.95`, `clip_range=0.2`, `ent_coef=0.01`. Eğitim 100.000 adımda 204,27 saniye sürmüştür. Validation model seçimi için kullanılmış, test bölümü kullanılmamıştır.
 
----
+Önemli dosyalar:
 
-### 2. RL Modelini Eğitme
+```text
+src/data/abilene_loader.py             # Native veri yükleyici / kronolojik ayrım
+src/network/topology.py                # Ağ topolojileri
+src/network/power_model.py             # Simüle edilmiş güç modeli
+src/env/green_network_env.py          # Gymnasium ortamı
+src/agents/rl_agent.py                 # PPO / DQN
+src/agents/baselines.py                # Referans ajanlar
+scripts/train.py                       # Genel eğitim CLI
+scripts/train_pilot_abilene.py         # Abilene pilot eğitimi
+scripts/benchmark_ppo_device.py        # CPU–GPU hız karşılaştırması
+results/pilot_abilene_100k_results.json
+results/cpu_gpu_benchmark_results.json
+REVISION_LOG.md                        # Teknik revizyon geçmişi
+```
 
-Ajanı sıfırdan eğitmek veya farklı hiperparametrelerle denemek için:
+## Bulgular — enerji ve QoS
+
+Kök neden incelemesinde iki ölçüm hatası giderildi:
+
+1. `total_power_w` alanı yanlış anahtardan okunuyordu; enerji tasarrufu gerçekte sıfır olmayan baseline'lar için yanlışlıkla `%0` raporlanıyordu.
+2. Ortamın 1000 Mbps sabit kapasitesi Abilene'nin 2500 Mbps bağlantı kapasitesini eziyordu; bu durum yapay darboğaz ve SLA ihlali oluşturuyordu. Topolojiye özgü varsayılan kapasite kullanımı düzeltildi.
+
+Düzeltme sonrasında gerçek Abilene **validation** trafiğindeki seçili pencere sonuçları:
+
+| Trafik penceresi | Politika | Güç (W) | OSPF'ye göre tasarruf | SLA ihlali | Paket kaybı |
+|---|---|---:|---:|---:|---:|
+| Düşük | PPO / OSPF | 1809,7 | %0 | %0 | %0 |
+| Düşük | Static | 1703,5 | %5,9 | %35,3 | %13,89 |
+| Düşük | Threshold | 1505,7 | %16,8 | %100 | %38,42 |
+| Orta | PPO / OSPF | 1814,2 | %0 | %0 | %0 |
+| Pik | PPO / OSPF | 1816,8 | %0 | %2,7 | %0,67 |
+
+**Yorum:** Static/Threshold'un görünen enerji kazancı, bazı trafik taleplerinin bağlantısız veya kayıplı kalması pahasına elde edilmiştir; **QoS korunarak enerji kazancı** olarak sunulamaz. PPO, Abilene'de tüm çekirdekleri aktif tutan Action 7'ye yakınsamıştır. Bunlar pilot/validation sonuçlarıdır, bağımsız final test sonucu değildir.
+
+Abilene'de bir router'ı tamamen kapatmak yerel PoP/host erişilebilirliğini bozabilir. Bu nedenle WAN üzerinde bir sonraki çalışma, router'ları açık tutup link/port seviyesi enerji durumlarını ve güvenli yeniden yönlendirmeyi değerlendirmektir. **EEE/LPI güç düşüşleri şu an simülasyon varsayımıdır; ölçülmüş donanım tasarrufu değildir.**
+
+## Testler ve doğrulama
 
 ```powershell
-.\venv\Scripts\python.exe scripts/train.py --algo PPO --timesteps 25000
+python -m pytest tests -q
 ```
 
-Eğitilen ağırlıklar otomatik olarak `models/ppo_green_agent.zip` konumuna kaydedilir.
+23 Ekim 2026 tarihli revizyon raporunda **92 testin geçtiği** bildirildi (88 mevcut + 4 Abilene regresyon testi). Bu, gerçek ağ üzerindeki davranışı veya enerji tasarrufunu kanıtlamaz.
 
----
+## Bilinen sınırlamalar
 
-### 3. Akademik Kıyaslama (Benchmark) Raporu Üretme
+- Abilene için mevcut router-level deep-sleep eylem uzayı güvenli enerji optimizasyonuna uygun değildir; link/port seviyesinde kontrol henüz geliştirilmemiştir.
+- Pilot PPO modeli OSPF'ye karşı enerji tasarrufu üretmemiştir; başarısız deney sonuçları saklanmıştır.
+- Pilotun ilk sürümünde yanlış etiketlenen `best_model.zip` kaldırılmıştır; hiçbir checkpoint'in katı güvenlik kriterlerini karşıladığı iddia edilmemelidir.
+- EEE/LPI, uyku ve güç tüketimi rakamları simülasyon düzeyindedir; gerçek ölçüm değildir.
+- Canlı Mininet/Open vSwitch/Ryu entegrasyonu Linux test ortamında henüz uçtan uca doğrulanmamıştır.
+- Nihai `test` bölümüne dayalı çoklu-seed karşılaştırması henüz yapılmamıştır.
 
-Tüm algoritmaları aynı trafik senaryosu üzerinde yarıştırıp akademik metrik tablosunu ekrana basmak için:
+Ayrıntılı teknik kronoloji için [`REVISION_LOG.md`](REVISION_LOG.md) dosyasına bakın.
 
-```powershell
-.\venv\Scripts\python.exe scripts/benchmark.py
-```
+## Lisans ve kaynak kullanımı
 
-Örnek Çıktı:
-
-| Yöntem / Algoritma | Ort. Güç (Watt) | Enerji Tasarrufu (%) | Ort. Gecikme (ms) | Maks. Gecikme (ms) | Paket Kaybı (%) | Darboğaz Olayları |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **OSPF / ECMP (Baseline)** | 3280.0 W | %0.0 | 0.82 ms | 1.15 ms | %0.0 | 0 |
-| **Sezgisel (Diurnal)** | 2420.0 W | %26.2 | 1.05 ms | 2.40 ms | %0.05 | 2 |
-| **Green RL Agent (PPO)** | **2080.0 W** | **%36.5** | **1.12 ms** | **2.10 ms** | **%0.0** | **0** |
-
----
-
-### 4. Mininet & Ryu SDN Ortamında Çalıştırma (Opsiyonel / İleri Seviye)
-
-Mininet betiklerini dışa aktarmak için:
-
-```powershell
-.\venv\Scripts\python.exe scripts/export_mininet.py
-```
-
-Oluşan dosyaları Ubuntu / WSL / Mininet sanal makinesine kopyalayarak:
-
-```bash
-# Terminal 1: Ryu Controller (PPO PolicyBridge)
-PYTHONPATH=. ryu-manager mininet_scripts/ryu_green_controller.py
-
-# Terminal 2: Otomatik Mininet Doğrulama (Ping, iperf, Link-Failure/Recovery)
-sudo python3 mininet_scripts/test_mininet_experiments.py
-```
-
-> **Not:** Gerçek OVS/Mininet yazılımında şasi uyku modu donanımsal olarak bulunmadığından, port modifikasyonları gerçektir; güç ve EEE değerleri analitik simülasyon modeli (`src.network.power_model`) ile hesaplanır ve loglarda `[SIMULATED_ENERGY]` olarak etiketlenir.
-
----
-
-### 5. Testler ve Bilimsel Doğrulama
-
-```powershell
-# 1. Tüm birim ve entegrasyon testlerini çalıştırma (88 test)
-pytest tests -v
-
-# 2. Yalnızca Abilene veri yükleyici ve entegrasyon testlerini çalıştırma
-pytest tests/test_abilene_loader.py -v
-
-# 3. Çoklu seed ve arıza senaryoları kıyaslaması (mean±std, %95 CI)
-python scripts/run_experiments.py --seeds 5 --steps 120
-
-# 4. Ödül fonksiyonu ablation çalışması
-python scripts/run_ablation.py --timesteps 15000 --seeds 3
-```
-
----
-
-### 6. SNDlib Abilene Gerçek Dünya Trafik Verisi Entegrasyonu
-
-GreenNet-RL, sentetik trafik üretiminin yanı sıra **SNDlib Abilene** (Yin Zhang 6 aylık, 5 dakikalık çözünürlüklü) gerçek ağ trafik verilerini destekler.
-
-* **Veri Konumu:** `data/raw/abilene/directed-abilene-zhang-5min-over-6months-ALL-native/`
-* **Toplam Matris:** 48.096 adet Native SNDlib 1.0 matrisi (`2004-03-01` -> `2004-09-10`).
-* **Birim & Doğrulama:** Kaynaktaki orijinal `MBITPERSEC` (Mbps) birimi yapay çarpanlara uğratılmadan korunur. Bozuk dosyalar, geçersiz düğümler, negatif trafik değerleri ve ölçüm kesintileri katı doğrulama kurallarıyla kontrol edilir.
-* **Kronolojik Veri Ayrımı (Data Leakage Önleme):**
-  * **Eğitim (%70):** 33.667 matris (`20040301-0000` -> `20040721-2130`)
-  * **Doğrulama (%15):** 7.214 matris (`20040721-2135` -> `20040815-2240`)
-  * **Test (%15):** 7.215 matris (`20040815-2245` -> `20040910-2355`)
-* **Hafıza Optimizasyonu (Lazy Loading):** 48.096 dosya tek seferde RAM'e yüklenmez; `data/processed/abilene_manifest.json` üzerinden dizinlenir ve ihtiyaç duyuldukça 1024'lük LRU bellek önbelleği ile diskten anlık okunur.
-* **Git Koruması:** `data/raw/` ve `data/processed/` dizinleri `.gitignore` altında izlenmez.
-
-#### Python ile Kullanım Örneği:
-
-```python
-from src.env.green_network_env import GreenNetworkEnv
-from src.data.abilene_loader import AbileneDataLoader
-
-# 1. Abilene Topolojisi ve Gerçek Test Trafiği ile Ortam Oluşturma
-env = GreenNetworkEnv(
-    topology_type="abilene",
-    traffic_source="real",
-    real_traffic_split="test",       # 'train', 'val' veya 'test'
-    link_capacity_mbps=2500.0,
-)
-
-obs, info = env.reset()
-print(f"Trafik Kaynağı: {info['traffic_source']}, Zaman: {info.get('real_timestamp')}")
-
-# 2. Bir adım ilerleme
-obs, reward, terminated, truncated, info = env.step(6)
-print(f"Toplam Talep: {info['total_demand_mbps']} Mbps, Gecikme: {info['avg_delay_ms']} ms")
-```
-
+Bu depodaki kodun yeniden kullanım koşulları için varsa depo lisans dosyasını kontrol edin. Abilene trafik verileri projeye dahil edilmemiştir; verilerin kullanım ve atıf koşulları için **SNDlib** ve orijinal Yin Zhang veri kaynağını esas alın.
