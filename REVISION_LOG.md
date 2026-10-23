@@ -58,3 +58,56 @@
   - 15 yeni test eklendi ve tamamı geçti (`88 passed in 21.37s`).
   - Model ağırlıkları veya PPO hiperparametreleri değiştirilmedi.
 
+---
+
+## 5. Gerçek Abilene Trafik Verisi Üzerinde CPU ve GPU (RTX 4060) PPO Performans Karşılaştırması ve Cihaz Desteği (2026-10-23)
+
+### Yapılan Değişiklikler
+- **`src/agents/rl_agent.py`**:
+  - `GreenRLAgent.__init__` metoduna `device: str = "auto"` parametresi eklendi ve `self.device = device` olarak saklandı.
+  - `_init_model` içinde `PPO` ve `DQN` başlatılırken `device=self.device` argümanı geçildi.
+  - `load` metodunda `PPO.load` ve `DQN.load` çağrılarına `device=self.device` eklendi.
+- **`scripts/train.py`**:
+  - `--device` argümanı (`auto`, `cuda`, `cpu`) eklendi.
+  - `--topology`, `--traffic-source` (`synthetic`, `real`), `--real-split` (`train`, `val`, `test`), `--seed` ve `--max-steps-per-episode` parametreleri CLI'ya eklendi.
+  - `traffic_source="real"` seçildiğinde gerçek Abilene veri setinin `train` split'i ile güvenli başlatılması sağlandı.
+- **`scripts/benchmark_ppo_device.py`**:
+  - Sıfır harici paket bağımlılığıyla (Windows standart `ctypes` Win32 API ve `torch.cuda` kullanarak) CPU vs GPU karşılaştırması yapan, RAM/VRAM tepe noktalarını, adım sürelerini ve PPO rollout kayıp metriklerini kaydeden benchmark runner eklendi.
+  - Çıktılar `results/cpu_gpu_benchmark_results.json` dosyasına yazıldı.
+
+### Donanım ve Ortam Bilgileri
+- **İşletim Sistemi**: Windows 11
+- **CPU**: 16 Mantıksal Çekirdek
+- **GPU**: NVIDIA GeForce RTX 4060 Laptop GPU (8 GB VRAM)
+- **CUDA & PyTorch**: PyTorch 2.5.1+cu121, CUDA Aktif
+- **SNDlib Abilene Veri Seti**: 48.096 matris; kronolojik %70 Train (33.667 matris, indeks: 0 - 33.666).
+
+### Gerçek Veri Kaynağı ve İzolasyon Doğrulaması
+- **Gerçek Trafik Kaynağı Doğrulandı**: `GreenNetworkEnv` `traffic_source="real"` ve `real_traffic_split="train"` ile başlatıldı; `RealTrafficSource` nesnesinin doğrudan SNDlib Abilene train split verilerini beslediği, sentetik fallback'e kesinlikle düşülmediği teyit edildi.
+- **Bölme İzolasyonu**: Yalnızca `train` split (0 - 33.666) kullanıldı; `val` ve `test` split'leri tamamen izole tutuldu.
+- **Mevcut Modeller Korundu**: Ana modeller (`models/ppo_green_agent*.zip`) değiştirilmedi; benchmark ağırlıkları izole olarak `models/benchmark/` dizinine kaydedildi.
+
+### Gerçek Ölçüm Sonuçları (10.000 Timestep, Seed=42, PPO MlpPolicy [128, 128])
+
+| Metrik | CPU | CUDA (RTX 4060 Laptop) | Karşılaştırma / Kazanan |
+| :--- | :---: | :---: | :---: |
+| **Toplam Süre** | **26.93 s** | 38.35 s | **CPU %29.78 daha kısa sürede tamamladı** |
+| **Eğitim Hızı (FPS)** | **371.27 steps/s** | 260.75 steps/s | **CPU %42.39 daha hızlı (1.42x)** |
+| **Süreç RAM (RSS Sonrası)** | **601.99 MB** | 1355.77 MB | CPU 753.78 MB daha az RAM kullandı |
+| **Süreç Tepe RAM (Peak)** | **602.92 MB** | 1355.77 MB | CPU %55.5 daha az tepe bellek tüketti |
+| **Tepe GPU VRAM (Peak)** | **0.0 MB** | 18.06 MB | GPU üzerinde küçük model tahsisi |
+| **Son Eğitim Kaybı (Loss)** | 0.146247 | 0.154606 | Dengeli yakınsama |
+| **Politika Kaybı (Policy Loss)** | -0.002241 | -0.000144 | Benzer gradyan stabilitesi |
+| **Değer Kaybı (Value Loss)** | 0.434209 | 0.431207 | Eşdeğer değer kestirimi |
+| **Açıklanan Varyans (Exp. Var.)** | 0.479526 | 0.562418 | CUDA'da hafif daha yüksek açıklanan varyans |
+| **Model Kayıt Yolu** | `models/benchmark/ppo_abilene_cpu_10000.zip` | `models/benchmark/ppo_abilene_cuda_10000.zip` | İzole dizin korundu |
+
+### Sonuç ve Cihaz Seçim Analizi (Neden CPU Daha Hızlı?)
+1. **Model Boyutu ve Ağ Mimarisi**: Politika ağı `[128, 128]` 2 gizli katmandan oluşan küçük bir MLP'dir (parametre sayısı ~35K).
+2. **Transfer ve Kernel Başlatma Yükü (Overhead)**: Çevre simülasyonu (ağ grafiği, ECMP routing ve QoS hesaplamaları) CPU üzerinde çalışmaktadır. Küçük tensörlerin her rollout ve adımda CPU RAM'inden GPU VRAM'ine PCIe veri yolu üzerinden kopyalanması ve CUDA kernel fırlatma gecikmeleri, GPU'nun paralel işlem gücü avantajından daha baskın çıkmaktadır.
+3. **Öneri**: Abilene topolojisi üzerindeki PPO eğitimleri için **CPU seçeneği** hem %42.39 daha yüksek FPS sunmakta hem de sistem bellek ayak izini yarıdan fazla düşürmektedir.
+
+### Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **88 passed in 11.29s** (Tüm testler eksiksiz ve yeşil).
+

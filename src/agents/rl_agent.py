@@ -26,7 +26,8 @@ class GreenRLAgent:
         model_path: Optional[str] = None,
         learning_rate: float = 3e-4,
         seed: int = 42,
-        use_shield: bool = True
+        use_shield: bool = True,
+        device: str = "auto"
     ):
         self.use_shield = use_shield  # False => raw policy output (used for unbiased benchmarking)
         self.env = env
@@ -34,6 +35,7 @@ class GreenRLAgent:
         self.model_path = model_path
         self.learning_rate = learning_rate
         self.seed = seed
+        self.device = device
         self.model = None
         self.is_trained = False
         self.last_predicted_action: Optional[int] = None
@@ -80,7 +82,8 @@ class GreenRLAgent:
                 ent_coef=0.01,
                 policy_kwargs=policy_kwargs,
                 verbose=0,
-                seed=seed
+                seed=seed,
+                device=self.device
             )
         elif self.algo_name == "DQN":
             self.model = DQN(
@@ -99,7 +102,8 @@ class GreenRLAgent:
                 exploration_initial_eps=1.0,
                 exploration_final_eps=0.05,
                 verbose=0,
-                seed=seed
+                seed=seed,
+                device=self.device
             )
         else:
             raise ValueError(f"Unsupported algorithm: {self.algo_name}. Choose PPO or DQN.")
@@ -217,13 +221,13 @@ class GreenRLAgent:
         """Loads trained model weights (auto-detects PPO or DQN) or activates dynamic elastic policy if topology dimension changes."""
         print(f"[*] Loading model from {model_path}...")
         try:
-            self.model = PPO.load(model_path, env=self.env)
+            self.model = PPO.load(model_path, env=self.env, device=self.device)
             self.algo_name = "PPO"
             self.is_trained = True
             print("[+] Loaded as PPO model.")
         except Exception as e:
             try:
-                self.model = DQN.load(model_path, env=self.env)
+                self.model = DQN.load(model_path, env=self.env, device=self.device)
                 self.algo_name = "DQN"
                 self.is_trained = True
                 print("[+] Loaded as DQN model.")
