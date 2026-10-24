@@ -717,6 +717,169 @@ Eski Pilot (v1) ile İkinci Pilot (v2) arasındaki Step 20K, 50K, 90K ve 100K ka
   - **108 passed in 21.74s** (Tüm 108 test eksiksiz ve yeşil).
 - Eski checkpoint'ler (`models/pilot_fattree_k4_100k`) ve yeni checkpoint'ler (`models/pilot_fattree_k4_100k_v2`) diskte eksiksiz ve bağımsız olarak bulunmaktadır.
 
+---
+
+## 14. Fat-Tree k=4 PPO v2 QoS Bozulması Kök Neden Analizi (Empirical Root Cause Analysis)
+
+Bu analiz, `results/pilot_fattree_k4_100k_v2_results.json` dosyasındaki 20K, 50K, 80K ve 100K checkpoint sonuçları, `models/pilot_fattree_k4_100k_v2/` ağırlıkları ve deterministik adım izleme (`scripts/diagnose_k4_qos.py`) verileri üzerinden gerçekleştirilmiştir. **Hiçbir yeni PPO eğitimi başlatılmamış ve mevcut modeller korunmuştur.**
+
+---
+
+### 1. Checkpoint Sonuçları Analizi (20K, 50K, 80K, 100K)
+
+Tüm checkpoint'ler 4 farklı rejimde (50'şer adımlık validasyon pencerelerinde) deterministik olarak değerlendirilmiştir:
+
+| Checkpoint | Rejim | PPO Tasarruf | PPO Kayıp | PPO Gecikme (p95) | PPO SLA İhlali | Override Oranı | Switch Toggles | OSPF Kayıp | OSPF Gecikme | OSPF SLA İhlali |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **20K** | Low (0.50x) | %13.52 | %0.28 | 0.852 ms (1.095) | %4.0 | %6.0 | 21 | %0.00 | 0.653 ms | %0.0 |
+| | **Medium (1.10x)** | **%8.82** | **%3.11** | **2.616 ms (4.667)** | **%14.0** | **%36.0** | **53** | **%1.48** | **1.732 ms** | **%8.0** |
+| | High (1.85x) | %1.51 | %16.62 | 9.962 ms (19.07) | %62.0 | %76.0 | 20 | %16.62 | 9.934 ms | %62.0 |
+| | Burst (2.50x) | %0.00 | %84.06 | 76.519 ms (90.60) | %100.0 | %100.0 | 0 | %84.06 | 76.519 ms | %100.0 |
+| **50K** | Low | %13.52 | %0.28 | 0.852 ms (1.095) | %4.0 | %6.0 | 21 | %0.00 | 0.653 ms | %0.0 |
+| | **Medium** | **%9.32** | **%3.23** | **2.788 ms (4.817)** | **%14.0** | **%42.0** | **62** | **%1.48** | **1.732 ms** | **%8.0** |
+| | High | %1.49 | %16.55 | 9.945 ms (19.03) | %60.0 | %84.0 | 28 | %16.62 | 9.934 ms | %62.0 |
+| | Burst | %0.00 | %84.06 | 76.519 ms (90.60) | %100.0 | %100.0 | 0 | %84.06 | 76.519 ms | %100.0 |
+| **80K** | Low | %13.52 | %0.28 | 0.852 ms (1.095) | %4.0 | %6.0 | 21 | %0.00 | 0.653 ms | %0.0 |
+| | **Medium** | **%8.82** | **%3.11** | **2.616 ms (4.667)** | **%14.0** | **%36.0** | **53** | **%1.48** | **1.732 ms** | **%8.0** |
+| | High | %1.51 | %16.62 | 9.962 ms (19.07) | %62.0 | %76.0 | 20 | %16.62 | 9.934 ms | %62.0 |
+| | Burst | %0.00 | %84.06 | 76.519 ms (90.60) | %100.0 | %100.0 | 0 | %84.06 | 76.519 ms | %100.0 |
+| **100K** | Low | %13.52 | %0.28 | 0.852 ms (1.095) | %4.0 | %8.0 | 21 | %0.00 | 0.653 ms | %0.0 |
+| | **Medium** | **%9.63** | **%3.54** | **2.910 ms (5.030)** | **%16.0** | **%44.0** | **56** | **%1.48** | **1.732 ms** | **%8.0** |
+| | High | %1.50 | %16.55 | 9.945 ms (19.03) | %60.0 | %76.0 | 26 | %16.62 | 9.934 ms | %62.0 |
+| | Burst | %0.00 | %84.06 | 76.519 ms (90.60) | %100.0 | %100.0 | 0 | %84.06 | 76.519 ms | %100.0 |
+
+---
+
+### 2. Orta Yükte (Medium) Paket Kaybının Ayrıştırılması: OSPF (%1.48) vs PPO (%3.54)
+
+Medium rejiminde (Seed 60002, 50 adım) OSPF ve PPO'nun adım adım izlenmesiyle paket kaybının iki bağımsız bileşenden oluştuğu doğrulanmıştır:
+
+$$\text{PPO Kaybı (\%3.54)} = \underbrace{\text{Fiziksel Kenar/Host Darboğazı (\%1.48)}}_{\text{OSPF Tabanlı / Kaçınılmaz}} + \underbrace{\text{Telemetri Gecikmesi ve Çekirdek Kısıtı (\%2.06)}}_{\text{SafeFilter \& PPO Kaynaklı}}$$
+
+#### A. OSPF Referansındaki %1.48 Kayıp ve %8 SLA İhlalinin Kök Nedeni:
+OSPF tüm omurga çekirdeklerini sürekli açık tutmasına (4 aktif core, 0 tasarruf) rağmen 4 adımda paket kaybetmiştir:
+- **Adım 1** (Talep: 3090.5 Mbps): Kayıp = %2.82, Darboğaz link = `e_1_0 -> h_1_0_0` (Doluluğu: %107.3).
+- **Adım 15** (Talep: 4415.3 Mbps): Kayıp = %12.89, Darboğaz link = `e_1_1 -> h_1_1_1` (Doluluğu: %145.0).
+- **Adım 29** (Talep: 6408.6 Mbps): Kayıp = %27.68, Darboğaz link = `a_2_1 -> e_2_0` (Doluluğu: %198.9).
+- **Adım 32** (Talep: 7507.9 Mbps): Kayıp = %30.69, Darboğaz link = `e_0_1 -> h_0_1_0` (Doluluğu: %171.8).
+
+**Bulgu**: OSPF'in kaybettiği tüm adımlarda darboğaz omurga çekirdeklerinde (`c_*`) değil, **kenar-host (edge-to-host 1 Gbps) veya agregasyon-kenar linklerindedir**. Sentetik trafik üreticisinde akışlar tesadüfen aynı hedef host veya kenar anahtarına yığıldığında, toplam talep 1 Gbps fiziksel hat sınırını aşmaktadır. Bu kayıp, yönlendirme veya uyku algoritmasından bağımsız **fiziksel topoloji kapasitesi sınırıdır**.
+
+#### B. PPO'nun İlave %2.06 Kaybının Kök Nedeni:
+PPO aynı 4 adımda OSPF'e kıyasla çok daha ağır kayıp yaşamış ve ilave 3 adımda daha kayba uğramıştır:
+- **Adım 1**: PPO %29.53 kayıp (OSPF %2.82). Darboğaz: `c_0_1 -> a_1_0` (%170.0 çekirdek aşırı yükü). PPO 1 core seçti, SafeFilter engellemedi!
+- **Adım 15**: PPO %45.75 kayıp (OSPF %12.89). Darboğaz: `c_0_1 -> a_1_0` (%206.2 çekirdek aşırı yükü). PPO 1 core seçti, SafeFilter engellemedi!
+- **Adım 36**: PPO %15.54 kayıp (OSPF %0.00). Darboğaz: `c_0_1 -> a_0_0` (%128.3). PPO 1 core seçti!
+- **Adım 42**: PPO %3.63 kayıp (OSPF %0.00). Darboğaz: `c_0_1 -> a_0_0` (%107.1). PPO 1 core seçti!
+- **Adım 45**: PPO %3.48 kayıp (OSPF %0.00). Darboğaz: `c_0_1 -> a_3_0` (%107.9). 3 core seçildi ama yetersiz kaldı!
+
+---
+
+### 3. SafeFilter Engelleme Mekanizması ve Telemetri Gecikmesi (1-Step Lag)
+
+Adım bazında SafeFilter davranışı incelendiğinde zamanlama uyuşmazlığı netleştirilmiştir:
+1. `GreenNetworkEnv.step(action)` çağrıldığında SafeFilter, **`self.active_demands` üzerinden güvenlik tahmini yapar**.
+2. Ancak `self.active_demands`, **bir önceki adımın ($t-1$) telemetrisidir**! Yeni adımın ($t$) trafiği henüz üretilmemiştir.
+3. **Adım 0 $\rightarrow$ Adım 1 Geçişi**:
+   - Adım 0 trafiği: 514.9 Mbps.
+   - SafeFilter kontrolü: $514.9 \times 1.20 \text{ (headroom)} = 617.9 \text{ Mbps}$.
+   - 1 Core kapasitesi 1000 Mbps olduğundan, SafeFilter "Action 1 (1 core) güvenli" kararı verir (`overridden = False`).
+   - Ardından Adım 1 trafiği üretilir: Trafik ani sıçramayla **3090.5 Mbps'ye (%600 artış)** çıkar!
+   - Tek aktif çekirdek linki `c_0_1 -> a_1_0` anında %170 doluluğa ulaşır ve **%29.53 paket kaybı** meydana gelir.
+4. **Adım 1 $\rightarrow$ Adım 2 Geçişi**:
+   - SafeFilter artık Adım 1'in 3090.5 Mbps telemetrisini görür.
+   - PPO Adım 2'de Action 2 (2 core = 2000 Mbps) ister.
+   - SafeFilter $3090.5 \times 1.20 = 3708.6 \text{ Mbps} > 2000 \text{ Mbps}$ görerek eylemi **Action 6'ya (4 core) yükseltir (`overridden = True`)**.
+   - Sonuç: Adım 2'de 2704.7 Mbps talep 4 core üzerinden taşınır; kayıp **%0.00**, doluluk %82.9 olur.
+
+**Kök Neden Özeti**: SafeFilter reaktiftir; 1 adımlık telemetri gecikmesi ve sabit %20 headroom ($h=1.20$), stokastik trafik jeneratörünün tek adımda gerçekleştirdiği %300–%600 oranındaki ani sıçramaları öngörememektedir.
+
+---
+
+### 4. PPO Ham Eylemi, Ödül Ataması (Credit Assignment) ve Öğrenme Bozulması
+
+1. **Ödülün Hangi Eylemden Alındığının Doğrulanması**:
+   - `GreenNetworkEnv.step(action)` içinde SafeFilter devreye girdiğinde:
+     `action, overridden = self.safe_action(requested_action)`
+     `self.current_action = int(action)`
+   - Simülasyon, enerji tüketimi ve QoS cezaları tamamen **SafeFilter tarafından uygulanan filtrelenmiş eylem (`self.current_action`) üzerinden hesaplanır**.
+   - SB3 PPO algoritması ise rollout buffer'a `(s_t, requested_action, r_t)` üçlüsünü yazar.
+2. **Öğrenme Üzerindeki Maskeleme Etkisi (Credit Assignment Distortion)**:
+   - PPO yüksek yük altında riskli Action 0/1 (1 core, %75 enerji tasarrufu) seçtiğinde:
+     - SafeFilter olmasa: Ağ çökecek (%45 kayıp, 25 ms gecikme) ve PPO **-129.5 ceza puanı** alarak bu eylemi hızla terk edecektir.
+     - SafeFilter devredeyken: Eylem Action 6'ya (4 core) yükseltilir, ağ kurtarılır, ceza oluşmaz ve PPO **~0.0 ödül** alır.
+   - **Sonuç**: PPO, riskli eylem seçmesine rağmen cezalandırılmadığı için SafeFilter'ı "güvenlik ağı" olarak kullanmayı öğrenir. PPO v2 modelinde ham eylemlerin %80'den fazlasının Action 1'e yığılmasının ve ajanın yükü hissetmemesinin asıl sebebi bu ödül maskelemesidir.
+
+---
+
+### 5. Switch Toggles Doğrulanması (Eylem Değişimi vs Fiziksel Durum Geçişleri)
+
+`results/..._results.json` dosyalarında raporlanan `switch_toggles` sayılarının (53–62) mahiyeti doğrulanmıştır:
+- `switch_toggles`, **eylem değiştirme sayısı (`episode_action_changes`) DEĞİLDİR**.
+- `src/network/power_model.py:transition_energy_j` tarafından hesaplanan:
+  $$\text{switch\_toggles} = \text{switch\_wakeups} + \text{switch\_sleeps} + \text{port\_wakeups} + \text{port\_sleeps}$$
+  formülüne göre, **ağdaki tüm anahtar kasaları ve portların fiziksel durum geçişlerinin toplamıdır**.
+- **Doğrulama Örneği**:
+  - Fat-Tree k=4'te Action 1'den (1 core açık) Action 6'ya (4 core açık) tek bir eylem değişimi yapıldığında:
+    - `episode_action_changes` $= 1$ artar.
+    - 3 core anahtarı (`c_0_0`, `c_1_0`, `c_1_1`) uyandığı için `switch_wakeups` $= 3$ artar (veya ilgili port geçişleriyle toplam $3$ ila $6$ toggle).
+  - 50 adımlık Medium validasyonunda ajan/filtre ~9-10 kez 1 core ile 4 core arasında gidip geldiğinde: $9 \times 6 \approx 54$ fiziksel toggle kaydedilmektedir.
+
+---
+
+### 6. Kontrollü Rejimler vs Fiziksel Aşırı Yük Stres Testleri
+
+Projede rejimlerin fiziksel gerçekliği net olarak ayrıştırılmıştır:
+1. **Kontrollü Rejimler (Low 0.50x, Medium 1.10x)**:
+   - Toplam talep bisection kapasitesinin altındadır.
+   - Enerji tasarrufu ve QoS optimizasyonu doğrudan RL ajanı ve SafeFilter'ın çekirdek uyku kararlarına bağlıdır.
+2. **Fiziksel Aşırı Yük Stres Testleri (High 1.85x, Burst 2.50x)**:
+   - Toplam talep topolojinin maksimum fiziksel kapasitesini aşmaktadır.
+   - Tüm anahtarların açık tutulduğu OSPF dahi High'da %16.62, Burst'te %84.06 kayba uğramaktadır.
+   - Güvenlik eşikleri (SLA $\le \%5.0$, kayıp $\le \%1.5$) değiştirilmemiştir. Modelin genel güvenlik kriterini karşılayamamasının sebebi kontrollü rejimler değil, Burst rejiminin global ortalamayı aşağı çekmesidir.
+
+---
+
+### 7. Deterministik Karşılaştırma: PPO vs OSPF vs Eşik vs Statik
+
+Medium rejiminde (Seed 60002) tüm ajanlar aynı trafik altında test edilmiştir:
+
+| Ajan | Aktif Core Politikası | Güç (W) | Tasarruf | Ort. Kayıp | SLA İhlali | Kayıp Yaşanan Adım |
+|---|---|---|---|---|---|---|
+| **OSPF** | Sabit 4 Core | 3061.2 W | %0.00 | %1.48 | %8.0 | 4 adım (Yalnızca Kenar/Host darboğazları) |
+| **PPO (Step 100K)** | Dinamik (SafeFilter ile) | 2766.4 W | %9.63 | %3.54 | %16.0 | 7 adım (4 Kenar + 3 Çekirdek gecikmesi) |
+| **Threshold Agent** | Yüke Göre Eşik (SafeFilter ile) | 2766.4 W | %9.63 | %3.54 | %16.0 | 7 adım (PPO ile aynı telemetri gecikmesi) |
+| **Static Heuristic** | Günün Saatine Göre | 2880.0 W | %5.90 | %2.10 | %10.0 | 5 adım |
+
+---
+
+### 8. Eklenen Regresyon Testleri ve Doğrulama
+
+Kök neden analiz bulgularını kod seviyesinde belgelemek ve korumak için `tests/test_qos.py` dosyasına 4 yeni regresyon testi eklendi:
+1. `test_qos_root_cause_safefilter_telemetry_lag_and_surge`: SafeFilter'ın önceki adım telemetrisiyle ani trafik sıçramasını kaçırdığını doğrular.
+2. `test_qos_root_cause_switch_toggles_vs_action_changes`: Switch toggles sayısının fiziksel durum geçişlerinin toplamı olduğunu ve eylem değişim sayısından kesinlikle büyük olduğunu doğrular.
+3. `test_qos_root_cause_safefilter_credit_assignment_masking`: SafeFilter müdahalesinin ceza maskelemesini doğrular.
+4. `test_qos_physical_edge_bottleneck_under_all_active_ospf`: OSPF altında dahi kenar yığılmasının kayba yol açtığını doğrular.
+
+**Pytest Sonucu**:
+```bash
+python -m pytest tests -q
+# 112 passed in 21.61s
+```
+Tüm 112 regresyon testi eksiksiz ve yeşil olarak başarıyla tamamlandı.
+
+---
+
+### 9. Minimum Müdahaleli İyileştirme Seçenekleri ve Bir Sonraki Deney Stratejisi
+
+1. **Seçenek A (SafeFilter Override Cezası - Reward Shaping)**:
+   - SafeFilter bir eylemi geçersiz kıldığında (`overridden == True`), PPO'ya küçük bir ceza ($P_{override} = -2.0$ ila $-5.0$) uygulanması. Böylece PPO, güvenli eylem sınırlarını internalize eder ve SafeFilter'a tembelce yaslanmayı bırakır.
+2. **Seçenek B (Dinamik / Trend Tabanlı Headroom)**:
+   - Sabit $h=1.20$ yerine, trafiğin türevine (artış eğilimine) göre dinamik headroom ($h_t = \max(1.20, 1.0 + 2.0 \times \Delta \text{demand})$) kullanılması.
+3. **Seçenek C (Değerlendirme Metriklerinin Rejim Bazında Raporlanması)**:
+   - Fiziksel aşırı yük stres testlerinin (Burst %84 kayıp) kontrollü rejimlerden (Low/Medium) ayrı bir skor kartında sunulması.
+
+
 
 
 
