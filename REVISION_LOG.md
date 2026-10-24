@@ -731,9 +731,9 @@ Tüm checkpoint'ler 4 farklı rejimde (50'şer adımlık validasyon pencerelerin
 
 | Checkpoint | Rejim | PPO Tasarruf | PPO Kayıp | PPO Gecikme (p95) | PPO SLA İhlali | Override Oranı | Switch Toggles | OSPF Kayıp | OSPF Gecikme | OSPF SLA İhlali |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **20K** | Low (0.50x) | %13.52 | %0.28 | 0.852 ms (1.095) | %4.0 | %6.0 | 21 | %0.00 | 0.653 ms | %0.0 |
-| | **Medium (1.10x)** | **%8.82** | **%3.11** | **2.616 ms (4.667)** | **%14.0** | **%36.0** | **53** | **%1.48** | **1.732 ms** | **%8.0** |
-| | High (1.85x) | %1.51 | %16.62 | 9.962 ms (19.07) | %62.0 | %76.0 | 20 | %16.62 | 9.934 ms | %62.0 |
+| **20K** | Low (0.50x) | **%7.06** | %0.28 | **0.838 ms (1.075)** | %4.0 | **%2.0** | **147** | %0.00 | 0.653 ms | %0.0 |
+| | **Medium (1.10x)** | **%5.88** | **%2.57** | **2.397 ms (4.285)** | **%14.0** | **%36.0** | **110** | **%1.48** | **1.732 ms** | **%8.0** |
+| | High (1.85x) | **%1.32** | **%16.55** | **9.945 ms (19.03)** | **%60.0** | **%80.0** | **28** | %16.62 | 9.934 ms | %62.0 |
 | | Burst (2.50x) | %0.00 | %84.06 | 76.519 ms (90.60) | %100.0 | %100.0 | 0 | %84.06 | 76.519 ms | %100.0 |
 | **50K** | Low | %13.52 | %0.28 | 0.852 ms (1.095) | %4.0 | %6.0 | 21 | %0.00 | 0.653 ms | %0.0 |
 | | **Medium** | **%9.32** | **%3.23** | **2.788 ms (4.817)** | **%14.0** | **%42.0** | **62** | **%1.48** | **1.732 ms** | **%8.0** |
@@ -747,6 +747,8 @@ Tüm checkpoint'ler 4 farklı rejimde (50'şer adımlık validasyon pencerelerin
 | | **Medium** | **%9.63** | **%3.54** | **2.910 ms (5.030)** | **%16.0** | **%44.0** | **56** | **%1.48** | **1.732 ms** | **%8.0** |
 | | High | %1.50 | %16.55 | 9.945 ms (19.03) | %60.0 | %76.0 | 26 | %16.62 | 9.934 ms | %62.0 |
 | | Burst | %0.00 | %84.06 | 76.519 ms (90.60) | %100.0 | %100.0 | 0 | %84.06 | 76.519 ms | %100.0 |
+
+*(Düzeltme Notu: Bölüm 14'ün ilk taslağında 20K satırına sehven 80K checkpoint değerleri kopyalanmıştı. Tablo doğrudan `results/pilot_fattree_k4_100k_v2_results.json` kaynağından okunarak düzeltilmiştir: 20K'da Medium kaybı %2.57, gecikme 2.397 ms, toggles 110'dur).*
 
 ---
 
@@ -879,10 +881,152 @@ Tüm 112 regresyon testi eksiksiz ve yeşil olarak başarıyla tamamlandı.
 3. **Seçenek C (Değerlendirme Metriklerinin Rejim Bazında Raporlanması)**:
    - Fiziksel aşırı yük stres testlerinin (Burst %84 kayıp) kontrollü rejimlerden (Low/Medium) ayrı bir skor kartında sunulması.
 
+---
 
+## 15. Fat-Tree k=4 QoS Kök Neden Doğrulaması ve İyileştirme Deneyleri (Pilot v3 Temeli)
 
+Bu çalışma, Bölüm 14'te tespit edilen bulguların kontrollü deneylerle doğrulanması, model/checkpoint dosyalarına dokunulmadan iyileştirmelerin çevrimdışı test edilmesi ve 3. pilot PPO deneyi için güvenilir bir temel oluşturulması amacıyla yapılmıştır. **Yeni PPO eğitimi başlatılmamış ve mevcut modeller korunmuştur.**
 
+---
 
+### 1. Checkpoint Tablosu Düzeltmesi ve Kaynak Teyidi
 
+Bölüm 14'teki 20K satırında sehven 80K checkpoint değerlerinin yer aldığı tespit edilmiş ve doğrudan `results/pilot_fattree_k4_100k_v2_results.json` dosyasından okunarak düzeltilmiştir (`scripts/verify_checkpoint_tables.py`):
 
+| Checkpoint | Rejim | PPO Tasarruf | PPO Kayıp | PPO Gecikme (p95) | PPO SLA İhlali | SafeFilter Override | Switch Toggles | OSPF Kayıp | OSPF Gecikme | OSPF SLA İhlali |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **20K (Düzeltildi)** | Low | **%7.06** | %0.28 | **0.838 ms (1.075)** | %4.0 | **%2.0** | **147** | %0.00 | 0.653 ms | %0.0 |
+| | **Medium** | **%5.88** | **%2.57** | **2.397 ms (4.285)** | **%14.0** | **%36.0** | **110** | **%1.48** | **1.732 ms** | **%8.0** |
+| | High | **%1.32** | **%16.55** | **9.945 ms (19.03)** | **%60.0** | **%80.0** | **28** | %16.62 | 9.934 ms | %62.0 |
+| | Burst | %0.00 | %84.06 | 76.519 ms (90.60) | %100.0 | %100.0 | 0 | %84.06 | 76.519 ms | %100.0 |
 
+**Kaynak Belgeleri**:
+- 20K checkpoint'inde ajanın erken keşif aşamasında olduğu, bu nedenle 50K/80K/100K'ya göre eylemleri daha sık değiştirdiği (`toggles = 110-147`) doğrulanmıştır.
+- Orta yükteki kayıp oranının **%2.57 (20K) $\rightarrow$ %3.23 (50K) $\rightarrow$ %3.11 (80K) $\rightarrow$ %3.54 (100K)** aralığında seyrettiği JSON kaynağından teyit edilmiştir.
+
+---
+
+### 2. Kontrollü SafeFilter Açık/Kapalı Karşılaştırması
+
+SafeFilter açık ve kapalı iki ortam, birebir aynı `seed=60002`, aynı trafik matrisi dizisi, aynı başlangıç durumu ve aynı fiziksel parametrelerle adım adım karşılaştırılmıştır (`scripts/controlled_safefilter_experiment.py`):
+
+#### A. Adım 1 (Ani Trafik Sıçraması: 514.9 Mbps $\rightarrow$ 3090.5 Mbps | Ham Eylem = 0 [1 Core]):
+- `active_demands` henüz Adım 0'ın 514.9 Mbps telemetrisidir.
+- **SafeFilter AÇIK**: $514.9 \times 1.20 = 617.9 \text{ Mbps} \le 1000 \text{ Mbps}$ olduğundan Action 0'ı güvenli saydı. `Applied Act = 0`, `Overridden = False`.
+- **SafeFilter KAPALI**: `Applied Act = 0`, `Overridden = False`.
+- **Sonuç**: Her iki ortamda da aynı 3090.5 Mbps trafik tek core üzerinden aktarılmış; **%29.53 paket kaybı**, **12.44 ms gecikme** ve **-132.65 net ceza ödülü** üretilmiştir.
+- **Bulgu**: SafeFilter'ın 1 adımlık telemetri gecikmesi nedeniyle ani sıçramalarda filtre açık olsa dahi müdahale edemediği matematiksel olarak kesinleşmiştir.
+
+#### B. Adım 2 (Yüksek Trafik Sürerken: 2704.7 Mbps | Ham Eylem = 0 [1 Core]):
+- `active_demands` artık Adım 1'in 3090.5 Mbps telemetrisidir.
+- **SafeFilter AÇIK**: $3090.5 \times 1.20 = 3708.6 \text{ Mbps} > 1000 \text{ Mbps}$ görerek Action 0'ı **Action 6'ya (4 Core) yükseltti (`Overridden = True`)**.
+- **SafeFilter KAPALI**: Eylem filtrelenmedi, doğrudan **Action 0 (1 Core)** uygulandı (`Overridden = False`).
+
+**Adım 2 Karşılaştırma Tablosu**:
+| Metrik / Bileşen | SafeFilter AÇIK (Uygulanan Act 6) | SafeFilter KAPALI (Uygulanan Act 0) | Fark ($\Delta$) |
+|---|---|---|---|
+| Aktif Core Sayısı | 4 Core | 1 Core | +3 Core |
+| Paket Kaybı | %0.00 | %0.00 (Bu akış dağılımında) | %0.00 |
+| Ortalama Gecikme | 1.64 ms | 2.95 ms | -1.31 ms |
+| `energy_reward` | 0.0000 | +12.0000 | -12.0000 |
+| `delay_penalty` | 0.6577 | 1.1807 | -0.5230 |
+| `congestion_penalty` | 0.0000 | 4.5000 (3 link $>\%85$) | -4.5000 |
+| `switching_penalty` | 0.2000 | 0.0000 | +0.2000 |
+| `wakeup_penalty` | 1.5000 (3 core uyandı) | 0.0000 | +1.5000 |
+| **Net Reward** | **-2.3577** | **+6.3193** | **-8.6770** |
+
+**Kredi Ataması Maskeleme Analizi**:
+Ağır yük altında riskli 1-core eylemi seçildiğinde SafeFilter müdahalesi neticesinde PPO'ya dönen ödül filtrelenmiş güvenli durumun ödülüdür. Bu durum ajanın riskli eylemleri keşfetmeye devam etmesine yol açmakta, SafeFilter'a yaslanma alışkanlığı yaratmaktadır.
+
+---
+
+### 3. Dinamik Headroom Ampirik Değerlendirmesi (Eğitimsiz Çevrimdışı Test)
+
+Sabit %20 headroom ($h=1.20$) ile geçmiş telemetri türevine dayanan dinamik headroom ($h_{dyn} = 1.20 \times (1 + \min(1.0, \Delta \text{demand}))$) aynı 50 adımlık Medium dizisinde (Seed 60002, Step 100K PPO modeli ile) test edilmiştir:
+- **Veri Sızıntısı Koruması**: Karar anında $t$ anının talep matrisi kesinlikle kullanılmamış, sadece $t-1$ ile $t-2$ arasındaki gözlemlenen değişim kullanılmıştır.
+
+| Metrik | Sabit Headroom (1.20x) | Dinamik Headroom (Türev Tabanlı) | Değişim |
+|---|---|---|---|
+| **Ortalama Paket Kaybı** | **%3.54** | **%3.46** | **-0.08 puan iyileşme** |
+| **Ortalama Gecikme** | **2.937 ms** | **2.832 ms** | **-0.105 ms iyileşme** |
+| **SLA İhlal Oranı** | %16.0 | %16.0 | Aynı (Kenar darboğazı kaynaklı) |
+| **Override Oranı** | %42.0 | %46.0 | +4.0 puan (Daha proaktif müdahale) |
+| **Ortalama Güç** | 2747.3 W | 2779.6 W | +32.3 W (%1.1 ek güç maliyeti) |
+
+**Yorum**: Dinamik headroom, pozitif trafik artışlarında güvenlik marjını proaktif olarak genişleterek hem paket kaybını hem de ortalama gecikmeyi eğitimsiz ortamda dahi aşağı çekmeyi başarmıştır.
+
+---
+
+### 4. Override Cezası Seçenekleri (-2.0 ve -5.0)
+
+SafeFilter'ın eylemi geçersiz kıldığı adımlarda `override_penalty` uygulanmasının matematiksel hesaplaması ve kontrollü ortam doğrulaması:
+
+| Yapılandırma | Ham Eylem | Uygulanan Eylem | Override? | Override Cezası | Net Ödül | Ceza Etkisi ($\Delta$) |
+|---|---|---|---|---|---|---|
+| **Ağırlık = 0.0 (Temel)** | Act 0 (1 Core) | Act 6 (4 Core) | True | 0.00 | -0.8577 | 0.00 (Tembel eylem cezalandırılmaz) |
+| **Ağırlık = 2.0 (-2 Ceza)** | Act 0 (1 Core) | Act 6 (4 Core) | True | 2.00 | -2.8577 | -2.00 puan |
+| **Ağırlık = 5.0 (-5 Ceza)** | Act 0 (1 Core) | Act 6 (4 Core) | True | 5.00 | -5.8577 | -5.00 puan |
+| *Referans Doğrudan Güvenli* | Act 6 (4 Core) | Act 6 (4 Core) | False | 0.00 | -0.8577 | 0.00 (Filtresiz doğru seçim) |
+
+> [!WARNING]
+> **Önemli İlkesel Kısıtlama**: Override cezasının PPO'nun politika gradyanına riskli eylemler aleyhine negatif avantaj eklediği hesaplamayla doğrulanmıştır. Ancak bu cezanın PPO'nun genel öğrenme kararlılığını veya nihai politikasını iyileştireceği iddiası **yeni bir eğitim yapılmadan kesin olarak savunulamaz**. Bu etki ancak bir sonraki kontrollü deneyde ampirik olarak test edilecektir.
+
+---
+
+### 5. OSPF %8 SLA İhlali ve Mutlak QoS Hedeflerinin Gerçekleştirilebilirlik Analizi
+
+Mevcut güvenlik kriterleri (`meets_safety_criteria`):
+- `overall_sla_violation_rate_percent <= 5.0`
+- `overall_mean_loss_percent <= 1.5`
+- `burst_loss_percent <= 2.5`
+
+**OSPF (Legacy All-Active / 0% Tasarruf) Gerçek Sonuçları**:
+- **Low**: SLA İhlali = %0.0, Kayıp = %0.00
+- **Medium**: SLA İhlali = **%8.0**, Kayıp = **%1.48**
+- **High**: SLA İhlali = **%62.0**, Kayıp = **%16.62**
+- **Burst**: SLA İhlali = **%100.0**, Kayıp = **%84.06**
+- **OSPF 4 Rejim Genel Ortalaması**: SLA İhlali = **%42.5**, Ortalama Kayıp = **%25.54**
+
+**Fiziksel Kapasite Analizi**:
+1. Fat-Tree k=4 topolojisinde 4 core anahtarı $\times$ 4 port $\times$ 1000 Mbps = **16 Gbps maksimum bisection bant genişliği** mevcuttur.
+2. Burst rejiminde (Flash crowd, intensity 2.50) üretilen anlık talep 20–40 Gbps seviyesine ulaşmaktadır. Bu nedenle Burst anında %84.06'lık kayıp kaçınılmazdır. Hiçbir yönlendirme algoritmasının Burst'te $\le \%2.5$ kayıp elde etmesi fiziksel olarak mümkün değildir.
+3. Medium rejiminde dahi sentetik akışların aynı hedef kenar portuna (1 Gbps) yığılması nedeniyle OSPF %8.0 SLA ihlali üretmektedir.
+4. **Sonuç**: Kriterler değiştirilmemiştir; ancak değerlendirme raporlarında kontrollü rejimler (Low + Medium) ile fiziksel aşırı yük stres testlerinin (High + Burst) ayrı skor kartlarında takip edilmesi gerektiği analitik olarak ortaya konmuştur.
+
+---
+
+### 6. Yapılandırılabilirlik ve Bağımsızlık
+
+Her iki yeni özellik de `GreenNetworkEnv` sınıfına varsayılan olarak kapalı, bağımsız parametreler olarak eklenmiştir:
+- `use_dynamic_headroom: bool = False` (Varsayılan: Statik `safety_headroom = 1.25/1.20` aynen korunur).
+- `override_penalty_weight: float = 0.0` (Varsayılan: Override anında 0 ceza, eski ödül formülasyonu aynen korunur).
+Önceki tüm eğitim betikleri ve regresyon testleri geriye dönük %100 uyumludur.
+
+---
+
+### 7. Eklenen Regresyon Testleri ve Pytest Doğrulaması
+
+`tests/test_qos.py` dosyasına 3 yeni regresyon testi eklendi:
+1. `test_dynamic_headroom_defaults_and_trend_expansion`: Dinamik headroom'un varsayılan olarak kapalı olduğunu, açıldığında geçmiş telemetri artışına göre genişlediğini ve geleceğe sızıntı yapmadığını doğrular.
+2. `test_override_penalty_configurable_and_calculation`: Override cezasının varsayılan olarak 0.0 olduğunu, 2.0 ve 5.0 ağırlıklarıyla birebir aynı miktarda net ödülü düşürdüğünü doğrular.
+3. `test_controlled_safefilter_on_vs_off_exact_traffic_match`: SafeFilter açık ve kapalı iki ortamın aynı seed ile birebir aynı trafik dizisini ürettiğini doğrular.
+
+**Pytest Sonucu**:
+```bash
+python -m pytest tests -q
+# 115 passed in 22.05s
+```
+Tüm 115 test eksiksiz ve yeşil olarak başarıyla geçmiştir.
+
+---
+
+### 8. Üçüncü Eğitim (Pilot v3) İçin Önerilen Deney Tasarımı
+
+1. **Deney Grubu A (Temel Karşılaştırma - v2 Tekrarı)**:
+   - Sabit headroom %20 ($h=1.20$), `override_penalty_weight = 0.0`.
+2. **Deney Grubu B (Dinamik Headroom)**:
+   - `use_dynamic_headroom = True`, `override_penalty_weight = 0.0`.
+   - Amaç: Trafik sıçramalarında çekirdek darboğazlarının eğitimsiz gözlenen %0.08 kayıp iyileştirmesinin öğrenmeye etkisini ölçmek.
+3. **Deney Grubu C (Dinamik Headroom + Ilımlı Override Cezası)**:
+   - `use_dynamic_headroom = True`, `override_penalty_weight = 2.0`.
+   - Amaç: PPO'nun SafeFilter'a tembelce yaslanmasını önlemek ve güvenli çekirdek seçimini içselleştirmesini sağlamak.

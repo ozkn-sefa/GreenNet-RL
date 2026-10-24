@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from conftest import make_flow
-from src.env.green_network_env import weighted_percentile
+from src.env.green_network_env import GreenNetworkEnv, weighted_percentile
 from src.agents.evaluate import mean_std_ci
 
 
@@ -166,3 +166,83 @@ def test_qos_physical_edge_bottleneck_under_all_active_ospf(env_k4):
     assert res["lost_mbps"] >= 400.0 - 1e-6
     assert "h_3_1_1" in res["bottleneck_link"]
 
+
+def test_dynamic_headroom_defaults_and_trend_expansion(env_k4):
+    """
+    Verification:
+    1. use_dynamic_headroom is False by default and uses static safety_headroom.
+    2. When use_dynamic_headroom=True, headroom expands if past telemetry shows positive growth.
+    3. Strictly uses past telemetry (_prev_step_demands_total vs active_demands) - no future leakage.
+    """
+    assert env_k4.use_dynamic_headroom is False
+
+    env_dyn = GreenNetworkEnv(k=4, use_safety_filter=True, safety_headroom=1.20, use_dynamic_headroom=True)
+    assert env_dyn.use_dynamic_headroom is True
+    env_dyn.reset(seed=60002)
+
+    # Initial step: no past growth history yet -> returns base headroom
+    env_dyn.active_demands = [make_flow("f1", "h_0_0_0", "h_1_0_0", 500.0)]
+    env_dyn._prev_step_demands_total = None
+    h_init = env_dyn._compute_dynamic_headroom()
+    assert h_init == pytest.approx(1.20)
+
+    # Past demand was 500 Mbps, curr observed demand surged to 1000 Mbps (growth = +100%)
+    env_dyn._prev_step_demands_total = 500.0
+    env_dyn.active_demands = [make_flow("f1", "h_0_0_0", "h_1_0_0", 1000.0)]
+    h_expanded = env_dyn._compute_dynamic_headroom()
+    # base * (1 + min(1, 1.0)) = 1.20 * 2.0 = 2.40
+    assert h_expanded == pytest.approx(2.40)
+    assert h_expanded > 1.20
+
+    # If past demand decreased (growth <= 0), headroom remains at base
+    env_dyn._prev_step_demands_total = 1000.0
+    env_dyn.active_demands = [make_flow("f1", "h_0_0_0", "h_1_0_0", 600.0)]
+    h_decreased = env_dyn._compute_dynamic_headroom()
+    assert h_decreased == pytest.approx(1.20)
+
+
+def test_override_penalty_configurable_and_calculation():
+    """
+    Verification:
+    1. override_penalty_weight is 0.0 by default (zero impact on reward).
+    2. When configured to 2.0 and 5.0, exactly 2.0 and 5.0 are deducted as override_penalty.
+    """
+    env_default = GreenNetworkEnv(k=4, use_safety_filter=True)
+    assert env_default.override_penalty_weight == 0.0
+
+    # Environment with penalty 2.0
+    env_pen2 = GreenNetworkEnv(k=4, use_safety_filter=True, override_penalty_weight=2.0)
+    assert env_pen2.override_penalty_weight == 2.0
+    env_pen2.reset(seed=60002)
+    env_pen2.active_demands = [make_flow(f"f_{i}", f"h_0_0_{i%2}", f"h_1_0_{i%2}", 900.0) for i in range(4)]
+    _, r2, _, _, info2 = env_pen2.step(0)  # SafeFilter overrides Action 0 -> 4 cores
+    assert info2["action_overridden"] is True
+    assert info2["reward_components"]["override_penalty"] == pytest.approx(2.0)
+
+    # Environment with penalty 5.0
+    env_pen5 = GreenNetworkEnv(k=4, use_safety_filter=True, override_penalty_weight=5.0)
+    env_pen5.reset(seed=60002)
+    env_pen5.active_demands = [make_flow(f"f_{i}", f"h_0_0_{i%2}", f"h_1_0_{i%2}", 900.0) for i in range(4)]
+    _, r5, _, _, info5 = env_pen5.step(0)
+    assert info5["action_overridden"] is True
+    assert info5["reward_components"]["override_penalty"] == pytest.approx(5.0)
+
+    # Delta between r2 and r5 must equal exactly 3.0 (5.0 - 2.0)
+    assert (r2 - r5) == pytest.approx(3.0)
+
+
+def test_controlled_safefilter_on_vs_off_exact_traffic_match():
+    """
+    Verification:
+    Both SafeFilter ON and OFF environments generate identical step demands
+    under identical seed and RNG initialization.
+    """
+    e_on = GreenNetworkEnv(k=4, use_safety_filter=True)
+    e_off = GreenNetworkEnv(k=4, use_safety_filter=False)
+    e_on.reset(seed=60002, options={"intensity": 1.10, "profile": "diurnal", "burst": False})
+    e_off.reset(seed=60002, options={"intensity": 1.10, "profile": "diurnal", "burst": False})
+
+    for s in range(5):
+        _, _, _, _, i_on = e_on.step(7)
+        _, _, _, _, i_off = e_off.step(7)
+        assert abs(i_on["total_demand_mbps"] - i_off["total_demand_mbps"]) < 1e-6

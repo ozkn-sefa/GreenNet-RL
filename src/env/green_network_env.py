@@ -20,6 +20,7 @@ TRAIN_SEED_LIMIT = 1_000_000
 DEFAULT_REWARD_CFG: Dict[str, float] = {
     "energy": 1.0, "waste": 1.0, "delay": 1.0, "loss": 1.0,
     "congestion": 1.0, "switching": 1.0, "wakeup": 1.0,
+    "override": 1.0,
 }
 
 
@@ -99,6 +100,8 @@ class GreenNetworkEnv(gym.Env):
         real_traffic_loop: bool = False,
         green_mode: str = "switch_sleep",
         min_dwell_steps: int = 3,
+        use_dynamic_headroom: bool = False,
+        override_penalty_weight: float = 0.0,
     ):
         super().__init__()
 
@@ -123,6 +126,9 @@ class GreenNetworkEnv(gym.Env):
         self.use_safety_filter = use_safety_filter
         self.safe_util_limit = safe_util_limit
         self.safety_headroom = safety_headroom
+        self.use_dynamic_headroom = bool(use_dynamic_headroom)
+        self.override_penalty_weight = float(override_penalty_weight)
+        self._prev_step_demands_total: Optional[float] = None
 
         # Real traffic integration
         self.traffic_source = str(traffic_source).lower()
@@ -420,11 +426,34 @@ class GreenNetworkEnv(gym.Env):
         }
 
     # -------------------------------------------------------- safe-action API
+    def _compute_dynamic_headroom(self) -> float:
+        """
+        Dynamically adjusts safety headroom based strictly on historical telemetry
+        (previous step demand vs older step demand). NO future traffic leakage.
+        If past traffic exhibits a rising trend, headroom expands from base up to 2.5x.
+        """
+        if not self.active_demands:
+            return self.safety_headroom
+        curr_total = float(sum(d.demand_mbps for d in self.active_demands))
+        base_h = self.safety_headroom
+        if self._prev_step_demands_total is None or self._prev_step_demands_total <= 0:
+            return base_h
+        growth = (curr_total - self._prev_step_demands_total) / self._prev_step_demands_total
+        if growth > 0:
+            dyn_h = base_h * (1.0 + min(1.0, growth))
+            return float(min(2.5, dyn_h))
+        return base_h
+
     def predict_action_outcomes(self, headroom: Optional[float] = None) -> List[Optional[Dict[str, Any]]]:
         """Predicted QoS of every action if the last observed demand matrix (x headroom) repeated."""
         if not self.active_demands:
             return [None] * len(self.core_actions)
-        h = self.safety_headroom if headroom is None else headroom
+        if headroom is not None:
+            h = headroom
+        elif self.use_dynamic_headroom:
+            h = self._compute_dynamic_headroom()
+        else:
+            h = self.safety_headroom
         failed = self._failed_links_at(self.current_step + 1)
         return [self._route_demands(self.active_demands, a, failed, scale=h) for a in range(len(self.core_actions))]
 
@@ -518,6 +547,7 @@ class GreenNetworkEnv(gym.Env):
         self.current_action = 7  # full capacity
         self.prev_action = None
         self.steps_in_action = 0
+        self._prev_step_demands_total = None
 
         if "traffic_source" in options:
             self.traffic_source = str(options["traffic_source"]).lower()
@@ -627,6 +657,8 @@ class GreenNetworkEnv(gym.Env):
         else:
             demands = self.traffic_gen.generate_step_demands(active_flow_count=16)
             real_info = {"traffic_source": "synthetic"}
+        if self.active_demands:
+            self._prev_step_demands_total = float(sum(d.demand_mbps for d in self.active_demands))
         self.active_demands = demands
 
         inter_pod_count = 0
@@ -721,9 +753,13 @@ class GreenNetworkEnv(gym.Env):
         port_wakeup_penalty = 0.05 * trans.get("port_wakeups", 0) * cfg["wakeup"]
         self.prev_action = self.current_action
 
+        override_penalty = 0.0
+        if overridden and self.override_penalty_weight > 0.0:
+            override_penalty = self.override_penalty_weight * cfg.get("override", 1.0)
+
         reward = float(energy_reward - waste_penalty - delay_penalty - loss_penalty
                        - congestion_penalty - switching_penalty - flapping_penalty
-                       - wakeup_penalty - port_wakeup_penalty) * self.reward_scale
+                       - wakeup_penalty - port_wakeup_penalty - override_penalty) * self.reward_scale
 
         # 7. Check Episode Termination
         terminated = False
@@ -791,6 +827,7 @@ class GreenNetworkEnv(gym.Env):
                 "flapping_penalty": float(flapping_penalty),
                 "wakeup_penalty": float(wakeup_penalty),
                 "port_wakeup_penalty": float(port_wakeup_penalty),
+                "override_penalty": float(override_penalty),
                 "net_reward": float(reward),
             },
         })
