@@ -8,6 +8,8 @@ import os
 from typing import Optional
 import gymnasium as gym
 from stable_baselines3 import PPO, DQN
+from stable_baselines3.common.monitor import Monitor
+from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
 import numpy as np
 
 
@@ -27,10 +29,13 @@ class GreenRLAgent:
         learning_rate: float = 3e-4,
         seed: int = 42,
         use_shield: bool = True,
-        device: str = "auto"
+        device: str = "auto",
+        use_monitor: bool = True,
+        use_vec_normalize: bool = False,
+        norm_reward: bool = True,
+        clip_reward: Optional[float] = None,
     ):
         self.use_shield = use_shield  # False => raw policy output (used for unbiased benchmarking)
-        self.env = env
         self.algo_name = algo.upper()
         self.model_path = model_path
         self.learning_rate = learning_rate
@@ -39,6 +44,39 @@ class GreenRLAgent:
         self.model = None
         self.is_trained = False
         self.last_predicted_action: Optional[int] = None
+        self.use_monitor = use_monitor
+        self.use_vec_normalize = use_vec_normalize
+        self.norm_reward = norm_reward
+        self.clip_reward = clip_reward
+
+        # GreenNet-RL Proje Tercihi: Reward clipping ile dinamik varyans normalizasyonu
+        # ceza skalasını ve QoS hassasiyetini korumak amacıyla bir arada uygulanmaz.
+        # Bu kısıtlama SB3 kütüphane zorunluluğu değil, projenin ödül dinamiklerini koruma tasarım tercihidir.
+        if use_vec_normalize and norm_reward and clip_reward is not None and clip_reward < float("inf"):
+            raise ValueError(
+                "GreenNet-RL proje tercihi: Reward clipping ve VecNormalize reward normalizasyonu "
+                "birlikte uygulanmaz (QoS ceza skalasını korumak için unclipped VecNormalize tercih edilir). "
+                "VecNormalize(norm_reward=True, clip_reward=inf) veya bağımsız clipping'den birini seçiniz."
+            )
+
+        # Wrap with Monitor if requested and not already a Monitor
+        if use_monitor and not isinstance(env, (Monitor, VecNormalize, DummyVecEnv)):
+            env = Monitor(env)
+
+        # Wrap with VecNormalize if requested
+        if use_vec_normalize and not isinstance(env, VecNormalize):
+            if not isinstance(env, DummyVecEnv):
+                env = DummyVecEnv([lambda: env])
+            env = VecNormalize(
+                env,
+                training=True,
+                norm_obs=False,
+                norm_reward=norm_reward,
+                clip_reward=float("inf"),
+                gamma=0.99,
+            )
+
+        self.env = env
 
         # Resolve topology-specific model path
         target_path = self._resolve_model_path(model_path)
@@ -117,6 +155,11 @@ class GreenRLAgent:
         print(f"[*] Starting {self.algo_name} training for {total_timesteps} timesteps on {getattr(self.env, 'topology_type', 'default')}...")
         self.model.learn(total_timesteps=total_timesteps)
         self.model.save(save_path)
+        vec_env = getattr(self.model, "get_vec_normalize_env", lambda: None)() or (self.env if isinstance(self.env, VecNormalize) else None)
+        if vec_env is not None and hasattr(vec_env, "save"):
+            vec_path = save_path.replace(".zip", "_vecnormalize.pkl")
+            vec_env.save(vec_path)
+            print(f"[+] VecNormalize statistics saved to: {vec_path}")
         self.is_trained = True
         print(f"[+] Model saved successfully to: {save_path}")
 
@@ -220,6 +263,15 @@ class GreenRLAgent:
     def load(self, model_path: str):
         """Loads trained model weights (auto-detects PPO or DQN) or activates dynamic elastic policy if topology dimension changes."""
         print(f"[*] Loading model from {model_path}...")
+        vec_path = model_path.replace(".zip", "_vecnormalize.pkl")
+        if os.path.exists(vec_path):
+            if not isinstance(self.env, VecNormalize):
+                if not isinstance(self.env, DummyVecEnv):
+                    self.env = DummyVecEnv([lambda: self.env])
+                self.env = VecNormalize.load(vec_path, self.env)
+            self.env.training = False
+            self.env.norm_reward = False
+            print(f"[+] Loaded VecNormalize statistics from {vec_path} (training=False, norm_reward=False)")
         try:
             self.model = PPO.load(model_path, env=self.env, device=self.device)
             self.algo_name = "PPO"

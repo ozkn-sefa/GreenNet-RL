@@ -571,6 +571,18 @@ class GreenNetworkEnv(gym.Env):
         obs = self._build_observation(diurnal_factor=1.0, total_demand=0.0, inter_pod_count=0)
         info = self._build_info_dict(energy_info={"total_power_w": 0, "energy_savings_percent": 0}, avg_delay_ms=1.0, packet_loss_rate=0.0)
         info["traffic_source"] = self.traffic_source
+        info["reward_components"] = {
+            "energy_reward": 0.0,
+            "waste_penalty": 0.0,
+            "delay_penalty": 0.0,
+            "loss_penalty": 0.0,
+            "congestion_penalty": 0.0,
+            "switching_penalty": 0.0,
+            "flapping_penalty": 0.0,
+            "wakeup_penalty": 0.0,
+            "port_wakeup_penalty": 0.0,
+            "net_reward": 0.0,
+        }
         if self.traffic_source == "real":
             info["real_split"] = self.real_traffic_split
         return obs, info
@@ -769,6 +781,18 @@ class GreenNetworkEnv(gym.Env):
             "failed_links": sorted(f"{u}->{v}" for (u, v) in failed),
             "requested_action": requested_action,
             "action_overridden": bool(overridden),
+            "reward_components": {
+                "energy_reward": float(energy_reward),
+                "waste_penalty": float(waste_penalty),
+                "delay_penalty": float(delay_penalty),
+                "loss_penalty": float(loss_penalty),
+                "congestion_penalty": float(congestion_penalty),
+                "switching_penalty": float(switching_penalty),
+                "flapping_penalty": float(flapping_penalty),
+                "wakeup_penalty": float(wakeup_penalty),
+                "port_wakeup_penalty": float(port_wakeup_penalty),
+                "net_reward": float(reward),
+            },
         })
         if self.traffic_source == "real":
             info.update({

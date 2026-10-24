@@ -30,13 +30,16 @@ def main():
     parser.add_argument("--real-split", type=str, default="train", choices=["train", "val", "test"], help="Dataset split for real traffic")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--max-steps-per-episode", type=int, default=150, help="Max steps per episode")
+    parser.add_argument("--vec-normalize", action="store_true", help="Enable VecNormalize wrapper")
+    parser.add_argument("--no-norm-reward", action="store_true", help="Disable reward normalization in VecNormalize")
+    parser.add_argument("--clip-reward", type=float, default=None, help="Reward clipping bound")
     args = parser.parse_args()
 
     print("=" * 60)
     print(" [*] GREEN SDN: RL AGENT TRAINING INITIATED")
     print(f" [*] Algorithm: {args.algo} | Timesteps: {args.timesteps} | Device: {args.device}")
     print(f" [*] Topology: {args.topology} | Traffic Source: {args.traffic_source} (Split: {args.real_split})")
-    print(f" [*] Seed: {args.seed} | Save Path: {args.save_path}")
+    print(f" [*] Seed: {args.seed} | Save Path: {args.save_path} | VecNormalize: {args.vec_normalize}")
     print("=" * 60)
 
     if args.traffic_source == "real":
@@ -63,7 +66,11 @@ def main():
         env=env,
         algo=args.algo,
         device=args.device,
-        seed=args.seed
+        seed=args.seed,
+        use_monitor=True,
+        use_vec_normalize=args.vec_normalize,
+        norm_reward=not args.no_norm_reward,
+        clip_reward=args.clip_reward,
     )
 
     agent.train(total_timesteps=args.timesteps, save_path=args.save_path)

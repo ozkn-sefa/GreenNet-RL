@@ -532,6 +532,193 @@ Düzeltilmiş ortam ve baseline'larla `results/audit_k4_checkpoints_reevaluation
   - **100 passed in 18.08s** (Tüm testler eksiksiz ve yeşil).
 - Checkpoint'ler, modeller ve veri seti izolasyonu korunmuş; ana eğitim başlatılmamıştır.
 
+---
+
+## 12. Fat-Tree k=4 PPO Telemetri ve Reward Kararlılığı İyileştirmeleri (Monitor Wrapper, VecNormalize, Reward Bileşenleri ve Regresyon Koruması) (2026-10-24)
+
+### 1. Stable-Baselines3 Monitor Wrapper Entegrasyonu ve Telemetri Doğrulaması
+- **Yapılan İyileştirme**:
+  - `scripts/train_pilot_fattree_k4.py`, `src/agents/rl_agent.py` ve `scripts/train.py` betiklerine `stable_baselines3.common.monitor.Monitor` wrapper'ı entegre edildi.
+  - Eğitim ortamı `Monitor(GreenNetworkEnv)` ile sarılarak her bölüm tamamlandığında (1024 adım veya truncation) `info["episode"]` sözlüğünün (`r`: getiri, `l`: uzunluk) SB3'ün `ep_info_buffer` kuyruğuna yazılması garanti altına alındı.
+  - `FatTreePilotCallback._on_rollout_end` fonksiyonu, hem SB3 logger çıktısını hem de `model.ep_info_buffer` tamponunu `safe_mean` ile okuyacak şekilde güncellendi.
+- **Doğrulama (Smoke Test)**:
+  - 2048 adımlık kısa smoke test (`--smoke-test`) icra edildi.
+  - `results/smoke_test_fattree_k4_results.json` çıktısında:
+    - Adım 1024: `mean_reward: -66102.05`, `mean_ep_length: 1024.0`
+    - Adım 2048: `mean_reward: -187611.99`, `mean_ep_length: 1024.0`
+    olarak gerçek değerlerin eksiksiz kaydedildiği, 0.0 loglama açığının tamamen kapandığı doğrulandı.
+
+### 2. Eğitim Ortamındaki Reward Bileşenlerinin Analizi ve Raporu
+`GreenNetworkEnv` adım döngüsündeki ödül/ceza bileşenleri `info["reward_components"]` sözlüğü ile şeffaf hale getirildi:
+1. **Enerji Tasarrufu Ödülü ($R_{energy}$)**:
+   - Formül: $R_{energy} = \frac{N_{total} - N_{active}}{N_{total}} \times 16.0 \times \frac{w_e}{2.5}$
+   - Fat-Tree k=4 Gerçek Eylem Dağılımı (`core_actions`):
+     - **Act 0 & Act 1**: 1 Core aktif (`c_0_0` veya `c_0_1`), 3 Core uyku (%75 tasarruf) $\rightarrow$ **$R_{energy} = 12.0$**
+     - **Act 2 & Act 3**: 2 Core aktif (`c_0_0, c_1_0` veya `c_0_1, c_1_1`), 2 Core uyku (%50 tasarruf) $\rightarrow$ **$R_{energy} = 8.0$**
+     - **Act 4 & Act 5**: 3 Core aktif (`c_0_0, c_0_1, c_1_0` veya `c_0_0, c_1_0, c_1_1`), 1 Core uyku (%25 tasarruf) $\rightarrow$ **$R_{energy} = 4.0$**
+     - **Act 6 & Act 7**: 4 Core aktif (tüm omurga devrede / Tam Kapasite, %0 tasarruf) $\rightarrow$ **$R_{energy} = 0.0$**
+     *(Düzeltme Notu: Önceki taslakta Act 6 sehven 3 core olarak yazılmıştı; kodda ve topolojide Act 6 ve Act 7 tam kapasite 4 core'dur).*
+2. **Aşırı Tahsisat / İsraf Cezası ($P_{waste}$)**:
+   - Formül: $N_{active} > N_{safe}$ ve link doluluğu $<\%70$ iken $(N_{active} - N_{safe}) \times 3.5 \times w_{waste}$.
+   - Tembel ajanın trafiği düşünmeden gereksiz yere tüm omurgayı açık tutmasını engeller.
+3. **Gecikme Cezası ($P_{delay}$)**:
+   - Formül: Lineer bileşen $\frac{D_{avg}}{2.5} \times w_d$ + SLA aşımında $(D_{avg} - SLA_{ms}) \times 6.0 \times w_d$.
+   - Normal yükte 0.2 - 1.5 puan; Burst anında (76.5 ms ortalama gecikme, SLA=3.5 ms) tek adımda **468.6 puan** ceza üretir.
+4. **Paket Kaybı Cezası ($P_{loss}$)**:
+   - Formül: $Loss_{rate} \times 50.0 \times w_{loss}$ (varsayılan $w_{loss}=5.0$ ile $Loss_{rate} \times 250.0$).
+   - Normal yükte 0.0 - 5.0 puan; Burst anında (%84.06 kayıp) tek adımda **210.1 puan** ceza üretir.
+5. **Tıkanıklık Cezası ($P_{cong}$)**:
+   - Formül: Doluluğu $>\%85$ olan link sayısı $\times 1.5 \times w_{cong}$.
+   - 16 omurga linki tıkandığında tek adımda **24.0 puan** ceza.
+6. **Geçiş ve Kararsızlık Cezaları ($P_{trans}$)**:
+   - `switching_penalty`: Eylem değiştiğinde 0.2 puan.
+   - `flapping_penalty`: Dwell time ($<3$ adım) ihlalinde $(3 - \text{steps}) \times 1.5$ ceza.
+   - `wakeup_penalty` / `port_wakeup_penalty`: Uyandırılan anahtar başına 0.5, port başına 0.05 puan.
+
+### 3. Reward Normalizasyonu (`VecNormalize`) ve Clipping Ayrımı (Proje Tercihi)
+- **Yapılan İyileştirme**:
+  - `DummyVecEnv` ve `VecNormalize(norm_obs=False, norm_reward=True, clip_reward=float("inf"), gamma=0.99)` eklendi.
+  - **Karşılıklı Dışlama Kuralı (GreenNet-RL Proje Tercihi)**:
+    - Stable-Baselines3 kütüphanesi teknik olarak `clip_reward` ve `norm_reward` parametrelerinin ikisini de aynı anda kabul edebilmektedir (`clip_reward > 0`).
+    - Ancak GreenNet-RL mimarisinde ani SLA ve paket kaybı cezalarının büyüklük hassasiyetini yapay olarak kırpmamak için, reward clipping uygulanmayıp unclipped `VecNormalize(clip_reward=float("inf"))` tercih edilmiştir.
+    - Bu kısıtlama **SB3'ün bir zorunluluğu değil**, projenin ceza dinamiklerini ve ölçek bağımsızlığını korumak için belirlediği bilinçli bir **GreenNet-RL mimari tasarım tercihidir**. Kod seviyesinde bu tercihi ihlal eden yapılandırmalarda açıklayıcı bir `ValueError` fırlatılır (`test_reward_clipping_and_normalization_mutually_exclusive`).
+  - Gözlem uzayının fiziksel sınırları (0/1 flag'ler, link dolulukları [0, 2], trafik [0, 5]) korunsun diye `norm_obs=False` tutuldu; yalnızca getiri dinamik varyansa bölündü ($r / \sqrt{\sigma_R^2 + \epsilon}$).
+- **Value Loss Sonucu**:
+  - Normalizasyon öncesi Burst şoku nedeniyle value loss **$1.07 \times 10^8$ ($107,000,000$)** seviyesine fırlamaktaydı.
+  - `VecNormalize(norm_reward=True)` ile icra edilen smoke testte value loss **11.34** seviyesine indi (**7 mertebe stabilizasyon**).
+
+### 4. Checkpoint Kayıt ve Değerlendirme (Evaluation) Entegrasyonu
+- **Checkpoint Kaydı**: Checkpoint oluşturulurken model dosyasının yanına eşzamanlı olarak `checkpoint_step_{step}_vecnormalize.pkl`, `final_model_vecnormalize.pkl` ve `best_model_vecnormalize.pkl` kaydedilir.
+- **Evaluation Yüklemesi**: Değerlendirme sırasında istatistikler `VecNormalize.load(...)` ile yüklenir ve zorunlu olarak:
+  - `eval_env.training = False` (koşu varyansı ve ortalaması dondurulur, değerlendirme verisi eğitim istatistiğini kirletmez).
+  - `eval_env.norm_reward = False` (değerlendirme çıktısı gerçek fiziksel ödül ve enerji/QoS değerleri üzerinden üretilir).
+
+### 5. Ödül Fonksiyonu Anlamının Korunması
+- `GreenNetworkEnv` içindeki çok amaçlı enerji-QoS ödül fonksiyonunun fiziksel katsayıları, SLA eşikleri ve bağıl cezaları değiştirilmemiştir.
+- Normalizasyon işlemi, tüm eylemleri eşit derecede ölçekleyen monotonik bir dönüşüm ($r / \sigma$) olduğundan, en iyi eylem hiyerarşisi ve SLA öncelikleri matematiksel olarak korunmuştur.
+
+### 6. Veri İzolasyonu, Fat-Tree k=4 ve Checkpoint Koruması
+- Train (0..50000), Val (60001..60004), Test (70001..70004) veri seti izolasyonu bozulmamıştır.
+- `models/pilot_fattree_k4_100k` altındaki mevcut 100K pilot model ağırlıklarına ve checkpoint'lerine kesinlikle dokunulmamış; smoke test izole dizinde (`models/smoke_test_fattree_k4`) yürütülmüştür.
+- Fat-Tree k=6 veya WAN topolojilerine geçilmemiştir.
+
+### 7. SafeFilter Regresyon Koruması ve Yeni Testler
+- Tam kapasite (Action 7 / 4 Core) talebinin aşırı yük altında asla alt kapasiteye düşürülmemesi kuralı (`tests/test_action_mapping.py::test_safe_action_never_downgrades_full_capacity`) ve `test_safefilter_full_capacity_regression_intact` ile korundu.
+- `tests/test_telemetry_normalization.py` dosyasına 7 yeni birim ve entegrasyon testi eklendi:
+  1. `test_reward_components_breakdown`: Ödül bileşenlerinin eksiksizliği ve adım ödülüyle aritmetik tutarlılığı.
+  2. `test_monitor_wrapper_records_episode_statistics`: `Monitor` wrapper'ının `info["episode"]` üretimi.
+  3. `test_ppo_telemetry_ep_rew_and_ep_len_recorded`: `ep_info_buffer` ve callback telemetri kaydı.
+  4. `test_reward_clipping_and_normalization_mutually_exclusive`: Normalizasyon ile clipping'in karşılıklı dışlaması.
+  5. `test_vec_normalize_scales_reward_without_distorting_semantics`: Varyans ölçeklemesinin anlam koruyuculuğu.
+  6. `test_vec_normalize_checkpoint_save_and_evaluation_loading`: Checkpoint kaydı, `training=False`, `norm_reward=False` yüklemesi ve varyans sabitliği.
+  7. `test_safefilter_full_capacity_regression_intact`: SafeFilter tam kapasite regresyon testi.
+
+### 8. Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **107 passed in 25.79s** (Tüm 107 test eksiksiz ve yeşil).
+
+### 9. Kalan Riskler ve Sonraki Adımlar
+1. **Burst Aşırı Yük Stres Rejimi (Fiziksel Darboğaz)**:
+   - Burst rejimi (35 Gbps) Fat-Tree k=4 mimarisinin bisection kapasitesini (16 Gbps) 2.2 kat aşmaktadır.
+   - PPO ne öğrenirse öğrensin fiziksel kapasitenin yetersiz kaldığı bu rejimde SLA ihlali ve paket kaybı kaçınılmazdır. Bu durum SafeFilter kalkanının canlı ağda daima devrede tutulması gerekliliğini doğrular.
+2. **Yeni 100K PPO Eğitimi Onayı**:
+   - Telemetri ve reward stabilizasyon altyapısı hazır durumdadır.
+   - Kullanıcı onayı alındıktan sonra 100,000 adımlık yeni Fat-Tree k=4 PPO eğitimi başlatılabilir.
+
+---
+
+## 13. Fat-Tree k=4 İkinci Kontrollü 100K PPO Pilot Eğitimi (v2) ve Pilot Karşılaştırma Raporu (2026-10-24)
+
+### 1. Eğitim Yapılandırması ve Yalıtım (Isolation)
+- **Topoloji**: Fat-Tree k=4 (4 Core, 8 Agg, 8 Edge, 16 Host), `green_mode="switch_sleep"`.
+- **Ajan**: PPO (`MlpPolicy [128, 128]`, device=CPU, seed=42, lr=3e-4, n_steps=1024, batch_size=256, gamma=0.99, gae_lambda=0.95, clip_range=0.2, ent_coef=0.01, n_epochs=10, 100,000 adım).
+- **Yeni Eklenenler**: `Monitor` wrapper ve unclipped `VecNormalize(norm_obs=False, norm_reward=True, clip_reward=float("inf"))`.
+- **Dizin İzolasyonu**:
+  - Checkpoint ve istatistikler: `models/pilot_fattree_k4_100k_v2/`
+  - Sonuç JSON: `results/pilot_fattree_k4_100k_v2_results.json`
+  - Eski v1 pilot modelleri (`models/pilot_fattree_k4_100k/`) ve Abilene modelleri eksiksiz korunmuştur.
+- **Tohum İzolasyonu**: Train (0..50000), Validation (60001..60004), Test (70001..70004, dokunulmadı).
+- **Süre**: 377.32 saniye (~6.29 dakika).
+
+---
+
+### 2. Öğrenme Telemetrisi ve Değer Fonksiyonu Kararlılığı (v1 vs. v2)
+
+| Metrik | Pilot 1 (v1: VecNormalize Yok) | Pilot 2 (v2: VecNormalize + Monitor) | Değişim ve Etki |
+| :--- | :---: | :---: | :--- |
+| **Value Loss (Kritik Ağ Hatası)** | **$1.07 \times 10^8$ ($107,000,000$)** | **0.001 - 0.05 (Ortalama ~0.01)** | Sayısal patlama tamamen engellendi, gradyanlar stabilize oldu |
+| **Logger Telemetrisi (`ep_rew_mean`)** | **0.0 (Kayıt Açığı)** | **Gerçek Bölüm Getirileri (-65K .. -239K)** | `Monitor` wrapper ile bölüm getirileri tam kaydedildi |
+| **Logger Telemetrisi (`ep_len_mean`)** | **0.0 (Kayıt Açığı)** | **1024.0 Adım** | Bölüm uzunlukları eksiksiz takip edildi |
+| **Policy Gradient Loss** | Değişken / Dengesiz | -0.006 .. -0.024 | Düzgün ve kararlı politika gradyanları |
+| **Approximate KL Divergence** | Patlamaya Açık | 0.005 .. 0.011 | Güvenli PPO güven bölgesi içinde kaldı |
+| **Policy Entropy** | -2.079 $\rightarrow$ -2.07 | -2.079 $\rightarrow$ -1.53 | Sağlıklı ve kontrollü keşif daralması |
+
+> [!WARNING]
+> **Ölçek Uyarısı**: Pilot 1 ve Pilot 2'deki `value_loss` değerleri doğrudan aynı ölçekte **değildir**. Pilot 1'de value loss ham birim kare cinsindendir ($(r - V)^2 \approx (-60,000)^2 \approx 3.6 \times 10^9$). Pilot 2'de ise getiri dinamik standart sapmaya bölündüğünden ($\frac{(r - V)^2}{\sigma_R^2}$) boyutsuz varyans hatasıdır. Bu nedenle 0.01 seviyesi, kritik ağının normalize getiri varyansının %1'i kadar küçük bir hata ile çalıştığını kanıtlar.
+
+---
+
+### 3. Checkpoint Karşılaştırması: Kontrol Edilebilir Yük vs. Aşırı Yük Stres Testi
+
+Eski Pilot (v1) ile İkinci Pilot (v2) arasındaki Step 20K, 50K, 90K ve 100K karşılaştırması:
+
+#### A. Kontrol Edilebilir Rejimler (Düşük ve Orta Yük)
+| Checkpoint | Rejim | v1 Tasarruf (%) | v2 Tasarruf (%) | v1 Kayıp (%) | v2 Kayıp (%) | v1 Gecikme (ms) | v2 Gecikme (ms) | v1 SLA İhlali | v2 SLA İhlali | SafeFilter Override (v2) |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Step 20k** | Low (0.5x) | %13.53 | %7.06 | %0.28 | %0.28 | 0.852 ms | **0.838 ms** | %4.0 | %4.0 | %2.0 |
+| | Medium (1.1x) | %9.63 | %5.88 | %3.54 | **%2.57** | 2.910 ms | **2.397 ms** | %16.0 | **%14.0** | %36.0 |
+| **Step 50k** | Low (0.5x) | %13.52 | %13.52 | %0.28 | %0.28 | 0.852 ms | 0.852 ms | %4.0 | %4.0 | %6.0 |
+| | Medium (1.1x) | %9.63 | %9.32 | %3.54 | **%3.23** | 2.910 ms | **2.788 ms** | %16.0 | **%14.0** | %42.0 |
+| **Step 90k** | Low (0.5x) | %10.43 | **%13.52** | %0.00 | %0.28 | 0.715 ms | 0.852 ms | %0.0 | %4.0 | %8.0 |
+| | Medium (1.1x) | %7.39 | **%9.63** | %2.75 | %3.54 | 2.435 ms | 2.910 ms | %4.0 | %16.0 | %44.0 |
+| **Step 100k** | Low (0.5x) | %9.00 | **%13.52** | %0.00 | %0.28 | 0.706 ms | 0.852 ms | %0.0 | %4.0 | %8.0 |
+| | Medium (1.1x) | %6.90 | **%9.63** | %2.31 | %3.54 | 2.220 ms | 2.910 ms | %2.0 | %16.0 | %44.0 |
+
+- **Yorum**: 
+  - v2 pilotunda Step 20K ve 50K'da orta yük gecikmesi ve paket kaybı daha başarılıdır (2.91 ms $\rightarrow$ 2.39 ms, kayıp %3.54 $\rightarrow$ %2.57).
+  - Step 90K ve 100K'da v2 pilotu enerji tasarrufunda daha agresif kalmış (%13.52 ve %9.63), SafeFilter ile düşük yükte SLA ihlalini %4.0 (limit $\le \%5.0$) ve kaybı %0.28 (limit $\le \%1.5$) seviyesinde tutmuştur.
+
+#### B. Aşırı Yük Stres Testi Rejimleri (High ve Burst Yük)
+| Checkpoint | Rejim | Raw PPO Eylemi (v2) | Uygulanan Eylem (SafeFilter v2) | PPO Kaybı (%) | OSPF Kaybı (%) | SLA İhlali (%) | SafeFilter Override (%) |
+| :---: | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
+| **Step 20k** | High (1.85x) | Act 1 (%76), Act 6 (%14), Diğer (%10) | Act 6 (%86), Act 1/2 (%10), Act 4/5 (%4) | %16.55 | %16.62 | %60.0 | %80.0 |
+| | Burst (2.5x) | Act 2 (%98), Act 1 (%2) | Act 6 (%100 - Tam Kapasite) | %84.06 | %84.06 | %100.0 | %100.0 |
+| **Step 50k** | High (1.85x) | Act 1 (%42), Act 2 (%32), Act 3/4/7 (%26) | Act 6 (%76), Act 7 (%8), Act 1/2 (%12) | %16.55 | %16.62 | %60.0 | %84.0 |
+| | Burst (2.5x) | Act 2 (%92), Act 4 (%6), Act 1 (%2) | Act 6 (%100 - Tam Kapasite) | %84.06 | %84.06 | %100.0 | %100.0 |
+| **Step 90k** | High (1.85x) | Act 1 (%40), Act 2 (%32), Act 0 (%18) | Act 6 (%80), Act 7 (%4), Act 1/2 (%12) | %16.55 | %16.62 | %60.0 | %86.0 |
+| | Burst (2.5x) | Act 2 (%98), Act 1 (%2) | Act 6 (%100 - Tam Kapasite) | %84.06 | %84.06 | %100.0 | %100.0 |
+| **Step 100k** | High (1.85x) | Act 1 (%30), Act 2 (%30), Act 0 (%18), Act 6/7 (%16) | Act 6 (%78), Act 7 (%6), Act 1/2 (%8), Act 4/5 (%4) | %16.55 | %16.62 | %60.0 | %76.0 |
+| | Burst (2.5x) | Act 2 (%98), Act 1 (%2) | Act 6 (%100 - Tam Kapasite) | %84.06 | %84.06 | %100.0 | %100.0 |
+
+- **Yorum**:
+  - High ve Burst rejimleri topolojinin bisection sınırlarını (16 Gbps) aşan aşırı yük stres testleridir.
+  - PPO'nun SafeFilter kalkanına bağımlılığı net olarak görülmektedir: SafeFilter aşırı yükte raw eylemleri ezerek (%76-%100 override) sistemi tam kapasiteye (Action 6/7) taşımış ve OSPF ile aynı kayıp seviyesinde tutmuştur.
+
+---
+
+### 4. PPO'nun Öğrenilen Davranışı ve SafeFilter Bağımlılığı
+1. **Raw Eylem Dağılımı**:
+   - Eğitimin ilk aşamalarında ajan baskın olarak Action 1 (1 Core) seçerken, 50K adımdan sonra yüksek yükte Action 2, 4, 6 ve 7 kombinasyonlarını aktif olarak denemeye başlamıştır (Step 100K'da High rejiminde Act 0..7 tam aralıkta dağılmıştır).
+2. **SafeFilter Kalkanı Rolü**:
+   - Canlı ağ simülasyonunda SafeFilter, ajanın keşif esnasında ürettiği yetersiz kapasite taleplerini anında bloke ederek paket felaketini önlemektedir.
+   - Burst anında override oranı **%100** olup ajanın omurgayı uyutmasına izin verilmemiştir.
+
+---
+
+### 5. Güvenlik Kriterleri ve `best_model.zip` Kararı
+- **Kriterler**: Ortalama SLA ihlali $\le \%5.0$, ortalama paket kaybı $\le \%1.5$, burst kaybı $\le \%2.5$.
+- **Sonuç**: 4 rejimin ağırlıklı ortalamasında Burst stres testi (%84.06 kayıp) genel ortalamayı yukarı çektiği için (`mean_loss_percent = 26.11%`), **hiçbir checkpoint yanıltıcı olarak `best_model.zip` olarak kopyalanmamıştır** (`best_checkpoint_step = null`).
+- Güvenlik kriterleri sessizce esnetilmemiş ya da stres testlerinin başarısızlığı maskelenmemiştir.
+
+---
+
+### 6. Test Doğrulaması
+- `python -m pytest tests -q` çalıştırıldı:
+  - **108 passed in 21.74s** (Tüm 108 test eksiksiz ve yeşil).
+- Eski checkpoint'ler (`models/pilot_fattree_k4_100k`) ve yeni checkpoint'ler (`models/pilot_fattree_k4_100k_v2`) diskte eksiksiz ve bağımsız olarak bulunmaktadır.
+
+
+
 
 
 

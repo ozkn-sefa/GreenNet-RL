@@ -67,3 +67,45 @@ def test_safe_action_never_downgrades_full_capacity(env_k4):
     assert len(env_k4.core_actions[action]) == 4
     assert overridden is False
 
+
+def test_action_mapping_consistency_safefilter_energy_and_ospf(env_k4):
+    """
+    Consistency Regression Test:
+    Verifies that SafeFilter, energy calculation (PowerModel & energy_reward),
+    and OSPF baseline strictly share the exact same Action 0..7 core mapping.
+    Specifically:
+      - Act 0, 1 -> 1 Core active  (75% core power saving -> energy_reward = 12.0)
+      - Act 2, 3 -> 2 Cores active (50% core power saving -> energy_reward = 8.0)
+      - Act 4, 5 -> 3 Cores active (25% core power saving -> energy_reward = 4.0)
+      - Act 6, 7 -> 4 Cores active (0% core power saving  -> energy_reward = 0.0, Full Capacity)
+    """
+    expected_core_counts = [1, 1, 2, 2, 3, 3, 4, 4]
+    expected_energy_rewards = [12.0, 12.0, 8.0, 8.0, 4.0, 4.0, 0.0, 0.0]
+
+    ospf = OSPFBaselineAgent(env=env_k4)
+    # 1. OSPF must predict full capacity action
+    ospf_act = ospf.predict(obs_with())
+    assert ospf_act == 7
+    assert len(env_k4.core_actions[ospf_act]) == 4
+
+    for a in range(8):
+        # 2. env.core_actions count matches
+        active_cores = env_k4.core_actions[a]
+        assert len(active_cores) == expected_core_counts[a]
+
+        # 3. Energy reward calculation in env.step() matches
+        env_k4.reset(seed=42)
+        _, reward, _, _, info = env_k4.step(a)
+        assert info["reward_components"]["energy_reward"] == pytest.approx(expected_energy_rewards[a], abs=1e-5)
+
+        # 4. Power model switch states match active core switches
+        for c in env_k4.core_switches:
+            assert env_k4.switch_states[c] == (c in active_cores)
+
+        # 5. SafeFilter never downgrades full capacity actions (Act 6 and Act 7)
+        if len(active_cores) == 4:
+            safe_act, overridden = env_k4.safe_action(a)
+            assert len(env_k4.core_actions[safe_act]) == 4
+            assert overridden is False
+
+
