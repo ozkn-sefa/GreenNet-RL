@@ -40,10 +40,10 @@ Klasik yönlendirme mekanizmaları (OSPF/ECMP), ağ trafiği dip noktadayken dah
 ```mermaid
 flowchart TD
     subgraph ControlLoop ["Adım Döngüsü (Step Loop)"]
-        Agent["PPO Politikası (MlpPolicy)"] -->|Ham Eylem (a_raw)| Filter{"SafeFilter Kontrolü"}
+        Agent["PPO Politikası (MlpPolicy)"] -->|"Ham Eylem (a_raw)"| Filter{"SafeFilter Kontrolü"}
         Telemetry["Geçmiş Telemetri (t-1)"] --> Filter
-        Filter -->|Güvenli ise| AppliedAction["Uygulanan Eylem (a_t)"]
-        Filter -->|Riskli ise (Override)| SafeUpgrade["Güvenli Eyleme Yükseltme"]
+        Filter -->|"Güvenli ise"| AppliedAction["Uygulanan Eylem (a_t)"]
+        Filter -->|"Riskli ise (Override)"| SafeUpgrade["Güvenli Eyleme Yükseltme"]
         SafeUpgrade --> AppliedAction
 
         AppliedAction --> Topology["NetworkX Ağ Topolojisi"]
@@ -56,33 +56,66 @@ flowchart TD
         QoS --> RewardEngine["Çok Amaçlı Ödül Motoru"]
         PowerModel --> RewardEngine
 
-        RewardEngine -->|r_t (Normalize)| RolloutBuffer["SB3 Rollout Buffer"]
+        RewardEngine -->|"r_t (Normalize)"| RolloutBuffer["SB3 Rollout Buffer"]
         QoS --> NextObs["Yeni Gözlem (s_t+1)"]
         NextObs --> Agent
     end
 ```
 
 ### B. Çok Amaçlı Ödül Fonksiyonu
+
 Ajanın optimizasyon hedefi, enerji tasarrufunu maksimize ederken QoS cezalarını minimize etmektir:
 
-$$R_t = \Big( R_{\text{energy}} - P_{\text{waste}} - P_{\text{delay}} - P_{\text{loss}} - P_{\text{congestion}} - P_{\text{switching}} - P_{\text{flapping}} - P_{\text{wakeup}} - P_{\text{override}} \Big) \times \text{scale}$$
+$$
+R_t = \left( R_{\text{energy}} - P_{\text{waste}} - P_{\text{delay}} - P_{\text{loss}} - P_{\text{congestion}} - P_{\text{switching}} - P_{\text{flapping}} - P_{\text{wakeup}} - P_{\text{override}} \right) \times \text{scale}
+$$
 
-1. **Enerji Tasarrufu Ödülü ($R_{\text{energy}}$)**:
-   $$R_{\text{energy}} = \frac{N_{\text{total\_cores}} - N_{\text{active\_cores}}}{N_{\text{total\_cores}}} \times 16.0 \times \frac{w_e}{2.5}$$
-   Fat-Tree k=4 için: 1 Core aktifken $R_{\text{energy}} = 12.0$ (%75 tasarruf), 2 Core aktifken $8.0$ (%50 tasarruf), 4 Core aktifken $0.0$ (%0 tasarruf).
-2. **Aşırı Tahsisat / İsraf Cezası ($P_{\text{waste}}$)**: Talep düşükken gereksiz omurga anahtarlarının açık tutulmasını cezalandırır:
-   $$P_{\text{waste}} = (N_{\text{active}} - N_{\text{safe}}) \times 3.5 \times w_{\text{waste}} \quad (\text{Eğer } N_{\text{active}} > N_{\text{safe}} \text{ ve } \text{MaxUtil} < 0.70)$$
-3. **Gecikme Cezası ($P_{\text{delay}}$)**: Trafik ağırlıklı uçtan uca ortalama gecikme ve SLA eşik aşımı cezası:
-   $$P_{\text{delay}} = \frac{D_{\text{avg}}}{2.5} \times w_d + \max(0, D_{\text{avg}} - \text{SLA}_{\text{delay}}) \times 6.0 \times w_d$$
-4. **Paket Kaybı Cezası ($P_{\text{loss}}$)**:
-   $$P_{\text{loss}} = (\text{Loss}_{\text{rate}} \times 50.0) \times w_{\text{loss}} \times \text{cfg}_{\text{loss}}$$
-5. **Geçiş ve Kararsızlık Cezaları ($P_{\text{switching}}, P_{\text{flapping}}, P_{\text{wakeup}}$)**: Anahtarların sürekli açılıp kapanmasını, minimum bekleme süresini (dwell time < 3 adım) ve anahtar uyanma enerji maliyetlerini sınırlar.
-6. **Güvenlik Filtresi Müdahale Cezası ($P_{\text{override}}$)**: Ajanın güvenli olmayan ham eylemler seçip SafeFilter'a tembelce yaslanmasını cezalandırmak üzere yapılandırılabilir bileşen (varsayılan: 0.0).
+#### 1. Enerji Tasarrufu Ödülü ($R_{\text{energy}}$)
+
+$$
+R_{\text{energy}} = \frac{N_{\text{total\_cores}} - N_{\text{active\_cores}}}{N_{\text{total\_cores}}} \times 16.0 \times \frac{w_e}{2.5}
+$$
+
+Fat-Tree k=4 için:
+- 1 Core aktifken: $R_{\text{energy}} = 12.0$ (%75 tasarruf)
+- 2 Core aktifken: $R_{\text{energy}} = 8.0$ (%50 tasarruf)
+- 4 Core aktifken: $R_{\text{energy}} = 0.0$ (%0 tasarruf)
+
+#### 2. Aşırı Tahsisat / İsraf Cezası ($P_{\text{waste}}$)
+
+Talep düşükken gereksiz omurga anahtarlarının açık tutulmasını cezalandırır ($N_{\text{active}} > N_{\text{safe}}$ ve $\text{MaxUtil} < 0.70$ olduğunda):
+
+$$
+P_{\text{waste}} = (N_{\text{active}} - N_{\text{safe}}) \times 3.5 \times w_{\text{waste}}
+$$
+
+#### 3. Gecikme Cezası ($P_{\text{delay}}$)
+
+Trafik ağırlıklı uçtan uca ortalama gecikme ve SLA eşik aşımı cezası:
+
+$$
+P_{\text{delay}} = \frac{D_{\text{avg}}}{2.5} \times w_d + \max\left(0, D_{\text{avg}} - \text{SLA}_{\text{delay}}\right) \times 6.0 \times w_d
+$$
+
+#### 4. Paket Kaybı Cezası ($P_{\text{loss}}$)
+
+$$
+P_{\text{loss}} = (\text{Loss}_{\text{rate}} \times 50.0) \times w_{\text{loss}} \times \text{cfg}_{\text{loss}}
+$$
+
+#### 5. Geçiş ve Kararsızlık Cezaları ($P_{\text{switching}}, P_{\text{flapping}}, P_{\text{wakeup}}$)
+
+Anahtarların sürekli açılıp kapanmasını, minimum bekleme süresini (dwell time < 3 adım) ve anahtar uyanma enerji maliyetlerini sınırlar.
+
+#### 6. Güvenlik Filtresi Müdahale Cezası ($P_{\text{override}}$)
+
+Ajanın güvenli olmayan ham eylemler seçip SafeFilter'a tembelce yaslanmasını cezalandırmak üzere yapılandırılabilir bileşen (varsayılan: 0.0).
 
 ### C. SafeFilter Güvenlik Mekanizması
+
 SafeFilter, ajanın önerdiği eylemin ($a_{\text{raw}}$) ağda tıkanıklık veya SLA ihlali yaratıp yaratmayacağını geçmiş telemetri ($t-1$) ve güvenlik marjı ($h$) üzerinden denetler:
 - Eylem güvenliyse doğrudan uygulanır.
-- Eylem güvensizse (tahmini doluluk $>\%85$ veya tahmini gecikme $>$ SLA), sistem eylemi en az güç tüketen güvenli üst eyleme (örneğin 1 core $\rightarrow$ 4 core) yükseltir.
+- Eylem güvensizse (tahmini doluluk > %85 veya tahmini gecikme > SLA), sistem eylemi en az güç tüketen güvenli üst eyleme (örneğin 1 core $\rightarrow$ 4 core) yükseltir.
 
 ---
 
@@ -293,9 +326,9 @@ GreenNet-RL/
 ```mermaid
 timeline
     title GreenNet-RL Araştırma ve Geliştirme Süreci
-    19 Ekim 2026 : SNDlib Abilene Veri Entegrasyonu : Kronolojik bölme (Train-Val-Test) : Ağ topolojisi ve gerçek veri hattı
+    19 Ekim 2026 : SNDlib Abilene Veri Entegrasyonu : Kronolojik Train-Val-Test bölmesi : Ağ topolojisi ve gerçek veri hattı
     23 Ekim 2026 : Abilene 100K Pilot ve Kök Neden : Router uyku kısıtları : Fat-Tree k=4 PPO v1 İlk Pilot (Value loss 1.07e8)
-    24 Ekim 2026 : Fat-Tree k=4 PPO v2 Pilot : VecNormalize ve Monitor ile stabilizasyon (~0.01) : QoS kök neden analizi ve çevrimdışı dinamik headroom testleri
+    24 Ekim 2026 : Fat-Tree k=4 PPO v2 Pilot : VecNormalize ve Monitor ile stabilizasyon : QoS kök neden analizi ve çevrimdışı dinamik headroom testleri
     Gelecek Aşama : Pilot v3 Deneyi : Dinamik headroom ve override cezası ile uçtan uca PPO eğitimi : Fat-Tree k=6 ölçekleme analizi
 ```
 
