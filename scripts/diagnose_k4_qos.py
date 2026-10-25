@@ -76,11 +76,12 @@ def run_step_by_step_medium_trace(checkpoint_step=100000):
         use_safety_filter=True,
     )
 
-    eval_venv = DummyVecEnv([lambda: env])
+    vec_norm = None
     if os.path.exists(vec_path):
-        eval_venv = VecNormalize.load(vec_path, eval_venv)
-        eval_venv.training = False
-        eval_venv.norm_reward = False
+        eval_venv = DummyVecEnv([lambda: env])
+        vec_norm = VecNormalize.load(vec_path, eval_venv)
+        vec_norm.training = False
+        vec_norm.norm_reward = False
 
     model = PPO.load(ckpt_path, device="cpu")
 
@@ -97,7 +98,8 @@ def run_step_by_step_medium_trace(checkpoint_step=100000):
     override_steps = []
 
     for s in range(regime["steps"]):
-        raw_act = int(model.predict(obs, deterministic=True)[0])
+        policy_obs = vec_norm.normalize_obs(obs) if vec_norm is not None else obs
+        raw_act = int(model.predict(policy_obs, deterministic=True)[0])
         obs, reward, term, trunc, s_info = env.step(raw_act)
         app_act = int(env.current_action)
         num_cores = len(env.core_actions[app_act])

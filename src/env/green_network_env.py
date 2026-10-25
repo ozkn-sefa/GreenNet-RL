@@ -15,7 +15,7 @@ from src.network.traffic import TrafficGenerator, FlowDemand
 
 # Training episodes draw traffic seeds from [0, TRAIN_SEED_LIMIT); evaluation scripts must use
 # seeds >= TRAIN_SEED_LIMIT so train/test traffic realizations never overlap.
-TRAIN_SEED_LIMIT = 1_000_000
+TRAIN_SEED_LIMIT = 50_000
 
 DEFAULT_REWARD_CFG: Dict[str, float] = {
     "energy": 1.0, "waste": 1.0, "delay": 1.0, "loss": 1.0,
@@ -247,6 +247,7 @@ class GreenNetworkEnv(gym.Env):
         self.current_step = 0
         self.current_action = 7  # default to full capacity
         self.prev_action: Optional[int] = None
+        self._eval_seed: Optional[int] = None
         self.switch_states: Dict[str, bool] = {s: True for s in self.all_switches}
         self._prev_switch_states: Dict[str, bool] = dict(self.switch_states)
         self._prev_link_states: Dict[Tuple[str, str], bool] = {l: True for l in self.links}
@@ -454,7 +455,7 @@ class GreenNetworkEnv(gym.Env):
             h = self._compute_dynamic_headroom()
         else:
             h = self.safety_headroom
-        failed = self._failed_links_at(self.current_step + 1)
+        failed = self._failed_links_at(self.current_step)
         return [self._route_demands(self.active_demands, a, failed, scale=h) for a in range(len(self.core_actions))]
 
     def action_mask(self) -> np.ndarray:
@@ -571,7 +572,13 @@ class GreenNetworkEnv(gym.Env):
                 intensity = getattr(self.traffic_gen, "traffic_intensity", 1.0) if hasattr(self, "traffic_gen") else 1.0
                 profile = getattr(self.traffic_gen, "workload_profile", "diurnal") if hasattr(self, "traffic_gen") else "diurnal"
                 burst = getattr(self.traffic_gen, "burst_mode", False) if hasattr(self, "traffic_gen") else False
-                traffic_seed = seed if seed is not None else 42
+                if seed is not None:
+                    self._eval_seed = int(seed)
+                    traffic_seed = int(seed)
+                elif self._eval_seed is not None:
+                    traffic_seed = int(self.np_random.integers(0, 2**31 - 1))
+                else:
+                    traffic_seed = 42
 
             intensity = float(options.get("intensity", intensity))
             profile = str(options.get("profile", profile))
@@ -611,6 +618,7 @@ class GreenNetworkEnv(gym.Env):
             "flapping_penalty": 0.0,
             "wakeup_penalty": 0.0,
             "port_wakeup_penalty": 0.0,
+            "override_penalty": 0.0,
             "net_reward": 0.0,
         }
         if self.traffic_source == "real":

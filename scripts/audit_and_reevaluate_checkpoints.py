@@ -41,7 +41,9 @@ def evaluate_agent_on_regime(
     regime: Dict[str, Any],
     use_filter: bool = True,
     is_raw_ppo: bool = False,
+    vec_normalize_path: Optional[str] = None,
 ) -> Dict[str, Any]:
+    from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
     env = GreenNetworkEnv(
         topology_type="fattree_k4",
         k=4,
@@ -50,6 +52,13 @@ def evaluate_agent_on_regime(
         traffic_source="synthetic",
         use_safety_filter=use_filter,
     )
+
+    vec_norm = None
+    if vec_normalize_path and os.path.exists(vec_normalize_path):
+        eval_venv = DummyVecEnv([lambda: env])
+        vec_norm = VecNormalize.load(vec_normalize_path, eval_venv)
+        vec_norm.training = False
+        vec_norm.norm_reward = False
 
     obs, info = env.reset(seed=regime["seed"], options={
         "intensity": regime["intensity"],
@@ -72,8 +81,9 @@ def evaluate_agent_on_regime(
     overrides = 0
 
     for _ in range(regime["steps"]):
+        policy_obs = vec_norm.normalize_obs(obs) if vec_norm is not None else obs
         if hasattr(agent, "predict"):
-            act = agent.predict(obs, deterministic=True)
+            act = agent.predict(policy_obs, deterministic=True)
             if isinstance(act, tuple):
                 raw_act = int(act[0])
             elif isinstance(act, np.ndarray):
@@ -90,7 +100,8 @@ def evaluate_agent_on_regime(
 
         applied_act = int(env.current_action)
         applied_actions.append(applied_act)
-        if s_info.get("safe_action_overridden", False) or applied_act != raw_act:
+        is_overridden = bool(s_info.get("action_overridden", applied_act != raw_act))
+        if is_overridden:
             overrides += 1
 
         dem = s_info["total_demand_mbps"]
@@ -106,7 +117,7 @@ def evaluate_agent_on_regime(
         losses.append(s_info["packet_loss_rate"])
         max_utils.append(s_info["max_utilization"])
 
-        if s_info["avg_delay_ms"] > env.sla_delay_ms or s_info["packet_loss_rate"] > 1e-4:
+        if s_info.get("sla_violation", False):
             sla_violations += 1
 
     total_kwh = env.power_model.total_energy_kwh
@@ -124,6 +135,8 @@ def evaluate_agent_on_regime(
         "max_utilization_percent": round(float(np.max(max_utils) * 100.0), 2),
         "sla_violations": int(sla_violations),
         "sla_violation_rate_percent": round(float(sla_violations / regime["steps"] * 100.0), 2),
+        "raw_actions": raw_actions,
+        "applied_actions": applied_actions,
         "raw_actions_distribution": {int(a): raw_actions.count(a) for a in set(raw_actions)},
         "applied_actions_distribution": {int(a): applied_actions.count(a) for a in set(applied_actions)},
         "override_count": int(overrides),
@@ -181,6 +194,8 @@ def run_audit():
         print(f"EVALUATING CHECKPOINT STEP {ckpt_step}")
         print(f"=======================================================")
         model = PPO.load(ckpt_file, device="cpu")
+        vec_file = ckpt_file.replace(".zip", "_vecnormalize.pkl")
+        vec_path = vec_file if os.path.exists(vec_file) else None
 
         ckpt_data = {"regimes": {}}
         for reg in REGIMES:
@@ -188,9 +203,9 @@ def run_audit():
             ospf_ref = baseline_results[r_name]["ospf"]
 
             # A. Raw PPO (no filter)
-            raw_ppo = evaluate_agent_on_regime(model, reg, use_filter=False, is_raw_ppo=True)
+            raw_ppo = evaluate_agent_on_regime(model, reg, use_filter=False, is_raw_ppo=True, vec_normalize_path=vec_path)
             # B. Guarded PPO (with SafeFilter)
-            guarded_ppo = evaluate_agent_on_regime(model, reg, use_filter=True, is_raw_ppo=False)
+            guarded_ppo = evaluate_agent_on_regime(model, reg, use_filter=True, is_raw_ppo=False, vec_normalize_path=vec_path)
 
             # Savings vs OSPF
             raw_saving = (1.0 - (raw_ppo["total_energy_kwh"] / max(1e-9, ospf_ref["total_energy_kwh"]))) * 100.0

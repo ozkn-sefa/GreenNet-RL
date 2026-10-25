@@ -124,11 +124,12 @@ class FatTreePilotCallback(BaseCallback):
             use_safety_filter=True, # Safety filter active
         )
 
+        vec_norm = None
         if vec_normalize_path and os.path.exists(vec_normalize_path):
             eval_venv = DummyVecEnv([lambda: env])
-            eval_venv = VecNormalize.load(vec_normalize_path, eval_venv)
-            eval_venv.training = False
-            eval_venv.norm_reward = False
+            vec_norm = VecNormalize.load(vec_normalize_path, eval_venv)
+            vec_norm.training = False
+            vec_norm.norm_reward = False
 
         obs, info = env.reset(seed=regime["seed"], options={
             "intensity": regime["intensity"],
@@ -148,8 +149,10 @@ class FatTreePilotCallback(BaseCallback):
         overrides = 0
 
         for _ in range(regime["steps"]):
+            # Normalize observation for policy prediction if VecNormalize is present (supports norm_obs=False and norm_obs=True)
+            policy_obs = vec_norm.normalize_obs(obs) if (vec_norm is not None and is_ppo) else obs
             if hasattr(agent, "predict"):
-                act = agent.predict(obs, deterministic=True)
+                act = agent.predict(policy_obs, deterministic=True)
                 if isinstance(act, tuple):
                     raw_act = int(act[0])
                 elif isinstance(act, np.ndarray):
@@ -166,7 +169,8 @@ class FatTreePilotCallback(BaseCallback):
             
             applied_act = int(env.current_action)
             applied_actions.append(applied_act)
-            if s_info.get("safe_action_overridden", False) or applied_act != raw_act:
+            is_overridden = bool(s_info.get("action_overridden", applied_act != raw_act))
+            if is_overridden:
                 overrides += 1
 
             powers.append(s_info["total_power_w"])
@@ -176,7 +180,7 @@ class FatTreePilotCallback(BaseCallback):
             losses.append(s_info["packet_loss_rate"])
             utils.append(s_info["max_utilization"])
 
-            if s_info["avg_delay_ms"] > env.sla_delay_ms or s_info["packet_loss_rate"] > 1e-4:
+            if s_info.get("sla_violation", False):
                 sla_violations += 1
 
         total_kwh = env.power_model.total_energy_kwh
@@ -193,6 +197,8 @@ class FatTreePilotCallback(BaseCallback):
             "sla_violations": int(sla_violations),
             "sla_violation_rate_percent": round(float(sla_violations / regime["steps"] * 100.0), 2),
             "switch_toggles": int(toggles),
+            "raw_actions": raw_actions,
+            "applied_actions": applied_actions,
             "raw_actions_distribution": {int(a): raw_actions.count(a) for a in set(raw_actions)},
             "applied_actions_distribution": {int(a): applied_actions.count(a) for a in set(applied_actions)},
             "override_count": int(overrides),
@@ -459,7 +465,7 @@ def train_pilot(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="GreenNet-RL Fat-Tree k=4 PPO Pilot Training")
-    parser.add_argument("--timesteps", type=int, default=100000, help="Total training timesteps")
+    parser.add_argument("--timesteps", "--steps", dest="timesteps", type=int, default=100000, help="Total training timesteps")
     parser.add_argument("--eval-freq", type=int, default=10000, help="Evaluation and checkpoint frequency")
     parser.add_argument("--smoke-test", action="store_true", help="Run short smoke test (2048 steps)")
     parser.add_argument("--no-norm-reward", action="store_true", help="Disable VecNormalize reward normalization")

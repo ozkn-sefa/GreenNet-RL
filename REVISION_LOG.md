@@ -1030,3 +1030,85 @@ Tüm 115 test eksiksiz ve yeşil olarak başarıyla geçmiştir.
 3. **Deney Grubu C (Dinamik Headroom + Ilımlı Override Cezası)**:
    - `use_dynamic_headroom = True`, `override_penalty_weight = 2.0`.
    - Amaç: PPO'nun SafeFilter'a tembelce yaslanmasını önlemek ve güvenli çekirdek seçimini içselleştirmesini sağlamak.
+
+---
+
+## 16. PPO v3 Öncesi Kod Denetimi, Değerlendirme ve Veri İzolasyonu Düzeltmeleri (2026-10-25)
+
+PPO v3 eğitim deneyi öncesinde kaynak kod, telemetri, ortam sözleşmeleri ve deney altyapısında kapsamlı bir denetim gerçekleştirilmiş ve tespit edilen sorunlar model ağırlıklarına dokunulmadan giderilmiştir.
+
+### 1. Düzeltilen Sorunlar ve Yapılan Değişiklikler
+
+1. **SLA İhlal Eşiğinin ve Hesaplamasının Standartlaştırılması**:
+   - `scripts/train_pilot_fattree_k4.py`, `scripts/audit_and_reevaluate_checkpoints.py` ve `scripts/diagnose_k4_qos.py` betiklerinde değerlendirme döngüsünde ortamın ürettiği `s_info["sla_violation"]` bayrağı doğrudan kullanılacak şekilde güncellendi.
+   - Değerlendirme betiklerindeki ortam sözleşmesinden 100 kat daha katı olan yapay `packet_loss_rate > 1e-4` kontrolü kaldırılarak, `GreenNetworkEnv` sınıfının sözleşmesi olan `packet_loss_rate > sla_loss_rate` (%1.0) veya `avg_delay_ms > sla_delay_ms` ile tam uyum sağlandı.
+2. **VecNormalize Değerlendirme Entegrasyonu**:
+   - Checkpoint değerlendirmelerinde yüklenen `VecNormalize` istatistiklerinin (`vec_norm.normalize_obs(obs)`) politika çıkarımında (`agent.predict`) gerçekten uygulanması sağlandı.
+   - Hem `norm_obs=False` (mevcut pilot davranışı) hem de `norm_obs=True` (olası normalizasyon) durumları test edildi.
+   - Gymnasium `env.step()` doğrudan çağrılarak ham, unnormalized fiziksel telemetri (güç, paket kaybı, gecikme, port durumları) eksiksiz korundu.
+3. **SafeFilter Telemetri Standardizasyonu**:
+   - Ortamın ürettiği standart `"action_overridden"` anahtarı tüm değerlendirme ve teşhis betiklerine bağlandı.
+   - Değerlendirme çıktılarına `raw_actions` (`requested_action`) ve `applied_actions` listeleri açıkça eklendi.
+4. **Link Arıza Tahminindeki Off-by-One Zamanlama Düzeltmesi**:
+   - `src/env/green_network_env.py:predict_action_outcomes` içinde `self._failed_links_at(self.current_step + 1)` ifadesi, adımın başında zaten artırılmış olan `self.current_step` değerine göre `self._failed_links_at(self.current_step)` olarak düzeltildi. SafeFilter'ın fiilen uygulanacak hat arızasını değerlendirdiği doğrulandı.
+5. **Eğitim Tohum Havuzu İzolasyonu**:
+   - `src/env/green_network_env.py` içinde `TRAIN_SEED_LIMIT = 50_000` olarak ayarlandı. Böylece eğitim tohumları `[0, 50000)` aralığına kilitlenerek validasyon (`60001..60004`) ve test (`70001..70004`) tohumlarıyla çakışma ihtimali tamamen ortadan kaldırıldı.
+6. **.gitignore Model Filtreleme Güvenliği**:
+   - `.gitignore` dosyasına `models/**/*.zip` ve `models/**/*.pkl` kuralları eklendi; Git tarafından izlenen ana modeller (`!models/ppo_green_agent*.zip`, `!models/**/training_config.json`) korunurken ara checkpoint ağırlıklarının kazara commite eklenmesi engellendi.
+7. **README.md ve reset() Şema Uyumlaması**:
+   - `README.md` içindeki `--steps 100000` ifadesi gerçek CLI bayrağı olan `--timesteps 100000` ile güncellendi; `train_pilot_fattree_k4.py` içine dokümantasyon uyumu için `--steps` alias'ı eklendi.
+   - Ödül formülüne eksik olan $- P_{\text{port\_wakeup}}$ terimi eklendi.
+   - `GreenNetworkEnv.reset()` çıktısındaki `reward_components` sözlüğüne `"override_penalty": 0.0` eklenerek `step()` şemasıyla tam tutarlılık sağlandı.
+   - `training_mode=False` iken açık seed verilmediğinde ortamın PRNG'yi ilerletmesi sağlandı, açık tohumlu deterministik değerlendirmeler korundu.
+8. **Ölçüme Dayalı Ödül Açıklamaları**:
+   - `scripts/controlled_safefilter_experiment.py` içindeki tahmini sabit metinler kaldırılarak doğrudan adımın `reward_components` değerlerinden ölçülen net ödül ve avantaj farkları hesaplandı.
+
+---
+
+### 2. Geçmiş Pilot v2 Checkpoint'lerinin Temiz Yeniden Değerlendirilmesi
+
+Orijinal `results/pilot_fattree_k4_100k_v2_results.json` dosyasına dokunulmadan, düzeltilmiş değerlendirme altyapısı ile `results/pilot_fattree_k4_100k_v2_reevaluation.json` dosyası üretilmiştir (`scripts/reevaluate_checkpoints_clean.py`):
+
+| Checkpoint | Rejim | Eski SLA İhlali | Yeni SLA İhlali | Eski Kayıp | Yeni Kayıp | Eski Tasarruf | Yeni Tasarruf | Eski Override | Yeni Override |
+|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **20K** | Low | %4.0 | %4.0 | %0.28 | %0.28 | %7.06 | %7.06 | %2.0 | %2.0 |
+| | Medium | %14.0 | %14.0 | %2.57 | %2.57 | %5.88 | %5.88 | %36.0 | %36.0 |
+| | High | %60.0 | %60.0 | %16.55 | %16.55 | %1.32 | %1.32 | %80.0 | %80.0 |
+| | Burst | %100.0 | %100.0 | %84.06 | %84.06 | %0.00 | %0.00 | %100.0 | %100.0 |
+| **50K** | Low | %4.0 | %4.0 | %0.28 | %0.28 | %13.52 | %13.52 | %6.0 | %6.0 |
+| | Medium | %14.0 | %14.0 | %3.23 | %3.23 | %9.32 | %9.32 | %42.0 | %42.0 |
+| | High | %60.0 | %60.0 | %16.55 | %16.55 | %1.49 | %1.49 | %84.0 | %84.0 |
+| | Burst | %100.0 | %100.0 | %84.06 | %84.06 | %0.00 | %0.00 | %100.0 | %100.0 |
+| **80K** | Low | %4.0 | %4.0 | %0.28 | %0.28 | %13.52 | %13.52 | %6.0 | %6.0 |
+| | Medium | %14.0 | %14.0 | %3.11 | %3.11 | %8.82 | %8.82 | %36.0 | %36.0 |
+| | High | %62.0 | %62.0 | %16.62 | %16.62 | %1.51 | %1.51 | %76.0 | %76.0 |
+| | Burst | %100.0 | %100.0 | %84.06 | %84.06 | %0.00 | %0.00 | %100.0 | %100.0 |
+| **100K** | Low | %4.0 | %4.0 | %0.28 | %0.28 | %13.52 | %13.52 | %8.0 | %8.0 |
+| | Medium | %16.0 | %16.0 | %3.54 | %3.54 | %9.63 | %9.63 | %44.0 | %44.0 |
+| | High | %60.0 | %60.0 | %16.55 | %16.55 | %1.50 | %1.50 | %76.0 | %76.0 |
+| | Burst | %100.0 | %100.0 | %84.06 | %84.06 | %0.00 | %0.00 | %100.0 | %100.0 |
+
+**Metrik Değişim ve Kararlılık Analizi**:
+1. **Tasarruf ve Kayıp Stabilitesi**: Enerji tasarrufu (%13.52 Low, %9.63 Medium) ve ortalama paket kayıpları birebir korunmuştur.
+2. **SLA İhlali Neden Aynı Kaldı?**: Medium rejiminde kayıp yaşanan adımlardaki paket kaybı %10–25 seviyesinde olduğu için hem eski yapay eşik (`>1e-4`) hem de ortamın resmi SLA eşiği (`>0.01` veya gecikme `>3.5 ms`) aynı 7-8 adımı tetiklemiştir. Ancak kod seviyesinde 100x katı eşik riski tamamen ortadan kaldırılarak ortamla senkronize edilmiştir.
+3. **Override Doğrulaması**: `action_overridden` anahtarı üzerinden okunan override oranları (%36–44 Medium, %76–84 High) telemetrinin dolaylı kontrol yerine doğrudan çalıştığını kanıtlamıştır.
+
+---
+
+### 3. Eklenen Regresyon Testleri ve Test Sonucu
+
+`tests/test_audit_fixes.py` dosyası eklenerek yapılan tüm düzeltmeler birim testlerle teminat altına alındı:
+- `test_train_seed_limit_is_50000`: `TRAIN_SEED_LIMIT == 50000` ve tohum izolasyonu.
+- `test_safefilter_failure_timing_no_off_by_one`: Hat arızasının tam zamanında öngörülmesi.
+- `test_sla_violation_contract_alignment`: SLA ihlal mantığının ortamla tam uyumu.
+- `test_override_telemetry_standard_keys`: `action_overridden` ve `requested_action` varlığı.
+- `test_reset_reward_components_schema`: `reset()` şema eksiksizliği.
+- `test_non_training_reset_advances_prng_when_seed_none`: Sıfırlamada PRNG ilerlemesi.
+- `test_vecnormalize_evaluation_integration_norm_obs_false_and_true`: `VecNormalize` normalizasyon doğrulaması.
+
+**Pytest Sonucu**:
+```bash
+python -m pytest tests -q
+# 122 passed in 22.75s
+```
+Tüm 122 test eksiksiz ve yeşil durumdadır.

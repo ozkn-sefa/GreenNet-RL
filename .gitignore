@@ -86,16 +86,23 @@ temp/
 
 # ------------------------------------------------------------------------------
 # RL Experiment Checkpoints & Heavy Weights
-# Note: Retain primary pretrained models in models/ (e.g., ppo_green_agent.zip),
+# Note: Retain primary pretrained models in models/ (e.g., ppo_green_agent*.zip),
 # ignore temporary ablation weights, checkpoints and legacy backups.
 # ------------------------------------------------------------------------------
 runs/
 tensorboard/
 checkpoints/
 models/ablation/
+models/**/*.zip
+models/**/*.pkl
 models/*.legacy*
 models/*.tmp*
 models/*.checkpoint*
+!models/ppo_green_agent.zip
+!models/ppo_green_agent_fattree_k4.zip
+!models/ppo_green_agent_fattree_k6.zip
+!models/ppo_green_agent_nsfnet.zip
+!models/**/training_config.json
 
 # ------------------------------------------------------------------------------
 # SDN, Mininet & Network Simulation Artifacts

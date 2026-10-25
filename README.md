@@ -6,7 +6,7 @@
 [![Gymnasium](https://img.shields.io/badge/Gymnasium-0.29.0-green.svg)](https://gymnasium.farama.org/)
 [![Stable-Baselines3](https://img.shields.io/badge/Stable--Baselines3-2.3.0-blueviolet.svg)](https://stable-baselines3.readthedocs.io/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
-[![Local Pytest](https://img.shields.io/badge/Local%20Pytest-115%20passed-brightgreen.svg)]()
+[![Local Pytest](https://img.shields.io/badge/Local%20Pytest-122%20passed-brightgreen.svg)]()
 
 ---
 
@@ -67,7 +67,7 @@ flowchart TD
 Ajanın optimizasyon hedefi, enerji tasarrufunu maksimize ederken QoS cezalarını minimize etmektir:
 
 $$
-R_t = \left( R_{\text{energy}} - P_{\text{waste}} - P_{\text{delay}} - P_{\text{loss}} - P_{\text{congestion}} - P_{\text{switching}} - P_{\text{flapping}} - P_{\text{wakeup}} - P_{\text{override}} \right) \times \text{scale}
+R_t = \left( R_{\text{energy}} - P_{\text{waste}} - P_{\text{delay}} - P_{\text{loss}} - P_{\text{congestion}} - P_{\text{switching}} - P_{\text{flapping}} - P_{\text{wakeup}} - P_{\text{port\_wakeup}} - P_{\text{override}} \right) \times \text{scale}
 $$
 
 #### 1. Enerji Tasarrufu Ödülü ($R_{\text{energy}}$)
@@ -103,9 +103,9 @@ $$
 P_{\text{loss}} = (\text{Loss}_{\text{rate}} \times 50.0) \times w_{\text{loss}} \times \text{cfg}_{\text{loss}}
 $$
 
-#### 5. Geçiş ve Kararsızlık Cezaları ($P_{\text{switching}}, P_{\text{flapping}}, P_{\text{wakeup}}$)
+#### 5. Geçiş ve Kararsızlık Cezaları ($P_{\text{switching}}, P_{\text{flapping}}, P_{\text{wakeup}}, P_{\text{port\_wakeup}}$)
 
-Anahtarların sürekli açılıp kapanmasını, minimum bekleme süresini (dwell time < 3 adım) ve anahtar uyanma enerji maliyetlerini sınırlar.
+Anahtarların sürekli açılıp kapanmasını, minimum bekleme süresini (dwell time < 3 adım), anahtar ve port link training uyanma enerji maliyetlerini sınırlar.
 
 #### 6. Güvenlik Filtresi Müdahale Cezası ($P_{\text{override}}$)
 
@@ -154,7 +154,7 @@ python -m pip install pytest
 python -m pytest tests -q
 ```
 
-**Mevcut Test Durumu:** Tüm test paketi yerel ortamda çalıştırılmış ve eksiksiz olarak geçmiştir (**115 passed**; otomatik CI/CD entegrasyonu yerine yerel pytest koşturulmaktadır).
+**Mevcut Test Durumu:** Tüm test paketi yerel ortamda çalıştırılmış ve eksiksiz olarak geçmiştir (**122 passed**; otomatik CI/CD entegrasyonu yerine yerel pytest koşturulmaktadır).
 
 ---
 
@@ -174,7 +174,7 @@ Eğitim betiğinin doğrulanması için 2048 adımlık hızlı test:
 ```powershell
 python scripts/train_pilot_fattree_k4.py --smoke-test
 ```
-*(Tam 100K pilot eğitimi `--steps 100000` ile yürütülür; yeni tam eğitim başlatmadan önce onay alınmalıdır).*
+*(Tam 100K pilot eğitimi `--timesteps 100000` ile yürütülür; yeni tam eğitim başlatmadan önce onay alınmalıdır).*
 
 ### C. Teşhis ve Adım Adım İnceleme (Diagnose QoS)
 PPO, OSPF ve Heuristic ajanların adım bazında darboğaz ve telemetri gecikmesini incelemek için:
@@ -255,6 +255,13 @@ SafeFilter müdahale ettiğinde PPO'ya override cezası verilmesi seçeneği kod
 > - **Yalnızca 50 Adımlık Tek Validasyon Senaryosu**: Yukarıdaki dinamik headroom kazanımları (%0.08 kayıp ve 0.105 ms gecikme düşüşü), yalnızca tek bir 50 adımlık Medium yük validasyon dizisine (Seed 60002) aittir. Diğer trafik rejimlerine veya genelleştirilmiş ağ durumlarına doğrudan genellenemez.
 > - **Çevrimdışı ve Eğitimsiz Simülasyon**: Bu iyileştirmeler mevcut PPO v2 checkpoint'i (100K) üzerinde çevrimdışı test edilmiştir. **PPO v3 eğitimiyle uçtan uca değerlendirilmemiştir; eğitimsiz ortamda dinamik headroom'un öğrenme kararlılığı ve politika yakınsaması sağladığı iddia edilemez.**
 
+### D. PPO v3 Öncesi Denetim ve Değerlendirme Altyapısı Düzeltmeleri
+
+PPO v3 eğitimine hazırlık sürecinde deneysel altyapı ve metrik tutarlılığı güçlendirilmiştir:
+- **SLA İhlal Eşiği Uyumu**: Değerlendirme betiklerindeki ortam sözleşmesinden 100 kat daha katı olan yapay `1e-4` (%0.01) paket kaybı kontrolü kaldırılmış; `GreenNetworkEnv` sınıfının resmi SLA tanımı olan `s_info["sla_violation"]` (paket kaybı > %1.0 veya ortalama gecikme > 3.5 ms) tüm değerlendirme akışlarına doğrudan bağlanmıştır.
+- **Aktif VecNormalize Değerlendirme Entegrasyonu**: Checkpoint'lerle birlikte kaydedilen `VecNormalize` istatistiklerinin (`vec_norm.normalize_obs(obs)`) politika çıkarımında dondurulmuş (`training=False, norm_reward=False`) olarak fiilen uygulanması sağlanmış; simülatörün ham Gymnasium fiziksel telemetrisi (enerji, gecikme, paket kaybı) bozulmadan korunmuştur.
+- **Eğitim Tohum Havuzu İzolasyonu**: `src/env/green_network_env.py` içinde `TRAIN_SEED_LIMIT = 50_000` olarak sabitlenerek eğitim rastlantısallığı `[0, 50000)` aralığına kilitlenmiş; sabit validasyon (`60001..60004`) ve test (`70001..70004`) rejimleriyle herhangi bir veri/tohum sızıntısı kesin olarak engellenmiştir.
+
 ---
 
 ## 8. Akademik Sınırlar ve Bilinen Kısıtlar
@@ -277,6 +284,7 @@ Projenin tüm deneysel kronolojisi, matematiksel hata düzeltmeleri ve kök nede
 - **Bölüm 13**: Fat-Tree k=4 PPO v2 İkinci Pilot Eğitimi (VecNormalize, Monitor entegrasyonu, value loss stabilizasyonu).
 - **Bölüm 14**: Fat-Tree k=4 PPO v2 QoS Bozulması Kök Neden Analizi (Telemetri gecikmesi, kenar darboğazı, switch toggles doğrulaması).
 - **Bölüm 15**: Fat-Tree k=4 QoS Kök Neden Doğrulaması ve İyileştirme Deneyleri (Kontrollü SafeFilter ON/OFF, dinamik headroom ampirik testi, override cezası seçenekleri ve Pilot v3 temeli).
+- **Bölüm 16**: PPO v3 Öncesi Kod Denetimi, Değerlendirme ve Veri İzolasyonu Düzeltmeleri (SLA eşik uyumu, VecNormalize aktif değerlendirme entegrasyonu, SafeFilter telemetri standardizasyonu, arıza zamanlaması düzeltmesi ve [0, 50000) eğitim tohum havuzu izolasyonu).
 
 ---
 

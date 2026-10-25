@@ -126,15 +126,18 @@ def run_dynamic_headroom_comparison():
         use_dynamic_headroom=True,
     )
 
-    eval_venv_s = DummyVecEnv([lambda: env_static])
-    eval_venv_d = DummyVecEnv([lambda: env_dyn])
+    vec_norm_s = None
+    vec_norm_d = None
     if os.path.exists(vec_path):
-        eval_venv_s = VecNormalize.load(vec_path, eval_venv_s)
-        eval_venv_s.training = False
-        eval_venv_s.norm_reward = False
-        eval_venv_d = VecNormalize.load(vec_path, eval_venv_d)
-        eval_venv_d.training = False
-        eval_venv_d.norm_reward = False
+        eval_venv_s = DummyVecEnv([lambda: env_static])
+        vec_norm_s = VecNormalize.load(vec_path, eval_venv_s)
+        vec_norm_s.training = False
+        vec_norm_s.norm_reward = False
+
+        eval_venv_d = DummyVecEnv([lambda: env_dyn])
+        vec_norm_d = VecNormalize.load(vec_path, eval_venv_d)
+        vec_norm_d.training = False
+        vec_norm_d.norm_reward = False
 
     obs_s, _ = env_static.reset(seed=60002, options={"intensity": 1.10, "profile": "diurnal", "burst": False})
     obs_d, _ = env_dyn.reset(seed=60002, options={"intensity": 1.10, "profile": "diurnal", "burst": False})
@@ -145,9 +148,11 @@ def run_dynamic_headroom_comparison():
     }
 
     for s in range(50):
-        # We test both on the PPO policy's chosen actions
-        act_s = int(model.predict(obs_s, deterministic=True)[0])
-        act_d = int(model.predict(obs_d, deterministic=True)[0])
+        # We test both on the PPO policy's chosen actions (using normalized observations)
+        policy_obs_s = vec_norm_s.normalize_obs(obs_s) if vec_norm_s is not None else obs_s
+        policy_obs_d = vec_norm_d.normalize_obs(obs_d) if vec_norm_d is not None else obs_d
+        act_s = int(model.predict(policy_obs_s, deterministic=True)[0])
+        act_d = int(model.predict(policy_obs_d, deterministic=True)[0])
 
         obs_s, r_s, _, _, info_s = env_static.step(act_s)
         obs_d, r_d, _, _, info_d = env_dyn.step(act_d)
@@ -193,8 +198,7 @@ def run_override_penalty_evaluation():
     print("3. OVERRIDE PENALTY EVALUATION (-2.0 and -5.0 Options)")
     print("=" * 90)
 
-    # When SafeFilter overrides raw Action 0 to Action 6:
-    # We compare reward when penalty_weight is 0.0 (baseline), 2.0 (-2 penalty), and 5.0 (-5 penalty)
+    results_by_weight = {}
     for p_weight in [0.0, 2.0, 5.0]:
         env = GreenNetworkEnv(
             topology_type="fattree_k4",
@@ -213,13 +217,38 @@ def run_override_penalty_evaluation():
         ov_pen = info["reward_components"].get("override_penalty", 0.0)
         net_r = info["reward_components"]["net_reward"]
         app_act = info["action"]
+        results_by_weight[p_weight] = {
+            "applied_action": app_act,
+            "overridden": ov,
+            "override_penalty": ov_pen,
+            "net_reward": net_r,
+        }
         print(f"Weight={p_weight:3.1f} | Raw=0 -> Applied={app_act} | Overridden={str(ov):<5} | Override Penalty={ov_pen:6.2f} | Net Reward={net_r:8.4f}")
 
-    print("\nCalculated Reward Impact:")
-    print("  Direct safe Action 6 without override : Net Reward ~ -0.66")
-    print("  Unsafe Action 0 with weight=0.0 (no penalty) : Net Reward ~ -0.66 (No disadvantage)")
-    print("  Unsafe Action 0 with weight=2.0 (-2.0 penalty): Net Reward ~ -2.66 (Disadvantage = -2.0)")
-    print("  Unsafe Action 0 with weight=5.0 (-5.0 penalty): Net Reward ~ -5.66 (Disadvantage = -5.0)")
+    # Also evaluate reference direct safe action (Action 6) without override under identical state
+    env_ref = GreenNetworkEnv(
+        topology_type="fattree_k4",
+        k=4,
+        max_steps_per_episode=60,
+        training_mode=False,
+        traffic_source="synthetic",
+        use_safety_filter=True,
+        override_penalty_weight=0.0,
+    )
+    env_ref.reset(seed=60002, options={"intensity": 1.10, "profile": "diurnal", "burst": False})
+    env_ref.step(7)
+    env_ref.step(7)
+    _, _, _, _, ref_info = env_ref.step(6)
+    ref_net_r = ref_info["reward_components"]["net_reward"]
+
+    print("\nMeasured Reward Impact (computed directly from step reward_components):")
+    print(f"  Direct safe Action 6 without override : Net Reward = {ref_net_r:.4f}")
+    base_net_r = results_by_weight[0.0]["net_reward"]
+    print(f"  Unsafe Action 0 with weight=0.0 (no penalty) : Net Reward = {base_net_r:.4f} (Delta vs ref = {base_net_r - ref_net_r:+.4f})")
+    for w in [2.0, 5.0]:
+        pen_net_r = results_by_weight[w]["net_reward"]
+        delta = pen_net_r - base_net_r
+        print(f"  Unsafe Action 0 with weight={w:.1f} (-{w:.1f} penalty): Net Reward = {pen_net_r:.4f} (Disadvantage vs baseline = {delta:+.4f})")
     print("Note: Penalizing overrides introduces a negative gradient on risky raw actions.")
     print("However, whether this improves PPO learning stability requires a full empirical training run.")
 
