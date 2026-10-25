@@ -20,9 +20,16 @@ import datetime
 import gc
 import json
 import os
+import subprocess
 import sys
 import time
 from typing import Dict, Any, List, Optional, Tuple
+
+def _get_git_commit() -> str:
+    try:
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    except Exception:
+        return "unknown"
 
 import numpy as np
 import torch
@@ -60,10 +67,16 @@ class FatTreePilotCallback(BaseCallback):
         eval_freq: int = 10000,
         checkpoint_dir: str = "models/pilot_fattree_k4_100k",
         verbose: int = 1,
+        safety_headroom: float = 1.25,
+        use_dynamic_headroom: bool = False,
+        override_penalty_weight: float = 0.0,
     ):
         super().__init__(verbose)
         self.eval_freq = eval_freq
         self.checkpoint_dir = checkpoint_dir
+        self.safety_headroom = safety_headroom
+        self.use_dynamic_headroom = use_dynamic_headroom
+        self.override_penalty_weight = override_penalty_weight
         self.last_eval_step = 0
         self.training_history: List[Dict[str, Any]] = []
         self.validation_records: List[Dict[str, Any]] = []
@@ -122,6 +135,9 @@ class FatTreePilotCallback(BaseCallback):
             training_mode=False,
             traffic_source="synthetic",
             use_safety_filter=True, # Safety filter active
+            safety_headroom=self.safety_headroom,
+            use_dynamic_headroom=self.use_dynamic_headroom,
+            override_penalty_weight=self.override_penalty_weight,
         )
 
         vec_norm = None
@@ -328,10 +344,15 @@ def train_pilot(
     norm_reward: bool = True,
     clip_reward: Optional[float] = None,
     seed: int = 42,
+    safety_headroom: float = 1.25,
+    use_dynamic_headroom: bool = False,
+    override_penalty_weight: float = 0.0,
+    experiment_id: Optional[str] = None,
 ):
     print("=" * 85)
     print("GREENNET-RL: FAT-TREE k=4 CONTROLLED PPO PILOT TRAINING")
     print(f"[*] Timesteps: {total_timesteps} | Eval Freq: {eval_freq} | Norm Reward: {norm_reward}")
+    print(f"[*] Safety Headroom: {safety_headroom} | Dynamic Headroom: {use_dynamic_headroom} | Override Penalty W: {override_penalty_weight}")
     print("=" * 85)
 
     # GreenNet-RL Proje Tercihi: Reward clipping ile dinamik varyans normalizasyonu
@@ -360,6 +381,9 @@ def train_pilot(
         training_mode=True, # Randomizes intensity & profile inside seed range
         traffic_source="synthetic",
         use_safety_filter=True,
+        safety_headroom=safety_headroom,
+        use_dynamic_headroom=use_dynamic_headroom,
+        override_penalty_weight=override_penalty_weight,
     )
     monitored_env = Monitor(raw_env)
     train_env = DummyVecEnv([lambda: monitored_env])
@@ -396,6 +420,9 @@ def train_pilot(
         eval_freq=eval_freq,
         checkpoint_dir=checkpoint_dir,
         verbose=1,
+        safety_headroom=safety_headroom,
+        use_dynamic_headroom=use_dynamic_headroom,
+        override_penalty_weight=override_penalty_weight,
     )
 
     print(f"Configuration: Device=CPU, Policy=[128, 128], seed={seed}, total_steps={total_timesteps}")
@@ -436,6 +463,8 @@ def train_pilot(
     # Save comprehensive results JSON
     results_payload = {
         "metadata": {
+            "experiment_id": experiment_id,
+            "git_commit": _get_git_commit(),
             "topology": "fattree_k4",
             "k": 4,
             "green_mode": "switch_sleep",
@@ -445,6 +474,22 @@ def train_pilot(
             "duration_seconds": round(total_duration, 2),
             "best_checkpoint_step": best_step,
             "norm_reward": norm_reward,
+            "safety_headroom": safety_headroom,
+            "use_dynamic_headroom": use_dynamic_headroom,
+            "override_penalty_weight": override_penalty_weight,
+            "ppo_hyperparameters": {
+                "policy": "MlpPolicy",
+                "net_arch": [128, 128],
+                "learning_rate": 3e-4,
+                "n_steps": 1024,
+                "batch_size": 256,
+                "gamma": 0.99,
+                "gae_lambda": 0.95,
+                "clip_range": 0.2,
+                "ent_coef": 0.01,
+                "n_epochs": 10,
+                "eval_freq": eval_freq,
+            },
             "safety_criteria": {
                 "max_overall_sla_violation_percent": 5.0,
                 "max_overall_loss_percent": 1.5,
@@ -472,6 +517,11 @@ if __name__ == "__main__":
     parser.add_argument("--clip-reward", type=float, default=None, help="Reward clipping bound")
     parser.add_argument("--checkpoint-dir", type=str, default="models/pilot_fattree_k4_100k", help="Checkpoint directory")
     parser.add_argument("--results-path", type=str, default="results/pilot_fattree_k4_100k_results.json", help="Results path")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed (default: 42)")
+    parser.add_argument("--safety-headroom", type=float, default=1.25, help="Safety headroom multiplier (default: 1.25, v3 ablation: 1.20)")
+    parser.add_argument("--use-dynamic-headroom", action="store_true", help="Enable trend-based dynamic headroom adjustment")
+    parser.add_argument("--override-penalty-weight", type=float, default=0.0, help="Override penalty weight in reward function")
+    parser.add_argument("--experiment-id", type=str, default=None, help="Experiment identifier")
     args = parser.parse_args()
 
     if args.smoke_test:
@@ -482,6 +532,11 @@ if __name__ == "__main__":
             results_path="results/smoke_test_fattree_k4_results.json",
             norm_reward=not args.no_norm_reward,
             clip_reward=args.clip_reward,
+            seed=args.seed,
+            safety_headroom=args.safety_headroom,
+            use_dynamic_headroom=args.use_dynamic_headroom,
+            override_penalty_weight=args.override_penalty_weight,
+            experiment_id=args.experiment_id,
         )
     else:
         train_pilot(
@@ -491,4 +546,9 @@ if __name__ == "__main__":
             results_path=args.results_path,
             norm_reward=not args.no_norm_reward,
             clip_reward=args.clip_reward,
+            seed=args.seed,
+            safety_headroom=args.safety_headroom,
+            use_dynamic_headroom=args.use_dynamic_headroom,
+            override_penalty_weight=args.override_penalty_weight,
+            experiment_id=args.experiment_id,
         )

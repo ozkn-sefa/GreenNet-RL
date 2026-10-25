@@ -1112,3 +1112,77 @@ python -m pytest tests -q
 # 122 passed in 22.75s
 ```
 Tüm 122 test eksiksiz ve yeşil durumdadır.
+
+---
+
+## 17. PPO v3 Kontrollü Ablasyon Deney Altyapısı (2026-10-25)
+
+### 1. Amaç ve Kapsam
+Fat-Tree k=4 topolojisinde SafeFilter'ın iki kritik bileşenini (Dinamik Headroom ve Override Cezası) bilimsel olarak ayrıştırmak ve etkilerini bağımsız olarak ölçmek amacıyla 2x2 faktöriyel ablasyon deney altyapısı kurulmuştur.
+
+> [!IMPORTANT]
+> **EĞİTİM BAŞLATILMADI**: Bu aşamada hiçbir model eğitimi, 2048 adımlık duman testi veya ağırlık optimizasyonu çalıştırılmamıştır. Yalnızca konfigürasyon, kayıt dizinleri, anti-drift mekanizmaları, testler ve dry-run doğrulama mekanizması hazırlanmıştır.
+
+---
+
+### 2. Dört Bağımsız Deney Grubu
+
+Tüm deney gruplarında **`safety_headroom = 1.20`** sabit tutulmuştur. Referans PPO v2 hiperparametreleri (`MlpPolicy`, `net_arch=[128, 128]`, `lr=3e-4`, `n_steps=1024`, `batch_size=256`, `gamma=0.99`, `gae_lambda=0.95`, `clip_range=0.2`, `ent_coef=0.01`, `n_epochs=10`, `total_timesteps=100,000`, `eval_freq=10,000`, `norm_reward=True`, CPU) değiştirilmemiştir.
+
+| Grup | Experiment ID | Dynamic Headroom | Override Penalty W | Safety Headroom | Açıklama |
+| :---: | :--- | :---: | :---: | :---: | :--- |
+| **A** | `PPO_V3_GROUP_A` | `False` | `0.0` | 1.20 | Temel SafeFilter: Sabit headroom, override cezası yok (Referans ablasyon) |
+| **B** | `PPO_V3_GROUP_B` | `True` | `0.0` | 1.20 | Dinamik Headroom Etkisi: Trende duyarlı headroom, override cezası yok |
+| **C** | `PPO_V3_GROUP_C` | `False` | `2.0` | 1.20 | Ceza Etkisi: Sabit headroom, override cezası aktif ($w=2.0$) |
+| **D** | `PPO_V3_GROUP_D` | `True` | `2.0` | 1.20 | Tam PPO v3 Mimarisi: Dinamik headroom + override cezası ($w=2.0$) |
+
+---
+
+### 3. Tohum ve Veri İzolasyon Planı
+
+Sıfır veri sızıntısı (zero data leakage) matematiksel ve yapılandırma seviyesinde doğrulanmıştır:
+- **Eğitim Tohumları**: `[0, 50,000)` aralığında dinamik sentetik trafik (`TRAIN_SEED_MAX_LIMIT = 50,000`). Başlangıç için `seed=42` kilitlenmiş, çoklu tohum genişletmesine hazır yapı oluşturulmuştur.
+- **Validasyon Tohumları**: `60001, 60002, 60003, 60004` (Düşük, Orta, Yüksek, Ani Burst rejimleri) kesinlikle sabittir.
+- **Test Tohumları**: `70001, 70002, 70003, 70004` eğitim veya hiperparametre seçimi için **kesinlikle kullanılmamış, tamamen izole tutulmuştur**.
+
+---
+
+### 4. Geliştirilen Modüller ve Güvenlik Mekanizmaları
+
+1. **`scripts/ppo_v3_config.py`**:
+   - PEP8 uyumlu, dataclass tabanlı, tip ipuçlarına sahip konfigürasyon modülü.
+   - `validate_group_configs()` ve `verify_seed_isolation()` fonksiyonlarıyla çalışma öncesi statik ve dinamik doğrulama.
+   - Otomatik `check_existing_outputs()` fonksiyonu ile var olan sonuçların kazara ezilmesini önleyen koruma kalkanı.
+2. **`scripts/train_pilot_fattree_k4.py` Entegrasyonu (Anti-Drift)**:
+   - `FatTreePilotCallback` ve `train_pilot` fonksiyonlarına `safety_headroom`, `use_dynamic_headroom`, `override_penalty_weight` parametreleri eklendi.
+   - Callback içindeki validasyon ortamı (`_eval_agent_on_regime`) bu parametreleri doğrudan devralarak eğitim ile validasyon arasında konfigürasyon kaymasını (train/eval drift) kesin olarak engeller.
+   - Varsayılan argümanlar (`safety_headroom=1.25`, `use_dynamic_headroom=False`, `override_penalty_weight=0.0`) korunarak geçmiş v2 komutlarının geriye dönük tam uyumluluğu sağlandı.
+3. **`scripts/run_ppo_v3_experiments.py` (Deney Çalıştırıcısı)**:
+   - **Varsayılan Davranış: Sadece Dry-Run**.
+   - Gerçek eğitim çağrısı ancak açıkça `--execute` bayrağı girildiğinde mümkündür.
+   - Her grup için ayrık dizinler:
+     - Checkpoint: `models/ppo_v3_ablation/group_{A,B,C,D}_seed42/`
+     - Sonuç JSON: `results/ppo_v3_ablation/group_{A,B,C,D}_seed42_results.json`
+4. **Kapsamlı Kayıt Şeması**:
+   - Üretilecek JSON sonuçlarında Experiment ID, Git commit hash, seed, PPO hiperparametreleri, dynamic headroom durumu, override ceza ağırlığı, safety headroom, eğitim adımı, enerji tasarrufu, ortalama paket kaybı, SLA ihlal oranı, ortalama/p95/p99 gecikme, eylem dağılımları (ham ve uygulanan), SafeFilter override oranı ve switch toggle metrikleri bulunacaktır.
+
+---
+
+### 5. Doğrulama ve Test Sonuçları
+
+`tests/test_ppo_v3_config.py` bünyesinde 8 yeni birim/entegrasyon testi eklenmiştir:
+- Dört grubun doğru parametreleri (`test_four_groups_exist_and_have_correct_parameters`)
+- Yalnızca planlanan deney değişkenlerinin farklılığı (`test_only_intended_variables_differ_between_groups`)
+- Tohum izolasyonu ve sıfır veri sızıntısı (`test_seed_isolation_and_zero_leakage`)
+- Dry-run modunun eğitim başlatmaması (`test_dry_run_executes_without_starting_training`)
+- `--execute` olmadan eğitimin tetiklenememesi (`test_runner_cli_defaults_to_dry_run_without_execute`)
+- Üzerine yazma korumasının çalışması (`test_overwrite_protection_prevents_accidental_clobbering`)
+- Eğitim ve validasyon ortamlarının anti-drift uyumu (`test_training_and_validation_environments_share_safety_config`)
+- Eski v2 komutlarının varsayılan parametre uyumluluğu (`test_legacy_default_values_preserved_in_train_pilot`)
+
+**Test Özeti**:
+```bash
+python -m pytest tests -q
+# 130 passed in 24.78s
+```
+Tüm 130 test başarıyla yeşil geçmiştir.
