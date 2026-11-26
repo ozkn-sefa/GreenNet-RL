@@ -21,12 +21,12 @@
 <body>
 <div class="container">
     <h1>🌿 Green SDN: Akıllı Ağ Yönetimi İçin Pekiştirmeli Öğrenme Destekli Optimizasyon</h1>
-    <p><strong>Proje Kapsamı:</strong> Akıllı Ağ Yönetimi & Endüstri 5.0 ve Optimizasyon | <strong>Tarih:</strong> 09.10.2026 22:17:42</p>
+    <p><strong>Proje Kapsamı:</strong> Akıllı Ağ Yönetimi & Endüstri 5.0 ve Optimizasyon | <strong>Tarih:</strong> 19.10.2026 12:53:11</p>
     
     <div class="highlight-card">
         <strong>Önemli Başarı:</strong> Geliştirilen Pekiştirmeli Öğrenme (RL) ajanı, klasik OSPF/ECMP yöntemine kıyasla ortalama 
-        <span class="badge">%16.38 Enerji Tasarrufu</span> sağlarken, paket gecikmesini 
-        <strong>0.95 ms</strong> seviyesinde tutmuş ve %0 paket kaybı ile SLA garantisini korumuştur.
+        <span class="badge">%23.71 Enerji Tasarrufu</span> sağlarken, paket gecikmesini 
+        <strong>1.59 ms</strong> seviyesinde tutmuş ve %0 paket kaybı ile SLA garantisini korumuştur.
     </div>
 
     <h2>1. Kıyaslamalı Performans Tablosu</h2>
@@ -46,43 +46,43 @@
   <tbody>
     <tr>
       <td>OSPF / ECMP (Baseline)</td>
-      <td>3760.0 W</td>
-      <td>%0.0</td>
-      <td>0.74 ms</td>
-      <td>4.82 ms</td>
-      <td>%0.0</td>
-      <td>58</td>
-      <td>-190.86</td>
+      <td>3038.22 W</td>
+      <td>%19.2</td>
+      <td>1.5 ms</td>
+      <td>28.47 ms</td>
+      <td>%1.2351</td>
+      <td>88</td>
+      <td>-1976.66</td>
     </tr>
     <tr>
       <td>Static Heuristic</td>
-      <td>3368.0 W</td>
-      <td>%10.42</td>
-      <td>0.76 ms</td>
-      <td>4.78 ms</td>
-      <td>%0.0</td>
-      <td>70</td>
-      <td>511.97</td>
+      <td>2785.09 W</td>
+      <td>%25.93</td>
+      <td>1.85 ms</td>
+      <td>31.13 ms</td>
+      <td>%1.9254</td>
+      <td>97</td>
+      <td>-866.89</td>
     </tr>
     <tr>
       <td>Load-Threshold Reactive</td>
-      <td>3142.13 W</td>
-      <td>%16.43</td>
-      <td>0.97 ms</td>
-      <td>9.07 ms</td>
-      <td>%0.0</td>
-      <td>99</td>
-      <td>764.21</td>
+      <td>2654.74 W</td>
+      <td>%29.4</td>
+      <td>2.16 ms</td>
+      <td>43.34 ms</td>
+      <td>%2.119</td>
+      <td>97</td>
+      <td>-403.16</td>
     </tr>
     <tr>
       <td>Green RL Agent (Ours)</td>
-      <td>3144.0 W</td>
-      <td>%16.38</td>
-      <td>0.95 ms</td>
-      <td>9.07 ms</td>
-      <td>%0.0</td>
-      <td>96</td>
-      <td>767.20</td>
+      <td>2868.6 W</td>
+      <td>%23.71</td>
+      <td>1.59 ms</td>
+      <td>28.47 ms</td>
+      <td>%1.4642</td>
+      <td>93</td>
+      <td>-1088.07</td>
     </tr>
   </tbody>
 </table>

@@ -1,0 +1,28 @@
+{
+  "algo": "PPO",
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "policy": "MlpPolicy",
+  "net_arch": [
+    128,
+    128
+  ],
+  "learning_rate": 0.0003,
+  "n_steps": 1024,
+  "batch_size": 256,
+  "n_epochs": 10,
+  "gamma": 0.99,
+  "gae_lambda": 0.95,
+  "clip_range": 0.2,
+  "ent_coef": 0.01,
+  "total_timesteps": 50,
+  "eval_freq": 50,
+  "val_steps": 10,
+  "seed": 42,
+  "topology": "abilene",
+  "green_mode": "link_level",
+  "train_matrices": 33667,
+  "val_matrices": 7214,
+  "test_matrices": 7215,
+  "resumed_from": null
+}

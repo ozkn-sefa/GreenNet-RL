@@ -3,202 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green SDN - Akıllı Yeşil Ağ Yönetimi & Canlı AI Asistanı</title>
+    <title>Green DCN Optimizer - RL Destekli Yeşil Veri Merkezi (k=6)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css?v=3.0">
 </head>
-<body>
-    <div class="app-container">
-        <!-- Sade ve Zarif Üst Bar -->
-        <header class="header">
-            <div class="brand">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.2" fill="none">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+<body class="theme-dark">
+    <!-- Üst Kompakt Menü Barı -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <div class="brand-badge">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.3">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                     </svg>
                 </div>
-                <div>
-                    <h1>Green SDN <span class="badge-ai">Akıllı Asistan</span></h1>
-                    <p class="subtitle">Pekiştirmeli Öğrenme Destekli Yeşil Yönlendirme & Canlı Karar Paneli</p>
+                <div class="brand-titles">
+                    <div class="brand-name">
+                        Green DCN <span class="tag-accent">k=6 Veri Merkezi</span>
+                    </div>
+                    <div class="brand-sub">RL Tabanlı Akıllı Enerji Tasarrufu & Yeşil Ağ Yönetimi</div>
                 </div>
             </div>
 
-            <div class="header-controls">
-                <div class="mode-pill-selector">
-                    <button class="mode-btn active" id="btn-mode-rl" onclick="setMode('RL')">
-                        <span class="mode-dot green"></span> 🤖 PPO Yapay Zeka
-                    </button>
-                    <button class="mode-btn" id="btn-mode-ospf" onclick="setMode('OSPF')">
-                        <span class="mode-dot gray"></span> OSPF (Klasik)
-                    </button>
-                </div>
-
-                <div class="topo-picker">
-                    <label for="select-topo">Topoloji:</label>
-                    <select id="select-topo" class="topo-select" onchange="changeTopology(this.value)">
-                        <option value="fattree_k4" selected>Fat-Tree k=4 (4 Omurga, 16 Sunucu)</option>
-                        <option value="fattree_k6">Fat-Tree k=6 (9 Omurga, 54 Sunucu)</option>
-                        <option value="nsfnet">NSFNET WAN (14 Router Omurga)</option>
-                    </select>
-                </div>
-
-                <div class="status-indicator">
-                    <span class="pulse-dot" id="global-pulse"></span>
-                    <span id="ws-status">Canlı Bağlantı</span>
-                </div>
+            <div class="connection-status">
+                <span class="live-pulse" id="global-pulse"></span>
+                <span id="ws-status">Canlı Sistem</span>
             </div>
-        </header>
+        </div>
 
-        <!-- Odak Kontrol: Trafik ve 4 Sade Sayaç -->
-        <section class="main-control-card">
-            <div class="traffic-section">
-                <div class="traffic-header">
-                    <div class="traffic-label-group">
-                        <span class="traffic-title">📶 Ağ Trafiği Yoğunluğu</span>
-                        <span class="traffic-subtext">Kaydırıcıyı hareket ettirerek ağa yük bindirin:</span>
-                    </div>
-                    <span class="traffic-val-badge" id="traffic-slider-val">100% (Normal Yük)</span>
-                </div>
-                
-                <div class="slider-wrapper">
-                    <input type="range" id="traffic-slider" min="25" max="250" value="100" step="5" oninput="onTrafficSliderInput(this.value)" onchange="onTrafficSliderChange(this.value)">
-                </div>
-
-                <div class="preset-buttons">
-                    <button class="preset-btn" id="preset-1" onclick="setTrafficPreset(0.35, '35%')">
-                        🌙 Düşük (%35)
-                    </button>
-                    <button class="preset-btn active" id="preset-2" onclick="setTrafficPreset(0.85, '85%')">
-                        ⛅ Normal (%85)
-                    </button>
-                    <button class="preset-btn" id="preset-3" onclick="setTrafficPreset(1.45, '145%')">
-                        📈 Yoğun (%145)
-                    </button>
-                    <button class="preset-btn" id="preset-4" onclick="setTrafficPreset(2.30, '230%')">
-                        ⚡ Pik Yük (%230)
-                    </button>
-                    <button class="burst-btn" id="btn-burst" onclick="toggleBurst()">
-                        <span class="burst-icon">⚡</span> <span id="burst-label">Ani Patlama (Burst)</span>
-                    </button>
-                </div>
+        <!-- Orta Kontroller: Topoloji, Mod, Trafik Hızlı Butonları -->
+        <div class="nav-center">
+            <!-- Topoloji Seçici -->
+            <div class="ctrl-group">
+                <span class="ctrl-label">Topoloji:</span>
+                <select id="select-topo" class="custom-select" onchange="changeTopology(this.value)">
+                    <option value="fattree_k6" selected>🏢 Fat-Tree k=6 (9 Omurga, 54 Sunucu - Standart DCN)</option>
+                    <option value="fattree_k4">🏢 Fat-Tree k=4 (4 Omurga, 16 Sunucu)</option>
+                    <option value="abilene">🌐 SNDlib Abilene WAN (12 Şehir PoP)</option>
+                    <option value="nsfnet">🌐 NSFNET WAN (14 Router)</option>
+                </select>
             </div>
 
-            <!-- 4 Sade ve Net Sayaç -->
-            <div class="kpi-strip">
-                <div class="kpi-mini">
-                    <div class="kpi-mini-title">⚡ Toplam Güç Tüketimi</div>
-                    <div class="kpi-mini-val"><span id="val-power">0</span> <small>Watt</small></div>
-                    <div class="mini-bar-bg"><div class="mini-bar-fill" id="bar-power" style="width: 50%;"></div></div>
-                </div>
-                <div class="kpi-mini">
-                    <div class="kpi-mini-title">🌿 Enerji Tasarrufu</div>
-                    <div class="kpi-mini-val text-green" id="val-savings">0%</div>
-                    <div class="kpi-mini-sub" id="val-carbon-text">Karbon: 0 g CO₂/saat</div>
-                </div>
-                <div class="kpi-mini">
-                    <div class="kpi-mini-title">⏱️ Ortalama Gecikme</div>
-                    <div class="kpi-mini-val text-cyan"><span id="val-delay">0.00</span> <small>ms</small></div>
-                    <div class="qos-mini-badge" id="qos-meter">SLA Uyumlu (&lt;5ms)</div>
-                </div>
-                <div class="kpi-mini">
-                    <div class="kpi-mini-title">🎛️ Aktif Omurga Switch</div>
-                    <div class="kpi-mini-val" id="val-cores">2 / 4</div>
-                    <div class="core-badges-row">
-                        <!-- c00, c01 pill badges buraya dolar -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Ana Çalışma Ekranı: Sol (Bağlantılar ve Topoloji) | Sağ (Modelin Karar Asistanı) -->
-        <main class="workbench-layout">
-            <!-- Sol: Ağ Bağlantıları ve Topoloji Tuvali -->
-            <div class="panel canvas-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                        <span>Ağ Bağlantıları ve Canlı Veri Akışı</span>
-                    </div>
-                    <div class="legend">
-                        <span class="legend-item"><span class="legend-color core-active"></span> Aktif Core</span>
-                        <span class="legend-item"><span class="legend-color core-sleep"></span> Uykuda (Sleep)</span>
-                        <span class="legend-item"><span class="legend-color link-flow"></span> Veri Akışı</span>
-                        <span class="legend-item"><span class="legend-color link-congested"></span> Darboğaz</span>
-                    </div>
-                </div>
-
-                <div class="canvas-wrapper">
-                    <canvas id="topoCanvas" width="940" height="420"></canvas>
-                </div>
-
-                <div class="canvas-footer-simple">
-                    <span>🔝 <strong>Katman 3: Core (Omurga)</strong> — Yapay Zeka Sadece Bunları Uyutur/Uyandırır</span>
-                    <span>↕️ <strong>Katman 2-1: Dağıtım & Kenar</strong> — Sunucuların Bağlantısı İçin Sürekli Aktiftir</span>
-                    <span>💻 <strong>Katman 0: Sunucular (Host)</strong> — Trafik Üreten Cihazlar</span>
-                </div>
+            <!-- Çalışma Modu -->
+            <div class="mode-toggle-group">
+                <button class="mode-pill active" id="btn-mode-rl" onclick="setMode('RL')">
+                    <span class="dot dot-green"></span> 🤖 PPO Yapay Zeka
+                </button>
+                <button class="mode-pill" id="btn-mode-ospf" onclick="setMode('OSPF')">
+                    <span class="dot dot-gray"></span> ⚡ OSPF (Tümü Açık)
+                </button>
             </div>
 
-            <!-- Sağ: Modelin Karar Asistanı ("Model Sizinle Konuşuyor") -->
-            <div class="panel ai-assistant-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span class="ai-avatar-icon">🤖</span>
-                        <span>Model Karar Açıklayıcısı (İç Sesi)</span>
-                    </div>
-                    <span class="badge-step" id="badge-step">Adım: 0</span>
-                </div>
+            <!-- Trafik Seviyeleri -->
+            <div class="traffic-quick-presets">
+                <button class="preset-chip" id="preset-1" onclick="setTrafficPreset(0.35, '35%')">🌙 Gece (%35)</button>
+                <button class="preset-chip active" id="preset-2" onclick="setTrafficPreset(0.85, '85%')">⛅ Normal (%85)</button>
+                <button class="preset-chip" id="preset-3" onclick="setTrafficPreset(1.45, '145%')">📈 Yoğun (%145)</button>
+                <button class="burst-chip" id="btn-burst" onclick="toggleBurst()">
+                    <span class="burst-sparkle">⚡</span> Ani Patlama (Burst)
+                </button>
+            </div>
+        </div>
 
-                <!-- Son Canlı Karar Konuşma Kartı (Hero) -->
-                <div class="ai-speech-hero" id="ai-hero-card">
-                    <div class="ai-speech-header">
-                        <div class="ai-hero-badge" id="ai-hero-badge">
-                            <span class="ai-hero-dot"></span>
-                            <span id="ai-hero-title">Model Analiz Ediyor...</span>
+        <!-- Sağ Taraf: Trafik Slider & AI Drawer Toggle Butonu -->
+        <div class="nav-right">
+            <div class="slider-inline-box">
+                <span class="slider-val-tag" id="traffic-slider-val">100%</span>
+                <input type="range" id="traffic-slider" min="25" max="250" value="100" step="5"
+                       oninput="onTrafficSliderInput(this.value)" onchange="onTrafficSliderChange(this.value)"
+                       title="Ağ Trafiği Yoğunluğu">
+            </div>
+
+            <button class="ai-drawer-toggle" id="btn-toggle-ai" onclick="toggleAiDrawer()" title="AI Karar Panelini Aç / Kapat">
+                <span class="ai-btn-icon">🤖</span>
+                <span class="ai-btn-text">AI Karar Paneli</span>
+                <span class="ai-btn-badge" id="ai-status-pill">Aktif</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Ana Çalışma Ekranı (Geniş Topoloji Sahnesi + Yüzen HUD Metrikleri) -->
+    <main class="main-stage-container">
+        <!-- BÜYÜK TOPOLOJİ ALANI -->
+        <div class="topology-stage" id="topology-stage">
+            <!-- Tuval Üzerinde Yüzen Canlı Metrik HUD Kartları (6 Kolonlu Geniş Gösterge) -->
+            <div class="hud-overlay-grid">
+                <!-- Metrik 1: Gelen İnternet / Ağ Trafik Hacmi & Proaktif Tahmin -->
+                <div class="hud-card highlight-amber">
+                    <div class="hud-header">
+                        <span class="hud-icon traffic-icon">📶</span>
+                        <span class="hud-title">Gelen İnternet / Ağ Trafiği</span>
+                    </div>
+                    <div class="hud-body">
+                        <div class="hud-big-val text-amber"><span id="val-traffic">0</span> <small id="val-traffic-unit">Mbps</small></div>
+                        <div class="hud-progress-track">
+                            <div class="hud-progress-fill fill-amber" id="bar-traffic" style="width: 35%;"></div>
                         </div>
-                        <span class="ai-hero-time" id="ai-hero-time">--:--:--</span>
                     </div>
-                    
-                    <div class="ai-bubble-box">
-                        <div class="ai-avatar-circle">🤖</div>
-                        <p class="ai-speech-bubble" id="ai-hero-message">
-                            Merhaba! Ağ trafiğini ve hat doluluklarını anlık izliyorum. Trafiği yukarıdaki kaydırıcıdan değiştirdiğinizde aldığım kararları ve gerekçelerini burada açıklayacağım.
+                    <div class="hud-footer">
+                        <span>Akış: <strong id="val-flow-count">0</strong> | Tahmin: <strong id="val-pred-traffic">--</strong></span>
+                    </div>
+                </div>
+
+                <!-- Metrik 2: Güç Tüketimi -->
+                <div class="hud-card">
+                    <div class="hud-header">
+                        <span class="hud-icon power-icon">⚡</span>
+                        <span class="hud-title">Toplam Güç Tüketimi</span>
+                    </div>
+                    <div class="hud-body">
+                        <div class="hud-big-val"><span id="val-power">0</span> <small>Watt</small></div>
+                        <div class="hud-progress-track">
+                            <div class="hud-progress-fill" id="bar-power" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <div class="hud-footer">
+                        <span>Klasik OSPF: <strong id="val-ospf-ref">~6780 W</strong></span>
+                    </div>
+                </div>
+
+                <!-- Metrik 3: Enerji Tasarrufu & Yeşil Başarı -->
+                <div class="hud-card highlight-green">
+                    <div class="hud-header">
+                        <span class="hud-icon eco-icon">🌿</span>
+                        <span class="hud-title">Switch Uyku Tasarrufu</span>
+                    </div>
+                    <div class="hud-body">
+                        <div class="hud-big-val text-green" id="val-savings">0%</div>
+                        <div class="hud-sub-badge" id="val-sleep-count">0 Omurga Uykuda</div>
+                    </div>
+                    <div class="hud-footer">
+                        <span id="val-savings-detail">OSPF'ye Göre Net Kasa Kazancı</span>
+                    </div>
+                </div>
+
+                <!-- Metrik 4: Sosyal Sorumluluk & Karbon Salınımı -->
+                <div class="hud-card highlight-emerald">
+                    <div class="hud-header">
+                        <span class="hud-icon carbon-icon">🌍</span>
+                        <span class="hud-title">Önlenen CO₂ Salınımı</span>
+                    </div>
+                    <div class="hud-body">
+                        <div class="hud-big-val text-emerald" id="val-carbon-hourly">0 <small>g CO₂/saat</small></div>
+                        <div class="hud-note" id="val-carbon-daily">Günde ~0.0 kg CO₂ tasarruf</div>
+                    </div>
+                    <div class="hud-footer">
+                        <span id="val-carbon-intensity">Şebeke Yoğunluğu: 420 g/kWh</span>
+                    </div>
+                </div>
+
+                <!-- Metrik 5: Hizmet Kalitesi (QoS / Gecikme & Uyanma Gecikmesi) -->
+                <div class="hud-card">
+                    <div class="hud-header">
+                        <span class="hud-icon delay-icon">⏱️</span>
+                        <span class="hud-title">Ağ Gecikmesi (RTT)</span>
+                    </div>
+                    <div class="hud-body">
+                        <div class="hud-big-val text-cyan"><span id="val-delay">0.00</span> <small>ms</small></div>
+                        <div class="qos-pill ok" id="qos-meter">SLA Uyumlu (&lt;3.5ms)</div>
+                    </div>
+                    <div class="hud-footer">
+                        <span>Kayıp: <strong id="val-loss">0.00%</strong> <span id="val-wakeup-delay"></span></span>
+                    </div>
+                </div>
+
+                <!-- Metrik 6: Aktif Omurga Switch Durumu -->
+                <div class="hud-card">
+                    <div class="hud-header">
+                        <span class="hud-icon core-icon">🎛️</span>
+                        <span class="hud-title" id="title-cores">Omurga (Core) Durumu</span>
+                    </div>
+                    <div class="hud-body">
+                        <div class="hud-big-val" id="val-cores">3 / 9 Aktif</div>
+                        <div class="core-badges-row">
+                            <!-- Core hapları dinamik yüklenir -->
+                        </div>
+                    </div>
+                    <div class="hud-footer">
+                        <span id="core-status-summary">Düşük yükte gereksiz omurgalar uykuda</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topoloji Tuvali (Büyük Görsel Sahne) -->
+            <div class="canvas-viewport" id="canvas-container">
+                <canvas id="topoCanvas"></canvas>
+
+                <!-- Düğüm Tooltip -->
+                <div class="node-tooltip" id="node-tooltip"></div>
+            </div>
+
+            <!-- Tuval Alt Bilgilendirme ve Renk İpuçları (Legend Bar) -->
+            <div class="topology-legend-bar">
+                <div class="legend-hierarchy" id="canvas-topology-info">
+                    <span class="layer-pill l3">🔝 <strong>Katman 3: Core (9 Omurga)</strong> — RL Ajanı Tarafından Dinamik Uyutulur</span>
+                    <span class="layer-pill l2">🔄 <strong>Katman 2-1: Dağıtım & Kenar (36 Switch)</strong> — 6 Pod İçi Kesintisiz Trafik Taşıyıcı</span>
+                    <span class="layer-pill l0">💻 <strong>Katman 0: Sunucular (54 Host)</strong> — Veri Üreten Cihazlar</span>
+                </div>
+
+                <div class="legend-indicators">
+                    <span class="ind-item"><span class="ind-dot ind-active"></span> Aktif Switch</span>
+                    <span class="ind-item"><span class="ind-dot ind-sleep"></span> 🌙 Uykuda (Sleep Mode)</span>
+                    <span class="ind-item"><span class="ind-dot ind-flow-green"></span> Normal Yük</span>
+                    <span class="ind-item"><span class="ind-dot ind-flow-orange"></span> Orta Yük</span>
+                    <span class="ind-item"><span class="ind-dot ind-flow-red"></span> Yüksek Yük</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAĞDA AÇILIP KAPANAN AI KARAR ASİSTANI PANELİ (DRAWER) -->
+        <aside class="ai-slide-drawer" id="ai-drawer">
+            <div class="drawer-header">
+                <div class="drawer-title-group">
+                    <span class="drawer-avatar">🤖</span>
+                    <div>
+                        <h3 class="drawer-title">AI Karar Açıklayıcısı</h3>
+                        <p class="drawer-sub">Modelin Canlı Kararları & İç Sesi</p>
+                    </div>
+                </div>
+                <div class="drawer-actions">
+                    <span class="badge-step-chip" id="badge-step">Adım: 0</span>
+                    <button class="drawer-close-btn" onclick="toggleAiDrawer()" title="Paneli Kapat">✕</button>
+                </div>
+            </div>
+
+            <div class="drawer-scrollable-content">
+                <!-- Canlı Karar Hero Kartı (Model Sizinle Konuşuyor) -->
+                <div class="ai-hero-card" id="ai-hero-card">
+                    <div class="ai-hero-head">
+                        <div class="ai-status-indicator" id="ai-hero-badge">
+                            <span class="status-dot"></span>
+                            <span id="ai-hero-title">Model Trafiği İnceliyor...</span>
+                        </div>
+                        <span class="ai-time-stamp" id="ai-hero-time">--:--:--</span>
+                    </div>
+
+                    <div class="ai-speech-bubble-wrapper">
+                        <p class="ai-speech-text" id="ai-hero-message">
+                            Merhaba! Fat-Tree k=6 veri merkezi ağındaki trafiği anlık takip ediyorum. 54 sunucu arasındaki veri akışını izleyip yeterli omurga anahtarlarını açık tutarken, ihtiyaç dışı olanları uyutarak enerji tasarrufu sağlıyorum.
                         </p>
                     </div>
 
-                    <div class="ai-speech-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">📊 Trafik Hacmi:</span>
-                            <span class="meta-val" id="ai-meta-demand">0 Mbps</span>
+                    <div class="ai-meta-grid">
+                        <div class="meta-chip">
+                            <span class="meta-lbl">📊 Trafik:</span>
+                            <span class="meta-num" id="ai-meta-demand">0 Mbps</span>
                         </div>
-                        <div class="meta-item">
-                            <span class="meta-label">🌿 Tasarruf Oranı:</span>
-                            <span class="meta-val text-green" id="ai-meta-savings">%0</span>
+                        <div class="meta-chip">
+                            <span class="meta-lbl">🌿 Tasarruf:</span>
+                            <span class="meta-num text-green" id="ai-meta-savings">%0</span>
                         </div>
-                        <div class="meta-item">
-                            <span class="meta-label">🎛️ Aktif Omurga:</span>
-                            <span class="meta-val text-cyan" id="ai-meta-cores">--</span>
+                        <div class="meta-chip">
+                            <span class="meta-lbl">🎛️ Açık Omurga:</span>
+                            <span class="meta-num text-cyan" id="ai-meta-cores">--</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modelin Karar Geçmişi (Canlı Log Akışı) -->
-                <div class="panel-header sub-header">
-                    <div class="panel-title">
-                        <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        <span>Modelin Son Karar Geçmişi (Neden & Ne Yaptı?)</span>
-                    </div>
-                    <button class="clear-log-btn" onclick="clearAiLog()">Temizle</button>
+                <!-- Modelin Karar Geçmişi Listesi -->
+                <div class="drawer-section-title">
+                    <span>📋 Son Karar Geçmişi (Neden & Ne Yaptı?)</span>
+                    <button class="btn-clear-stream" onclick="clearAiLog()">Temizle</button>
                 </div>
 
-                <div class="ai-log-stream" id="ai-log-stream">
-                    <!-- Dinamik karar kartları buraya akar -->
+                <div class="ai-decision-stream" id="ai-log-stream">
+                    <!-- Dinamik akış kartları buraya eklenir -->
                 </div>
             </div>
-        </main>
-    </div>
+        </aside>
+    </main>
 
-    <script src="/static/app.js"></script>
+    <script src="/static/app.js?v=3.0"></script>
 </body>
 </html>

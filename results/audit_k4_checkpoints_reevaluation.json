@@ -1,0 +1,1239 @@
+{
+  "metadata": {
+    "topology": "fattree_k4",
+    "k": 4,
+    "bisection_capacity_mbps": 16000.0,
+    "host_access_capacity_mbps": 16000.0,
+    "checkpoints_evaluated": [
+      20000,
+      50000,
+      90000,
+      100000
+    ]
+  },
+  "baselines": {
+    "Low": {
+      "ospf": {
+        "mean_offered_mbps": 467.8,
+        "mean_carried_mbps": 467.8,
+        "mean_dropped_mbps": 0.0,
+        "mean_power_w": 2956.42,
+        "total_energy_kwh": 29.564222,
+        "mean_delay_ms": 0.653,
+        "p95_delay_ms": 0.779,
+        "p99_delay_ms": 0.779,
+        "mean_loss_percent": 0.0,
+        "max_utilization_percent": 60.8,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "raw_actions_distribution": {
+          "7": 50
+        },
+        "applied_actions_distribution": {
+          "7": 50
+        },
+        "override_count": 0,
+        "override_rate_percent": 0.0
+      },
+      "static": {
+        "mean_offered_mbps": 467.8,
+        "mean_carried_mbps": 467.8,
+        "mean_dropped_mbps": 0.0,
+        "mean_power_w": 2663.49,
+        "total_energy_kwh": 26.639071,
+        "mean_delay_ms": 0.692,
+        "p95_delay_ms": 0.851,
+        "p99_delay_ms": 0.852,
+        "mean_loss_percent": 0.0,
+        "max_utilization_percent": 93.9,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "raw_actions_distribution": {
+          "0": 23,
+          "2": 18,
+          "7": 9
+        },
+        "applied_actions_distribution": {
+          "0": 23,
+          "2": 17,
+          "6": 1,
+          "7": 9
+        },
+        "override_count": 1,
+        "override_rate_percent": 2.0
+      },
+      "threshold": {
+        "mean_offered_mbps": 467.8,
+        "mean_carried_mbps": 461.5,
+        "mean_dropped_mbps": 6.3,
+        "mean_power_w": 2555.85,
+        "total_energy_kwh": 25.564381,
+        "mean_delay_ms": 0.852,
+        "p95_delay_ms": 1.095,
+        "p99_delay_ms": 1.095,
+        "mean_loss_percent": 0.28,
+        "max_utilization_percent": 129.0,
+        "sla_violations": 2,
+        "sla_violation_rate_percent": 4.0,
+        "raw_actions_distribution": {
+          "0": 47,
+          "2": 3
+        },
+        "applied_actions_distribution": {
+          "0": 46,
+          "2": 1,
+          "6": 3
+        },
+        "override_count": 3,
+        "override_rate_percent": 6.0
+      }
+    },
+    "Medium": {
+      "ospf": {
+        "mean_offered_mbps": 1551.3,
+        "mean_carried_mbps": 1456.6,
+        "mean_dropped_mbps": 94.7,
+        "mean_power_w": 3061.23,
+        "total_energy_kwh": 30.61227,
+        "mean_delay_ms": 1.732,
+        "p95_delay_ms": 3.163,
+        "p99_delay_ms": 3.207,
+        "mean_loss_percent": 1.4816,
+        "max_utilization_percent": 198.9,
+        "sla_violations": 4,
+        "sla_violation_rate_percent": 8.0,
+        "raw_actions_distribution": {
+          "7": 50
+        },
+        "applied_actions_distribution": {
+          "7": 50
+        },
+        "override_count": 0,
+        "override_rate_percent": 0.0
+      },
+      "static": {
+        "mean_offered_mbps": 1551.3,
+        "mean_carried_mbps": 1383.5,
+        "mean_dropped_mbps": 167.8,
+        "mean_power_w": 2814.19,
+        "total_energy_kwh": 28.155255,
+        "mean_delay_ms": 2.583,
+        "p95_delay_ms": 4.497,
+        "p99_delay_ms": 4.53,
+        "mean_loss_percent": 3.089,
+        "max_utilization_percent": 238.7,
+        "sla_violations": 4,
+        "sla_violation_rate_percent": 8.0,
+        "raw_actions_distribution": {
+          "0": 23,
+          "2": 18,
+          "7": 9
+        },
+        "applied_actions_distribution": {
+          "0": 20,
+          "2": 11,
+          "4": 2,
+          "6": 8,
+          "7": 9
+        },
+        "override_count": 10,
+        "override_rate_percent": 20.0
+      },
+      "threshold": {
+        "mean_offered_mbps": 1551.3,
+        "mean_carried_mbps": 1373.7,
+        "mean_dropped_mbps": 177.6,
+        "mean_power_w": 2767.22,
+        "total_energy_kwh": 27.690543,
+        "mean_delay_ms": 2.886,
+        "p95_delay_ms": 4.991,
+        "p99_delay_ms": 5.025,
+        "mean_loss_percent": 3.542,
+        "max_utilization_percent": 238.7,
+        "sla_violations": 8,
+        "sla_violation_rate_percent": 16.0,
+        "raw_actions_distribution": {
+          "0": 33,
+          "2": 14,
+          "4": 1,
+          "7": 2
+        },
+        "applied_actions_distribution": {
+          "0": 27,
+          "2": 8,
+          "4": 3,
+          "6": 10,
+          "7": 2
+        },
+        "override_count": 17,
+        "override_rate_percent": 34.0
+      }
+    },
+    "High": {
+      "ospf": {
+        "mean_offered_mbps": 3356.6,
+        "mean_carried_mbps": 2467.9,
+        "mean_dropped_mbps": 888.7,
+        "mean_power_w": 3186.66,
+        "total_energy_kwh": 31.866638,
+        "mean_delay_ms": 9.934,
+        "p95_delay_ms": 19.031,
+        "p99_delay_ms": 19.031,
+        "mean_loss_percent": 16.62,
+        "max_utilization_percent": 368.4,
+        "sla_violations": 31,
+        "sla_violation_rate_percent": 62.0,
+        "raw_actions_distribution": {
+          "7": 50
+        },
+        "applied_actions_distribution": {
+          "7": 50
+        },
+        "override_count": 0,
+        "override_rate_percent": 0.0
+      },
+      "static": {
+        "mean_offered_mbps": 3356.6,
+        "mean_carried_mbps": 2469.5,
+        "mean_dropped_mbps": 887.2,
+        "mean_power_w": 3135.04,
+        "total_energy_kwh": 31.359605,
+        "mean_delay_ms": 9.946,
+        "p95_delay_ms": 19.035,
+        "p99_delay_ms": 19.036,
+        "mean_loss_percent": 16.5524,
+        "max_utilization_percent": 368.4,
+        "sla_violations": 30,
+        "sla_violation_rate_percent": 60.0,
+        "raw_actions_distribution": {
+          "0": 29,
+          "2": 18,
+          "7": 3
+        },
+        "applied_actions_distribution": {
+          "0": 4,
+          "2": 2,
+          "4": 1,
+          "5": 1,
+          "6": 39,
+          "7": 3
+        },
+        "override_count": 43,
+        "override_rate_percent": 86.0
+      },
+      "threshold": {
+        "mean_offered_mbps": 3356.6,
+        "mean_carried_mbps": 2469.5,
+        "mean_dropped_mbps": 887.2,
+        "mean_power_w": 3135.04,
+        "total_energy_kwh": 31.360438,
+        "mean_delay_ms": 9.946,
+        "p95_delay_ms": 19.035,
+        "p99_delay_ms": 19.036,
+        "mean_loss_percent": 16.5524,
+        "max_utilization_percent": 368.4,
+        "sla_violations": 30,
+        "sla_violation_rate_percent": 60.0,
+        "raw_actions_distribution": {
+          "0": 4,
+          "2": 28,
+          "4": 14,
+          "7": 4
+        },
+        "applied_actions_distribution": {
+          "0": 3,
+          "1": 1,
+          "2": 2,
+          "4": 1,
+          "5": 1,
+          "6": 38,
+          "7": 4
+        },
+        "override_count": 41,
+        "override_rate_percent": 82.0
+      }
+    },
+    "Burst": {
+      "ospf": {
+        "mean_offered_mbps": 35258.8,
+        "mean_carried_mbps": 5616.1,
+        "mean_dropped_mbps": 29642.7,
+        "mean_power_w": 3751.3,
+        "total_energy_kwh": 37.512996,
+        "mean_delay_ms": 76.519,
+        "p95_delay_ms": 90.6,
+        "p99_delay_ms": 90.6,
+        "mean_loss_percent": 84.0646,
+        "max_utilization_percent": 1121.6,
+        "sla_violations": 50,
+        "sla_violation_rate_percent": 100.0,
+        "raw_actions_distribution": {
+          "7": 50
+        },
+        "applied_actions_distribution": {
+          "7": 50
+        },
+        "override_count": 0,
+        "override_rate_percent": 0.0
+      },
+      "static": {
+        "mean_offered_mbps": 35258.8,
+        "mean_carried_mbps": 5616.1,
+        "mean_dropped_mbps": 29642.7,
+        "mean_power_w": 3751.3,
+        "total_energy_kwh": 37.512996,
+        "mean_delay_ms": 76.519,
+        "p95_delay_ms": 90.6,
+        "p99_delay_ms": 90.6,
+        "mean_loss_percent": 84.0646,
+        "max_utilization_percent": 1121.6,
+        "sla_violations": 50,
+        "sla_violation_rate_percent": 100.0,
+        "raw_actions_distribution": {
+          "7": 50
+        },
+        "applied_actions_distribution": {
+          "7": 50
+        },
+        "override_count": 0,
+        "override_rate_percent": 0.0
+      },
+      "threshold": {
+        "mean_offered_mbps": 35258.8,
+        "mean_carried_mbps": 5616.1,
+        "mean_dropped_mbps": 29642.7,
+        "mean_power_w": 3751.3,
+        "total_energy_kwh": 37.512996,
+        "mean_delay_ms": 76.519,
+        "p95_delay_ms": 90.6,
+        "p99_delay_ms": 90.6,
+        "mean_loss_percent": 84.0646,
+        "max_utilization_percent": 1121.6,
+        "sla_violations": 50,
+        "sla_violation_rate_percent": 100.0,
+        "raw_actions_distribution": {
+          "0": 1,
+          "7": 49
+        },
+        "applied_actions_distribution": {
+          "6": 1,
+          "7": 49
+        },
+        "override_count": 1,
+        "override_rate_percent": 2.0
+      }
+    }
+  },
+  "checkpoints": {
+    "20000": {
+      "regimes": {
+        "Low": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 461.5,
+            "mean_dropped_mbps": 6.3,
+            "mean_power_w": 2527.15,
+            "total_energy_kwh": 25.272341,
+            "mean_delay_ms": 0.86,
+            "p95_delay_ms": 1.105,
+            "p99_delay_ms": 1.105,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "raw_actions_distribution": {
+              "0": 45,
+              "1": 5
+            },
+            "applied_actions_distribution": {
+              "0": 45,
+              "1": 5
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 461.5,
+            "mean_dropped_mbps": 6.3,
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.565215,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "raw_actions_distribution": {
+              "0": 35,
+              "1": 15
+            },
+            "applied_actions_distribution": {
+              "0": 32,
+              "1": 14,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "raw_saving_percent": 14.52,
+          "guarded_saving_percent": 13.53,
+          "delta_loss_vs_ospf": 0.28,
+          "delta_delay_vs_ospf_ms": 0.199,
+          "delta_sla_vs_ospf_percent": 4.0
+        },
+        "Medium": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1311.3,
+            "mean_dropped_mbps": 240.0,
+            "mean_power_w": 2617.34,
+            "total_energy_kwh": 26.174253,
+            "mean_delay_ms": 3.8,
+            "p95_delay_ms": 6.333,
+            "p99_delay_ms": 6.424,
+            "mean_loss_percent": 4.6856,
+            "max_utilization_percent": 328.7,
+            "sla_violations": 10,
+            "sla_violation_rate_percent": 20.0,
+            "raw_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "applied_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1373.7,
+            "mean_dropped_mbps": 177.6,
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.663503,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "raw_actions_distribution": {
+              "0": 37,
+              "1": 13
+            },
+            "applied_actions_distribution": {
+              "0": 22,
+              "1": 6,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "raw_saving_percent": 14.5,
+          "guarded_saving_percent": 9.63,
+          "delta_loss_vs_ospf": 2.0604,
+          "delta_delay_vs_ospf_ms": 1.178,
+          "delta_sla_vs_ospf_percent": 8.0
+        },
+        "High": {
+          "regime_type": "Boundary Overload",
+          "raw_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2101.2,
+            "mean_dropped_mbps": 1255.4,
+            "mean_power_w": 2716.85,
+            "total_energy_kwh": 27.169291,
+            "mean_delay_ms": 16.486,
+            "p95_delay_ms": 29.663,
+            "p99_delay_ms": 29.764,
+            "mean_loss_percent": 26.4276,
+            "max_utilization_percent": 444.3,
+            "sla_violations": 38,
+            "sla_violation_rate_percent": 76.0,
+            "raw_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "applied_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2469.5,
+            "mean_dropped_mbps": 887.2,
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.360438,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "raw_actions_distribution": {
+              "0": 29,
+              "1": 21
+            },
+            "applied_actions_distribution": {
+              "0": 2,
+              "1": 2,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "raw_saving_percent": 14.74,
+          "guarded_saving_percent": 1.59,
+          "delta_loss_vs_ospf": -0.0676,
+          "delta_delay_vs_ospf_ms": 0.012,
+          "delta_sla_vs_ospf_percent": -2.0
+        },
+        "Burst": {
+          "regime_type": "Extreme Stress Test",
+          "raw_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 3329.9,
+            "mean_dropped_mbps": 31928.8,
+            "mean_power_w": 3013.83,
+            "total_energy_kwh": 30.139133,
+            "mean_delay_ms": 68.947,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 90.5526,
+            "max_utilization_percent": 1881.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "applied_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 5616.1,
+            "mean_dropped_mbps": 29642.7,
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "0": 49,
+              "1": 1
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "raw_saving_percent": 19.66,
+          "guarded_saving_percent": 0.0,
+          "delta_loss_vs_ospf": 0.0,
+          "delta_delay_vs_ospf_ms": 0.0,
+          "delta_sla_vs_ospf_percent": 0.0
+        }
+      }
+    },
+    "50000": {
+      "regimes": {
+        "Low": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 461.5,
+            "mean_dropped_mbps": 6.3,
+            "mean_power_w": 2527.15,
+            "total_energy_kwh": 25.271508,
+            "mean_delay_ms": 0.86,
+            "p95_delay_ms": 1.105,
+            "p99_delay_ms": 1.105,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 461.5,
+            "mean_dropped_mbps": 6.3,
+            "mean_power_w": 2555.85,
+            "total_energy_kwh": 25.566048,
+            "mean_delay_ms": 0.852,
+            "p95_delay_ms": 1.095,
+            "p99_delay_ms": 1.095,
+            "mean_loss_percent": 0.28,
+            "max_utilization_percent": 129.0,
+            "sla_violations": 2,
+            "sla_violation_rate_percent": 4.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 46,
+              "2": 1,
+              "6": 3
+            },
+            "override_count": 4,
+            "override_rate_percent": 8.0
+          },
+          "raw_saving_percent": 14.52,
+          "guarded_saving_percent": 13.52,
+          "delta_loss_vs_ospf": 0.28,
+          "delta_delay_vs_ospf_ms": 0.199,
+          "delta_sla_vs_ospf_percent": 4.0
+        },
+        "Medium": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1311.3,
+            "mean_dropped_mbps": 240.0,
+            "mean_power_w": 2617.34,
+            "total_energy_kwh": 26.17342,
+            "mean_delay_ms": 3.8,
+            "p95_delay_ms": 6.333,
+            "p99_delay_ms": 6.424,
+            "mean_loss_percent": 4.6856,
+            "max_utilization_percent": 328.7,
+            "sla_violations": 10,
+            "sla_violation_rate_percent": 20.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1373.7,
+            "mean_dropped_mbps": 177.6,
+            "mean_power_w": 2764.27,
+            "total_energy_kwh": 27.664337,
+            "mean_delay_ms": 2.91,
+            "p95_delay_ms": 5.03,
+            "p99_delay_ms": 5.064,
+            "mean_loss_percent": 3.542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 8,
+            "sla_violation_rate_percent": 16.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 28,
+              "2": 7,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 22,
+            "override_rate_percent": 44.0
+          },
+          "raw_saving_percent": 14.5,
+          "guarded_saving_percent": 9.63,
+          "delta_loss_vs_ospf": 2.0604,
+          "delta_delay_vs_ospf_ms": 1.178,
+          "delta_sla_vs_ospf_percent": 8.0
+        },
+        "High": {
+          "regime_type": "Boundary Overload",
+          "raw_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2101.2,
+            "mean_dropped_mbps": 1255.4,
+            "mean_power_w": 2716.85,
+            "total_energy_kwh": 27.168458,
+            "mean_delay_ms": 16.486,
+            "p95_delay_ms": 29.663,
+            "p99_delay_ms": 29.764,
+            "mean_loss_percent": 26.4276,
+            "max_utilization_percent": 444.3,
+            "sla_violations": 38,
+            "sla_violation_rate_percent": 76.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2469.5,
+            "mean_dropped_mbps": 887.2,
+            "mean_power_w": 3135.04,
+            "total_energy_kwh": 31.359605,
+            "mean_delay_ms": 9.946,
+            "p95_delay_ms": 19.035,
+            "p99_delay_ms": 19.036,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 4,
+              "2": 2,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "raw_saving_percent": 14.74,
+          "guarded_saving_percent": 1.59,
+          "delta_loss_vs_ospf": -0.0676,
+          "delta_delay_vs_ospf_ms": 0.012,
+          "delta_sla_vs_ospf_percent": -2.0
+        },
+        "Burst": {
+          "regime_type": "Extreme Stress Test",
+          "raw_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 3329.9,
+            "mean_dropped_mbps": 31928.8,
+            "mean_power_w": 3013.83,
+            "total_energy_kwh": 30.1383,
+            "mean_delay_ms": 68.947,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 90.5526,
+            "max_utilization_percent": 1881.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "1": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 5616.1,
+            "mean_dropped_mbps": 29642.7,
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "1": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "raw_saving_percent": 19.66,
+          "guarded_saving_percent": 0.0,
+          "delta_loss_vs_ospf": 0.0,
+          "delta_delay_vs_ospf_ms": 0.0,
+          "delta_sla_vs_ospf_percent": 0.0
+        }
+      }
+    },
+    "90000": {
+      "regimes": {
+        "Low": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 467.8,
+            "mean_dropped_mbps": 0.0,
+            "mean_power_w": 2645.22,
+            "total_energy_kwh": 26.453023,
+            "mean_delay_ms": 0.709,
+            "p95_delay_ms": 0.89,
+            "p99_delay_ms": 0.891,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 98.1,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "raw_actions_distribution": {
+              "0": 10,
+              "2": 40
+            },
+            "applied_actions_distribution": {
+              "0": 10,
+              "2": 40
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 467.8,
+            "mean_dropped_mbps": 0.0,
+            "mean_power_w": 2647.62,
+            "total_energy_kwh": 26.48123,
+            "mean_delay_ms": 0.715,
+            "p95_delay_ms": 0.899,
+            "p99_delay_ms": 0.9,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 98.1,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "raw_actions_distribution": {
+              "0": 16,
+              "2": 34
+            },
+            "applied_actions_distribution": {
+              "0": 15,
+              "2": 32,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "raw_saving_percent": 10.52,
+          "guarded_saving_percent": 10.43,
+          "delta_loss_vs_ospf": 0.0,
+          "delta_delay_vs_ospf_ms": 0.062,
+          "delta_sla_vs_ospf_percent": 0.0
+        },
+        "Medium": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1416.0,
+            "mean_dropped_mbps": 135.3,
+            "mean_power_w": 2769.22,
+            "total_energy_kwh": 27.692983,
+            "mean_delay_ms": 2.221,
+            "p95_delay_ms": 4.147,
+            "p99_delay_ms": 4.18,
+            "mean_loss_percent": 2.2418,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "2": 49
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "2": 49
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1401.6,
+            "mean_dropped_mbps": 149.7,
+            "mean_power_w": 2833.38,
+            "total_energy_kwh": 28.351264,
+            "mean_delay_ms": 2.435,
+            "p95_delay_ms": 4.424,
+            "p99_delay_ms": 4.458,
+            "mean_loss_percent": 2.7542,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 6,
+            "sla_violation_rate_percent": 12.0,
+            "raw_actions_distribution": {
+              "0": 15,
+              "2": 35
+            },
+            "applied_actions_distribution": {
+              "0": 5,
+              "2": 30,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 17,
+            "override_rate_percent": 34.0
+          },
+          "raw_saving_percent": 9.54,
+          "guarded_saving_percent": 7.39,
+          "delta_loss_vs_ospf": 1.2726,
+          "delta_delay_vs_ospf_ms": 0.703,
+          "delta_sla_vs_ospf_percent": 4.0
+        },
+        "High": {
+          "regime_type": "Boundary Overload",
+          "raw_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2352.6,
+            "mean_dropped_mbps": 1004.0,
+            "mean_power_w": 2869.03,
+            "total_energy_kwh": 28.691921,
+            "mean_delay_ms": 12.398,
+            "p95_delay_ms": 22.382,
+            "p99_delay_ms": 22.393,
+            "mean_loss_percent": 19.4382,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 31,
+            "sla_violation_rate_percent": 62.0,
+            "raw_actions_distribution": {
+              "0": 6,
+              "2": 44
+            },
+            "applied_actions_distribution": {
+              "0": 6,
+              "2": 44
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2469.5,
+            "mean_dropped_mbps": 887.2,
+            "mean_power_w": 3140.75,
+            "total_energy_kwh": 31.416705,
+            "mean_delay_ms": 9.945,
+            "p95_delay_ms": 19.03,
+            "p99_delay_ms": 19.03,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "raw_actions_distribution": {
+              "0": 25,
+              "1": 10,
+              "2": 15
+            },
+            "applied_actions_distribution": {
+              "0": 2,
+              "2": 4,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 46,
+            "override_rate_percent": 92.0
+          },
+          "raw_saving_percent": 9.96,
+          "guarded_saving_percent": 1.41,
+          "delta_loss_vs_ospf": -0.0676,
+          "delta_delay_vs_ospf_ms": 0.011,
+          "delta_sla_vs_ospf_percent": -2.0
+        },
+        "Burst": {
+          "regime_type": "Extreme Stress Test",
+          "raw_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 3329.9,
+            "mean_dropped_mbps": 31928.8,
+            "mean_power_w": 3013.83,
+            "total_energy_kwh": 30.139133,
+            "mean_delay_ms": 68.947,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 90.5526,
+            "max_utilization_percent": 1881.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "1": 49
+            },
+            "applied_actions_distribution": {
+              "0": 1,
+              "1": 49
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 5616.1,
+            "mean_dropped_mbps": 29642.7,
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "0": 1,
+              "1": 49
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "raw_saving_percent": 19.66,
+          "guarded_saving_percent": 0.0,
+          "delta_loss_vs_ospf": 0.0,
+          "delta_delay_vs_ospf_ms": 0.0,
+          "delta_sla_vs_ospf_percent": 0.0
+        }
+      }
+    },
+    "100000": {
+      "regimes": {
+        "Low": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 467.8,
+            "mean_dropped_mbps": 0.0,
+            "mean_power_w": 2672.74,
+            "total_energy_kwh": 26.72735,
+            "mean_delay_ms": 0.707,
+            "p95_delay_ms": 0.887,
+            "p99_delay_ms": 0.888,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 98.1,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 467.8,
+            "mean_carried_mbps": 467.8,
+            "mean_dropped_mbps": 0.0,
+            "mean_power_w": 2689.93,
+            "total_energy_kwh": 26.902643,
+            "mean_delay_ms": 0.706,
+            "p95_delay_ms": 0.886,
+            "p99_delay_ms": 0.887,
+            "mean_loss_percent": 0.0,
+            "max_utilization_percent": 98.1,
+            "sla_violations": 0,
+            "sla_violation_rate_percent": 0.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 47,
+              "6": 3
+            },
+            "override_count": 3,
+            "override_rate_percent": 6.0
+          },
+          "raw_saving_percent": 9.6,
+          "guarded_saving_percent": 9.0,
+          "delta_loss_vs_ospf": 0.0,
+          "delta_delay_vs_ospf_ms": 0.053,
+          "delta_sla_vs_ospf_percent": 0.0
+        },
+        "Medium": {
+          "regime_type": "Controllable",
+          "raw_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1416.0,
+            "mean_dropped_mbps": 135.3,
+            "mean_power_w": 2772.04,
+            "total_energy_kwh": 27.72037,
+            "mean_delay_ms": 2.221,
+            "p95_delay_ms": 4.147,
+            "p99_delay_ms": 4.18,
+            "mean_loss_percent": 2.2418,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 4,
+            "sla_violation_rate_percent": 8.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 1551.3,
+            "mean_carried_mbps": 1414.4,
+            "mean_dropped_mbps": 136.9,
+            "mean_power_w": 2848.68,
+            "total_energy_kwh": 28.500137,
+            "mean_delay_ms": 2.22,
+            "p95_delay_ms": 4.169,
+            "p99_delay_ms": 4.202,
+            "mean_loss_percent": 2.3114,
+            "max_utilization_percent": 238.7,
+            "sla_violations": 5,
+            "sla_violation_rate_percent": 10.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 35,
+              "4": 3,
+              "6": 12
+            },
+            "override_count": 15,
+            "override_rate_percent": 30.0
+          },
+          "raw_saving_percent": 9.45,
+          "guarded_saving_percent": 6.9,
+          "delta_loss_vs_ospf": 0.8298,
+          "delta_delay_vs_ospf_ms": 0.488,
+          "delta_sla_vs_ospf_percent": 2.0
+        },
+        "High": {
+          "regime_type": "Boundary Overload",
+          "raw_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2387.4,
+            "mean_dropped_mbps": 969.2,
+            "mean_power_w": 2891.06,
+            "total_energy_kwh": 28.910624,
+            "mean_delay_ms": 11.444,
+            "p95_delay_ms": 21.151,
+            "p99_delay_ms": 21.162,
+            "mean_loss_percent": 18.5234,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 3356.6,
+            "mean_carried_mbps": 2469.5,
+            "mean_dropped_mbps": 887.2,
+            "mean_power_w": 3143.64,
+            "total_energy_kwh": 31.445585,
+            "mean_delay_ms": 9.945,
+            "p95_delay_ms": 19.029,
+            "p99_delay_ms": 19.029,
+            "mean_loss_percent": 16.5524,
+            "max_utilization_percent": 368.4,
+            "sla_violations": 30,
+            "sla_violation_rate_percent": 60.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "1": 1,
+              "2": 5,
+              "4": 1,
+              "5": 1,
+              "6": 42
+            },
+            "override_count": 45,
+            "override_rate_percent": 90.0
+          },
+          "raw_saving_percent": 9.28,
+          "guarded_saving_percent": 1.32,
+          "delta_loss_vs_ospf": -0.0676,
+          "delta_delay_vs_ospf_ms": 0.011,
+          "delta_sla_vs_ospf_percent": -2.0
+        },
+        "Burst": {
+          "regime_type": "Extreme Stress Test",
+          "raw_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 4763.9,
+            "mean_dropped_mbps": 30494.8,
+            "mean_power_w": 3301.14,
+            "total_energy_kwh": 33.011376,
+            "mean_delay_ms": 76.049,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 86.483,
+            "max_utilization_percent": 1425.0,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "2": 50
+            },
+            "override_count": 0,
+            "override_rate_percent": 0.0
+          },
+          "guarded_ppo": {
+            "mean_offered_mbps": 35258.8,
+            "mean_carried_mbps": 5616.1,
+            "mean_dropped_mbps": 29642.7,
+            "mean_power_w": 3751.3,
+            "total_energy_kwh": 37.512996,
+            "mean_delay_ms": 76.519,
+            "p95_delay_ms": 90.6,
+            "p99_delay_ms": 90.6,
+            "mean_loss_percent": 84.0646,
+            "max_utilization_percent": 1121.6,
+            "sla_violations": 50,
+            "sla_violation_rate_percent": 100.0,
+            "raw_actions_distribution": {
+              "2": 50
+            },
+            "applied_actions_distribution": {
+              "6": 50
+            },
+            "override_count": 50,
+            "override_rate_percent": 100.0
+          },
+          "raw_saving_percent": 12.0,
+          "guarded_saving_percent": 0.0,
+          "delta_loss_vs_ospf": 0.0,
+          "delta_delay_vs_ospf_ms": 0.0,
+          "delta_sla_vs_ospf_percent": 0.0
+        }
+      }
+    }
+  }
+}

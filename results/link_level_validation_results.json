@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "topology": "abilene",
+    "green_mode": "link_level",
+    "disclaimer": "Simulated analytical assumptions based on IEEE 802.3az EEE/LPI and port admin-down (12W active, 1W LPI, 0W off). Not measured or verified on physical hardware.",
+    "link_capacity_mbps": 2500.0,
+    "sla_delay_threshold_ms": 22.136363636363637
+  },
+  "windows": {
+    "Low Traffic": {
+      "window_info": {
+        "name": "Low Traffic",
+        "start_step": 4750,
+        "steps": 100,
+        "desc": "~1330-1450 Mbps total network demand"
+      },
+      "ospf": {
+        "policy": "OSPF",
+        "steps": 100,
+        "mean_power_w": 1790.14,
+        "total_energy_kwh": 35.802722,
+        "mean_delay_ms": 12.446,
+        "p95_delay_ms": 21.287,
+        "p99_delay_ms": 26.235,
+        "max_utilization": 0.312,
+        "mean_packet_loss_percent": 0.0,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "overrides_count": 0,
+        "action_distribution": {
+          "7": 100
+        }
+      },
+      "heuristic": {
+        "policy": "Link_Level_Heuristic",
+        "steps": 100,
+        "mean_power_w": 1788.78,
+        "total_energy_kwh": 35.775681,
+        "mean_delay_ms": 15.3,
+        "p95_delay_ms": 26.054,
+        "p99_delay_ms": 31.071,
+        "max_utilization": 0.365,
+        "mean_packet_loss_percent": 0.0,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "overrides_count": 0,
+        "action_distribution": {
+          "0": 94,
+          "2": 4,
+          "7": 2
+        }
+      },
+      "energy_saving_percent": 0.08
+    },
+    "Medium Traffic": {
+      "window_info": {
+        "name": "Medium Traffic",
+        "start_step": 2100,
+        "steps": 100,
+        "desc": "~2000-2150 Mbps total network demand"
+      },
+      "ospf": {
+        "policy": "OSPF",
+        "steps": 100,
+        "mean_power_w": 1806.41,
+        "total_energy_kwh": 36.128238,
+        "mean_delay_ms": 13.094,
+        "p95_delay_ms": 25.925,
+        "p99_delay_ms": 26.367,
+        "max_utilization": 0.38,
+        "mean_packet_loss_percent": 0.0,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "overrides_count": 0,
+        "action_distribution": {
+          "7": 100
+        }
+      },
+      "heuristic": {
+        "policy": "Link_Level_Heuristic",
+        "steps": 100,
+        "mean_power_w": 1804.11,
+        "total_energy_kwh": 36.082182,
+        "mean_delay_ms": 14.169,
+        "p95_delay_ms": 25.95,
+        "p99_delay_ms": 26.393,
+        "max_utilization": 0.38,
+        "mean_packet_loss_percent": 0.0,
+        "sla_violations": 0,
+        "sla_violation_rate_percent": 0.0,
+        "overrides_count": 0,
+        "action_distribution": {
+          "2": 98,
+          "7": 2
+        }
+      },
+      "energy_saving_percent": 0.13
+    },
+    "Peak Traffic": {
+      "window_info": {
+        "name": "Peak Traffic",
+        "start_step": 4220,
+        "steps": 100,
+        "desc": "~5300-6950 Mbps peak network demand"
+      },
+      "ospf": {
+        "policy": "OSPF",
+        "steps": 100,
+        "mean_power_w": 1839.95,
+        "total_energy_kwh": 36.798941,
+        "mean_delay_ms": 16.392,
+        "p95_delay_ms": 26.965,
+        "p99_delay_ms": 30.446,
+        "max_utilization": 2.373,
+        "mean_packet_loss_percent": 4.1744,
+        "sla_violations": 16,
+        "sla_violation_rate_percent": 16.0,
+        "overrides_count": 0,
+        "action_distribution": {
+          "7": 100
+        }
+      },
+      "heuristic": {
+        "policy": "Link_Level_Heuristic",
+        "steps": 100,
+        "mean_power_w": 1840.61,
+        "total_energy_kwh": 36.812306,
+        "mean_delay_ms": 17.281,
+        "p95_delay_ms": 27.048,
+        "p99_delay_ms": 30.516,
+        "max_utilization": 2.373,
+        "mean_packet_loss_percent": 4.1826,
+        "sla_violations": 16,
+        "sla_violation_rate_percent": 16.0,
+        "overrides_count": 0,
+        "action_distribution": {
+          "1": 1,
+          "2": 36,
+          "3": 39,
+          "6": 22,
+          "7": 2
+        }
+      },
+      "energy_saving_percent": -0.04
+    }
+  }
+}

@@ -60,9 +60,9 @@ def run_evaluation_suite(num_steps: int = 120, seed: int = 42):
     rl_agent = GreenRLAgent(env=env, algo="PPO", model_path=model_path if os.path.exists(model_path) else None)
 
     candidates = {
-        "OSPF / ECMP (Baseline)": (OSPFBaselineAgent(), "#6c757d"),
-        "Static Heuristic": (StaticHeuristicAgent(), "#ffc107"),
-        "Load-Threshold Reactive": (ThresholdLoadAgent(), "#fd7e14"),
+        "OSPF / ECMP (Baseline)": (OSPFBaselineAgent(env=env), "#6c757d"),
+        "Static Heuristic": (StaticHeuristicAgent(env=env), "#ffc107"),
+        "Load-Threshold Reactive": (ThresholdLoadAgent(env=env), "#fd7e14"),
         "Green RL Agent (Ours)": (rl_agent, "#10b981")
     }
 

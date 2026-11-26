@@ -3,7 +3,7 @@
 
 **Proje Kapsamı:** Akıllı Ağ Yönetimi & Endüstri 5.0 ve Optimizasyon Uygulamaları  
 **Test Ortamı:** Gymnasium Fat-Tree (k=4) Dijital İkiz Simülasyonu & Mininet / Ryu SDN Dışa Aktarıcısı  
-**Tarih:** 09.10.2026 22:17:42
+**Tarih:** 19.10.2026 12:53:11
 
 ---
 
@@ -19,17 +19,17 @@ Geleneksel veri merkezi yönlendirme protokolleri (OSPF / ECMP), gece saatlerind
 
 | Algoritma / Yontem | Ort. Guc (Watt) | Tasarruf (%) | Ort. Gecikme | Maks. Gecikme | Paket Kaybi | Darbogaz Sayisi | Kumulatif Odul |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| OSPF / ECMP (Baseline) | 3760.0 W | %0.0 | 0.74 ms | 4.82 ms | %0.0 | 58 | -190.86 |
-| Static Heuristic | 3368.0 W | %10.42 | 0.76 ms | 4.78 ms | %0.0 | 70 | 511.97 |
-| Load-Threshold Reactive | 3142.13 W | %16.43 | 0.97 ms | 9.07 ms | %0.0 | 99 | 764.21 |
-| Green RL Agent (Ours) | 3144.0 W | %16.38 | 0.95 ms | 9.07 ms | %0.0 | 96 | 767.2 |
+| OSPF / ECMP (Baseline) | 3038.22 W | %19.2 | 1.5 ms | 28.47 ms | %1.2351 | 88 | -1976.66 |
+| Static Heuristic | 2785.09 W | %25.93 | 1.85 ms | 31.13 ms | %1.9254 | 97 | -866.89 |
+| Load-Threshold Reactive | 2654.74 W | %29.4 | 2.16 ms | 43.34 ms | %2.119 | 97 | -403.16 |
+| Green RL Agent (Ours) | 2868.6 W | %23.71 | 1.59 ms | 28.47 ms | %1.4642 | 93 | -1088.07 |
 
 ---
 
 ### 3. Akademik Bulgular ve Temel Grafikler
 
 #### 3.1. Enerji Tüketimi ve Tasarruf Kıyaslaması
-Geliştirilen RL modeli, klasik OSPF/ECMP yöntemine kıyasla ortalama **16.38%** enerji tasarrufu elde etmiştir.
+Geliştirilen RL modeli, klasik OSPF/ECMP yöntemine kıyasla ortalama **23.71%** enerji tasarrufu elde etmiştir.
 
 ![Enerji Tüketimi](energy_savings_bar.png)
 
